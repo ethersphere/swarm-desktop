@@ -44,6 +44,7 @@ swap-initial-deposit: 0
 mainnet: true
 full-node: false
 chain-enable: false
+cors-allowed-origins: '*'
 data-dir: ${resolve('data-dir')}`
 }
 
