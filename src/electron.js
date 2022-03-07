@@ -1,4 +1,4 @@
-const { app, Tray, Menu, shell } = require('electron')
+const { app, Tray, Menu, shell, BrowserWindow } = require('electron')
 const { runLauncher } = require('./launcher')
 const { BeeManager } = require('./lifecycle')
 
@@ -33,6 +33,7 @@ function rebuildElectronTray() {
 
 function main() {
     app.whenReady().then(() => {
+        app.dock.hide()
         tray = new Tray('tray.png')
         rebuildElectronTray()
     })
