@@ -3,8 +3,11 @@ const { existsSync, readFileSync, writeFileSync, mkdirSync } = require('fs')
 const { exit } = require('process')
 const { resolve } = require('path')
 const { spawn } = require('child_process')
+const { BeeManager } = require('./lifecycle')
 
 async function main() {
+    const { rebuildElectronTray } = require('./electron')
+    const abortController = new AbortController()
     if (!existsSync('bee')) {
         console.error(`Please compile bee and place it as follows: ${resolve('bee')}`)
         exit(1)
@@ -25,7 +28,16 @@ async function main() {
         const { transaction, blockHash } = await sendTransaction(address)
         writeFileSync('config.yaml', createConfiguration(transaction, blockHash))
     }
-    launchBee()
+    const subprocess = launchBee(abortController).catch(reason => {
+        console.error(reason)
+    })
+    BeeManager.signalRunning(abortController, subprocess)
+    rebuildElectronTray()
+    await subprocess
+    console.log('Bee subprocess finished running')
+    abortController.abort()
+    BeeManager.signalStopped()
+    rebuildElectronTray()
 }
 
 async function sendTransaction(address) {
@@ -54,9 +66,9 @@ transaction: ${transaction}
 block-hash: ${blockHash}`
 }
 
-async function launchBee() {
+async function launchBee(abortController) {
     const configPath = resolve('config.yaml')
-    return runProcess(resolve('bee'), ['start', `--config=${configPath}`], onStdout, onStderr)
+    return runProcess(resolve('bee'), ['start', `--config=${configPath}`], onStdout, onStderr, abortController)
 }
 
 function onStdout(data) {
@@ -67,9 +79,9 @@ function onStderr(data) {
     process.stderr.write(data)
 }
 
-async function runProcess(command, args, onStdout, onStderr) {
+async function runProcess(command, args, onStdout, onStderr, abortController) {
     return new Promise((resolve, reject) => {
-        const subprocess = spawn(command, args)
+        const subprocess = spawn(command, args, { signal: abortController.signal, killSignal: 'SIGINT' })
         subprocess.stdout.on('data', onStdout)
         subprocess.stderr.on('data', onStderr)
         subprocess.on('close', code => {
@@ -78,6 +90,9 @@ async function runProcess(command, args, onStdout, onStderr) {
             } else {
                 reject(code)
             }
+        })
+        subprocess.on('error', error => {
+            reject(error)
         })
     })
 }
