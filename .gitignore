@@ -1,5 +1,13 @@
+# osx
+
+.DS_Store
+
 # js
 node_modules
+
+# electron
+dist
+build
 
 # bee
 bee

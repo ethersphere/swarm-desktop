@@ -5,6 +5,21 @@ const { resolve } = require('path')
 const { spawn } = require('child_process')
 const { BeeManager } = require('./lifecycle')
 
+async function createConfigFileAndAddress() {
+    writeFileSync('config.yaml', createStubConfiguration())
+    await launchBee().catch(() => {})
+}
+
+async function createInitialTransaction() {
+    const config = readFileSync('config.yaml', 'utf-8')
+    if (!config.includes('block-hash')) {
+        const { address } = JSON.parse(readFileSync('data-dir/keys/swarm.key'))
+        console.log('Sending transaction to address', address)
+        const { transaction, blockHash } = await sendTransaction(address)
+        writeFileSync('config.yaml', createConfiguration(transaction, blockHash))
+    }
+}
+
 async function main() {
     const { rebuildElectronTray } = require('./electron')
     const abortController = new AbortController()
@@ -67,6 +82,9 @@ block-hash: ${blockHash}`
 }
 
 async function launchBee(abortController) {
+    if (!abortController) {
+        abortController = new AbortController()
+    }
     const configPath = resolve('config.yaml')
     return runProcess(resolve('bee'), ['start', `--config=${configPath}`], onStdout, onStderr, abortController)
 }
@@ -98,5 +116,7 @@ async function runProcess(command, args, onStdout, onStderr, abortController) {
 }
 
 module.exports = {
+    createConfigFileAndAddress,
+    createInitialTransaction,
     runLauncher: main
 }

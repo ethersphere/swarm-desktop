@@ -1,10 +1,27 @@
-const { app, Tray, Menu, shell, BrowserWindow } = require('electron')
+const { app, Tray, Menu, shell } = require('electron')
 const { runLauncher } = require('./launcher')
 const { BeeManager } = require('./lifecycle')
 
 let tray
 
 function rebuildElectronTray() {
+    if (!tray) {
+        return
+    }
+    if (require('./api-server').getStatus().status !== 2) {
+        const contextMenu = Menu.buildFromTemplate([
+            { label: 'Open Installer', click: () => shell.openExternal('http://localhost:5002') },
+            { type: 'separator' },
+            {
+                label: 'Exit',
+                click: async () => {
+                    app.quit()
+                }
+            }
+        ])
+        tray.setContextMenu(contextMenu)
+        return
+    }
     const contextMenu = Menu.buildFromTemplate([
         {
             label: BeeManager.isRunning() ? 'Stop Bee' : 'Start Bee',
@@ -33,6 +50,7 @@ function rebuildElectronTray() {
 
 function main() {
     app.whenReady().then(() => {
+        app.dock.setIcon('icon.png')
         app.dock.hide()
         tray = new Tray('tray.png')
         rebuildElectronTray()
