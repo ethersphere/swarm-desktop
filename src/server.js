@@ -1,34 +1,19 @@
 const Router = require('@koa/router')
 const Koa = require('koa')
 const koaBodyparser = require('koa-bodyparser')
-const context = require('koa/lib/context')
-const { existsSync, readFileSync } = require('fs')
-const { createConfigFileAndAddress, createInitialTransaction } = require('./launcher')
-const { rebuildElectronTray } = require('./electron')
+const serve = require('koa-static')
+const { writeConfigYaml, readConfigYaml } = require('./config-yaml')
+const { createInitialTransaction, createConfigFileAndAddress, runLauncher } = require('./launcher')
+const { BeeManager } = require('./lifecycle')
+const { getStatus } = require('./status')
 
-function getStatus() {
-    if (!existsSync('config.yaml') || !existsSync('data-dir')) {
-        return {
-            status: 0
-        }
-    }
-    const config = readFileSync('config.yaml', 'utf-8')
-    if (!config.includes('block-hash')) {
-        const { address } = JSON.parse(readFileSync('data-dir/keys/swarm.key'))
-        return {
-            address,
-            status: 1
-        }
-    }
-    return {
-        status: 2
-    }
-}
+const port = 5000
 
-function main() {
+function runServer() {
     const app = new Koa()
+    app.use(serve('static'))
     app.use(async (context, next) => {
-        context.set('Access-Control-Allow-Origin', 'http://localhost:5002')
+        context.set('Access-Control-Allow-Origin', `http://localhost:${port}`)
         context.set('Access-Control-Allow-Credentials', 'true')
         context.set(
             'Access-Control-Allow-Headers',
@@ -48,15 +33,23 @@ function main() {
     })
     router.post('/setup/transaction', async context => {
         await createInitialTransaction()
+        const { rebuildElectronTray } = require('./electron')
         rebuildElectronTray()
         context.body = getStatus()
     })
+    router.patch('/config', context => {
+        writeConfigYaml(context.request.body)
+        context.body = readConfigYaml()
+    })
+    router.post('/restart', async context => {
+        BeeManager.stop()
+        await BeeManager.waitForSigtermToFinish()
+        runLauncher()
+        context.body = { success: true }
+    })
     app.use(router.routes())
     app.use(router.allowedMethods())
-    app.listen(5001)
+    app.listen(port)
 }
 
-module.exports = {
-    getStatus,
-    runApiServer: main
-}
+module.exports = { runServer, port }

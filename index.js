@@ -1,14 +1,13 @@
 const { shell } = require('electron')
-const { runApiServer } = require('./src/api-server')
 const { runElectronTray } = require('./src/electron')
 const { runLauncher } = require('./src/launcher')
-const { runStaticServer } = require('./src/static-server')
+const { port, runServer } = require('./src/server')
+const { getStatus } = require('./src/status')
 
-if (require('./src/api-server').getStatus().status === 2) {
+if (getStatus().status === 2) {
     runLauncher()
 } else {
-    shell.openExternal('http://localhost:5002')
+    shell.openExternal(`http://localhost:${port}/installer/`)
 }
 runElectronTray()
-runStaticServer()
-runApiServer()
+runServer()
