@@ -1,11 +1,17 @@
-const state = {
+type BeeManagerState = {
+    process: null | Promise<number>
+    running: boolean
+    abortController: AbortController | null
+}
+
+const state: BeeManagerState = {
     process: null,
     running: false,
     abortController: null
 }
 
-const BeeManager = {
-    signalRunning: (abortController, process) => {
+export const BeeManager = {
+    signalRunning: (abortController: AbortController, process: Promise<number>) => {
         state.abortController = abortController
         state.process = process
         state.running = true
@@ -24,8 +30,4 @@ const BeeManager = {
             await state.process
         }
     }
-}
-
-module.exports = {
-    BeeManager
 }

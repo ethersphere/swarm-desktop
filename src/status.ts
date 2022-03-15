@@ -1,9 +1,14 @@
-const { readFileSync, existsSync } = require('fs')
-const { load } = require('js-yaml')
-const { readConfigYaml } = require('./config-yaml')
+import { existsSync, readFileSync } from 'fs'
+import { readConfigYaml } from './config-yaml'
 
-function getStatus() {
-    const statusObject = {
+type BeeDesktopStatus = {
+    status: 0 | 1 | 2
+    address: string | null
+    config: Record<string, unknown> | null
+}
+
+export function getStatus(): BeeDesktopStatus {
+    const statusObject: BeeDesktopStatus = {
         status: 0,
         address: null,
         config: null
@@ -12,7 +17,7 @@ function getStatus() {
         return statusObject
     }
     statusObject.config = readConfigYaml()
-    const { address } = JSON.parse(readFileSync('data-dir/keys/swarm.key'))
+    const { address } = JSON.parse(readFileSync('data-dir/keys/swarm.key', 'utf-8'))
     statusObject.address = address
     if (!statusObject.config['block-hash']) {
         statusObject.status = 1
@@ -21,5 +26,3 @@ function getStatus() {
     statusObject.status = 2
     return statusObject
 }
-
-module.exports = { getStatus }

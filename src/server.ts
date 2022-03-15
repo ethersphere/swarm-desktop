@@ -1,15 +1,16 @@
-const Router = require('@koa/router')
-const Koa = require('koa')
-const koaBodyparser = require('koa-bodyparser')
-const serve = require('koa-static')
-const { writeConfigYaml, readConfigYaml } = require('./config-yaml')
-const { createInitialTransaction, createConfigFileAndAddress, runLauncher } = require('./launcher')
-const { BeeManager } = require('./lifecycle')
-const { getStatus } = require('./status')
+import Koa from 'koa'
+import koaBodyparser from 'koa-bodyparser'
+import Router from 'koa-router'
+import serve from 'koa-static'
+import { readConfigYaml, writeConfigYaml } from './config-yaml'
+import { rebuildElectronTray } from './electron'
+import { createConfigFileAndAddress, createInitialTransaction, runLauncher } from './launcher'
+import { BeeManager } from './lifecycle'
+import { getStatus } from './status'
 
-const port = 5000
+export const port = 5000
 
-function runServer() {
+export function runServer(): void {
     const app = new Koa()
     app.use(serve('static'))
     app.use(async (context, next) => {
@@ -33,7 +34,6 @@ function runServer() {
     })
     router.post('/setup/transaction', async context => {
         await createInitialTransaction()
-        const { rebuildElectronTray } = require('./electron')
         rebuildElectronTray()
         context.body = getStatus()
     })
@@ -51,5 +51,3 @@ function runServer() {
     app.use(router.allowedMethods())
     app.listen(port)
 }
-
-module.exports = { runServer, port }

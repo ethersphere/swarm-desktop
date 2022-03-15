@@ -1,12 +1,12 @@
-const { app, Tray, Menu, shell } = require('electron')
-const { runLauncher } = require('./launcher')
-const { BeeManager } = require('./lifecycle')
-const { port } = require('./server')
-const { getStatus } = require('./status')
+import { app, Menu, shell, Tray } from 'electron'
+import { runLauncher } from './launcher'
+import { BeeManager } from './lifecycle'
+import { port } from './server'
+import { getStatus } from './status'
 
-let tray
+let tray: null | Tray
 
-function rebuildElectronTray() {
+export function rebuildElectronTray() {
     if (!tray) {
         return
     }
@@ -50,16 +50,11 @@ function rebuildElectronTray() {
     tray.setContextMenu(contextMenu)
 }
 
-function main() {
+export function runElectronTray() {
     app.whenReady().then(() => {
         app.dock.setIcon('icon.png')
         app.dock.hide()
         tray = new Tray('tray.png')
         rebuildElectronTray()
     })
-}
-
-module.exports = {
-    runElectronTray: main,
-    rebuildElectronTray
 }
