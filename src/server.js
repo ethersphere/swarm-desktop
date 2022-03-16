@@ -13,13 +13,13 @@ function runServer() {
     const app = new Koa()
     app.use(serve('static'))
     app.use(async (context, next) => {
-        context.set('Access-Control-Allow-Origin', `http://localhost:${port}`)
+        context.set('Access-Control-Allow-Origin', `*`)
         context.set('Access-Control-Allow-Credentials', 'true')
         context.set(
             'Access-Control-Allow-Headers',
             'Content-Type, Content-Length, Authorization, Accept, X-Requested-With'
         )
-        context.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS')
+        context.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS, PATCH')
         await next()
     })
     app.use(koaBodyparser())
