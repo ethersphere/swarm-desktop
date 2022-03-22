@@ -13,7 +13,7 @@ function runServer() {
     const app = new Koa()
     app.use(serve('static'))
     app.use(async (context, next) => {
-        context.set('Access-Control-Allow-Origin', `*`)
+        context.set('Access-Control-Allow-Origin', '*')
         context.set('Access-Control-Allow-Credentials', 'true')
         context.set(
             'Access-Control-Allow-Headers',
