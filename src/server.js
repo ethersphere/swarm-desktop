@@ -19,7 +19,7 @@ function runServer() {
             'Access-Control-Allow-Headers',
             'Content-Type, Content-Length, Authorization, Accept, X-Requested-With'
         )
-        context.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS, PATCH')
+        context.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS')
         await next()
     })
     app.use(koaBodyparser())
@@ -37,7 +37,7 @@ function runServer() {
         rebuildElectronTray()
         context.body = getStatus()
     })
-    router.patch('/config', context => {
+    router.post('/config', context => {
         writeConfigYaml(context.request.body)
         context.body = readConfigYaml()
     })
