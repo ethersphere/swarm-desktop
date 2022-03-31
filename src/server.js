@@ -5,15 +5,14 @@ const serve = require('koa-static')
 const { writeConfigYaml, readConfigYaml } = require('./config-yaml')
 const { createInitialTransaction, createConfigFileAndAddress, runLauncher } = require('./launcher')
 const { BeeManager } = require('./lifecycle')
+const { port } = require('./port')
 const { getStatus } = require('./status')
-
-const port = 5000
 
 function runServer() {
     const app = new Koa()
     app.use(serve('static'))
     app.use(async (context, next) => {
-        context.set('Access-Control-Allow-Origin', '*')
+        context.set('Access-Control-Allow-Origin', `http://localhost:${port.value}`)
         context.set('Access-Control-Allow-Credentials', 'true')
         context.set(
             'Access-Control-Allow-Headers',
@@ -49,7 +48,7 @@ function runServer() {
     })
     app.use(router.routes())
     app.use(router.allowedMethods())
-    app.listen(port)
+    app.listen(port.value)
 }
 
-module.exports = { runServer, port }
+module.exports = { runServer }
