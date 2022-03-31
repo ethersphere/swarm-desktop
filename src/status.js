@@ -1,5 +1,4 @@
 const { readFileSync, existsSync } = require('fs')
-const { load } = require('js-yaml')
 const { readConfigYaml } = require('./config-yaml')
 
 function getStatus() {

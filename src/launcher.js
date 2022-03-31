@@ -72,7 +72,6 @@ mainnet: true
 full-node: false
 chain-enable: false
 cors-allowed-origins: '*'
-resolver-options: https://cloudflare-eth.com
 use-postage-snapshot: true
 data-dir: ${resolve('data-dir')}`
 }

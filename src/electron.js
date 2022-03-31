@@ -1,4 +1,5 @@
 const { app, Tray, Menu, shell } = require('electron')
+const { apiKey } = require('./api-key')
 const { runLauncher } = require('./launcher')
 const { BeeManager } = require('./lifecycle')
 const { port } = require('./port')
@@ -12,7 +13,10 @@ function rebuildElectronTray() {
     }
     if (getStatus().status !== 2) {
         const contextMenu = Menu.buildFromTemplate([
-            { label: 'Open Installer', click: () => shell.openExternal(`http://localhost:${port.value}/installer/`) },
+            {
+                label: 'Open Installer',
+                click: () => shell.openExternal(`http://localhost:${port.value}/installer/?v=${apiKey}`)
+            },
             { type: 'separator' },
             {
                 label: 'Exit',
@@ -36,7 +40,10 @@ function rebuildElectronTray() {
             }
         },
         { type: 'separator' },
-        { label: 'Open Web UI', click: () => shell.openExternal(`http://localhost:${port.value}/dashboard/#/`) },
+        {
+            label: 'Open Web UI',
+            click: () => shell.openExternal(`http://localhost:${port.value}/dashboard/?v=${apiKey}#/`)
+        },
         { type: 'separator' },
         {
             label: 'Exit',

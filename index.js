@@ -1,4 +1,5 @@
 const { shell } = require('electron')
+const { apiKey } = require('./src/api-key')
 const { runElectronTray } = require('./src/electron')
 const { runLauncher } = require('./src/launcher')
 const { findFreePort, port } = require('./src/port')
@@ -10,7 +11,7 @@ async function main() {
     if (getStatus().status === 2) {
         runLauncher()
     } else {
-        shell.openExternal(`http://localhost:${port.value}/installer/`)
+        shell.openExternal(`http://localhost:${port.value}/installer/?v=${apiKey}`)
     }
     runElectronTray()
     runServer()

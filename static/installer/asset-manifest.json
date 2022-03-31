@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/installer/static/css/main.cfed29a4.css",
-    "main.js": "/installer/static/js/main.443fc15b.js",
+    "main.js": "/installer/static/js/main.2a4a9dc7.js",
     "index.html": "/installer/index.html",
     "main.cfed29a4.css.map": "/installer/static/css/main.cfed29a4.css.map",
-    "main.443fc15b.js.map": "/installer/static/js/main.443fc15b.js.map"
+    "main.2a4a9dc7.js.map": "/installer/static/js/main.2a4a9dc7.js.map"
   },
   "entrypoints": [
     "static/css/main.cfed29a4.css",
-    "static/js/main.443fc15b.js"
+    "static/js/main.2a4a9dc7.js"
   ]
 }
