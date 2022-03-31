@@ -7,7 +7,7 @@ const { BeeManager } = require('./lifecycle')
 
 async function createConfigFileAndAddress() {
     writeFileSync('config.yaml', createStubConfiguration())
-    await launchBee().catch(() => {})
+    await initializeBee()
 }
 
 async function createInitialTransaction() {
@@ -81,6 +81,11 @@ function createConfiguration(transaction, blockHash) {
     return `${createStubConfiguration()}
 transaction: ${transaction}
 block-hash: ${blockHash}`
+}
+
+async function initializeBee() {
+    const configPath = resolve('config.yaml')
+    return runProcess(resolve('bee'), ['init', `--config=${configPath}`], onStdout, onStderr, new AbortController())
 }
 
 async function launchBee(abortController) {
