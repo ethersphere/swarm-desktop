@@ -2,15 +2,17 @@ const Router = require('@koa/router')
 const Koa = require('koa')
 const koaBodyparser = require('koa-bodyparser')
 const serve = require('koa-static')
+const { getApiKey } = require('./api-key')
 const { writeConfigYaml, readConfigYaml } = require('./config-yaml')
 const { createInitialTransaction, createConfigFileAndAddress, runLauncher } = require('./launcher')
 const { BeeManager } = require('./lifecycle')
+const { resolvePath } = require('./path')
 const { port } = require('./port')
 const { getStatus } = require('./status')
 
 function runServer() {
     const app = new Koa()
-    app.use(serve('static'))
+    app.use(serve(resolvePath('static')))
     app.use(async (context, next) => {
         context.set('Access-Control-Allow-Origin', `http://localhost:${port.value}`)
         context.set('Access-Control-Allow-Credentials', 'true')
@@ -19,6 +21,15 @@ function runServer() {
             'Content-Type, Content-Length, Authorization, Accept, X-Requested-With'
         )
         context.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS')
+        await next()
+    })
+    app.use(async (context, next) => {
+        const { authorization } = context.headers
+        if (authorization !== getApiKey()) {
+            context.status = 401
+            context.body = 'Unauthorized'
+            return
+        }
         await next()
     })
     app.use(koaBodyparser())

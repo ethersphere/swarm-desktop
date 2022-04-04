@@ -4,44 +4,45 @@ const { exit } = require('process')
 const { resolve } = require('path')
 const { spawn } = require('child_process')
 const { BeeManager } = require('./lifecycle')
+const { resolvePath } = require('./path')
 
 async function createConfigFileAndAddress() {
-    writeFileSync('config.yaml', createStubConfiguration())
+    writeFileSync(resolvePath('config.yaml'), createStubConfiguration())
     await initializeBee()
 }
 
 async function createInitialTransaction() {
-    const config = readFileSync('config.yaml', 'utf-8')
+    const config = readFileSync(resolvePath('config.yaml'), 'utf-8')
     if (!config.includes('block-hash')) {
-        const { address } = JSON.parse(readFileSync('data-dir/keys/swarm.key'))
+        const { address } = JSON.parse(readFileSync(resolvePath('data-dir/keys/swarm.key')))
         console.log('Sending transaction to address', address)
         const { transaction, blockHash } = await sendTransaction(address)
-        writeFileSync('config.yaml', createConfiguration(transaction, blockHash))
+        writeFileSync(resolvePath('config.yaml'), createConfiguration(transaction, blockHash))
     }
 }
 
 async function main() {
     const { rebuildElectronTray } = require('./electron')
     const abortController = new AbortController()
-    if (!existsSync('bee')) {
+    if (!existsSync(resolvePath('bee'))) {
         console.error(`Please compile bee and place it as follows: ${resolve('bee')}`)
         exit(1)
     }
-    if (!existsSync('data-dir')) {
-        mkdirSync('data-dir')
+    if (!existsSync(resolvePath('data-dir'))) {
+        mkdirSync(resolvePath('data-dir'))
     }
-    if (!existsSync('config.yaml')) {
-        writeFileSync('config.yaml', createStubConfiguration())
+    if (!existsSync(resolvePath('config.yaml'))) {
+        writeFileSync(resolvePath('config.yaml'), createStubConfiguration())
     }
-    if (!existsSync('data-dir/keys/swarm.key')) {
+    if (!existsSync(resolvePath('data-dir/keys/swarm.key'))) {
         await launchBee().catch(() => {})
     }
-    const config = readFileSync('config.yaml', 'utf-8')
+    const config = readFileSync(resolvePath('config.yaml'), 'utf-8')
     if (!config.includes('block-hash')) {
-        const { address } = JSON.parse(readFileSync('data-dir/keys/swarm.key'))
+        const { address } = JSON.parse(readFileSync(resolvePath('data-dir/keys/swarm.key')))
         console.log('Sending transaction to address', address)
         const { transaction, blockHash } = await sendTransaction(address)
-        writeFileSync('config.yaml', createConfiguration(transaction, blockHash))
+        writeFileSync(resolvePath('config.yaml'), createConfiguration(transaction, blockHash))
     }
     const subprocess = launchBee(abortController).catch(reason => {
         console.error(reason)
@@ -72,7 +73,6 @@ mainnet: true
 full-node: false
 chain-enable: false
 cors-allowed-origins: '*'
-resolver-options: https://cloudflare-eth.com
 use-postage-snapshot: true
 data-dir: ${resolve('data-dir')}`
 }

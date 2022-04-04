@@ -17,10 +17,16 @@
         "koa": "^2.13.4",
         "koa-bodyparser": "^4.3.0",
         "koa-static": "^5.0.0",
-        "node-fetch": "^2.6.7"
+        "node-fetch": "^2.6.7",
+        "uuid": "^8.3.2"
     },
     "devDependencies": {
         "electron": "^17.1.0",
         "electron-builder": "^22.14.13"
+    },
+    "build": {
+        "mac": {
+            "target": "mas"
+        }
     }
 }
