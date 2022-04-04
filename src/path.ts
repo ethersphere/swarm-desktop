@@ -1,7 +1,7 @@
-const { join } = require('path')
-const { app } = require('electron')
+import { join } from 'path'
+import { app } from 'electron'
 
-function resolvePath(path) {
+export function resolvePath(path: string) {
     if (process.execPath.includes('node_modules/electron/dist/Electron.app')) {
         return path
     }
@@ -11,8 +11,4 @@ function resolvePath(path) {
         execPath = execPath.split(appName)[0]
     }
     return join(execPath, path)
-}
-
-module.exports = {
-    resolvePath
 }

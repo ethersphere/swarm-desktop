@@ -1,9 +1,8 @@
-const globalState = {
+export const globalState = {
     readyToLaunchTray: false
 }
 
-function main() {
+export function initialiseGlobalState() {
     globalState.readyToLaunchTray = require('./api-server').getStatus().status === 2
 }
 
-module.exports = { globalState, initialiseGlobalState: main }

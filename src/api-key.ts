@@ -1,8 +1,8 @@
-const { existsSync, writeFileSync, readFileSync } = require('fs')
-const { v4 } = require('uuid')
-const { resolvePath } = require('./path')
+import { existsSync, writeFileSync, readFileSync } from 'fs'
+import { v4 } from 'uuid'
+import { resolvePath } from './path'
 
-function getApiKey() {
+export function getApiKey() {
     if (!existsSync(resolvePath('api-key.txt'))) {
         const apiKey = v4()
         writeFileSync(resolvePath('api-key.txt'), apiKey)
@@ -10,5 +10,3 @@ function getApiKey() {
     }
     return readFileSync(resolvePath('api-key.txt'), 'utf-8')
 }
-
-module.exports = { getApiKey }

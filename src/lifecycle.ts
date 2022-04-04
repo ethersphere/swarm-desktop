@@ -1,11 +1,17 @@
-const state = {
+interface State {
+    process: any
+    running: boolean
+    abortController: any
+}
+
+const state: State = {
     process: null,
     running: false,
     abortController: null
 }
 
-const BeeManager = {
-    signalRunning: (abortController, process) => {
+export const BeeManager = {
+    signalRunning: (abortController: any, process: any) => {
         state.abortController = abortController
         state.process = process
         state.running = true
@@ -24,8 +30,4 @@ const BeeManager = {
             await state.process
         }
     }
-}
-
-module.exports = {
-    BeeManager
 }
