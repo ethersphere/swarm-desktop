@@ -1,7 +1,8 @@
 const { app, Tray, Menu, shell } = require('electron')
-const { apiKey } = require('./api-key')
+const { getApiKey } = require('./api-key')
 const { runLauncher } = require('./launcher')
 const { BeeManager } = require('./lifecycle')
+const { resolvePath } = require('./path')
 const { port } = require('./port')
 const { getStatus } = require('./status')
 
@@ -15,7 +16,7 @@ function rebuildElectronTray() {
         const contextMenu = Menu.buildFromTemplate([
             {
                 label: 'Open Installer',
-                click: () => shell.openExternal(`http://localhost:${port.value}/installer/?v=${apiKey}`)
+                click: () => shell.openExternal(`http://localhost:${port.value}/installer/?v=${getApiKey()}`)
             },
             { type: 'separator' },
             {
@@ -42,7 +43,7 @@ function rebuildElectronTray() {
         { type: 'separator' },
         {
             label: 'Open Web UI',
-            click: () => shell.openExternal(`http://localhost:${port.value}/dashboard/?v=${apiKey}#/`)
+            click: () => shell.openExternal(`http://localhost:${port.value}/dashboard/?v=${getApiKey()}#/`)
         },
         { type: 'separator' },
         {
@@ -59,9 +60,9 @@ function rebuildElectronTray() {
 
 function main() {
     app.whenReady().then(() => {
-        app.dock.setIcon('icon.png')
+        app.dock.setIcon(resolvePath('icon.png'))
         app.dock.hide()
-        tray = new Tray('tray.png')
+        tray = new Tray(resolvePath('tray.png'))
         rebuildElectronTray()
     })
 }

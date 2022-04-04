@@ -1,9 +1,10 @@
 const { load, dump } = require('js-yaml')
 const { readFileSync, writeFileSync } = require('fs')
 const { FAILSAFE_SCHEMA } = require('js-yaml')
+const { resolvePath } = require('./path')
 
 function getPath() {
-    return 'config.yaml'
+    return resolvePath('config.yaml')
 }
 
 function readConfigYaml() {
