@@ -1,9 +1,9 @@
-import { join } from 'path'
 import { app } from 'electron'
+import { join, resolve } from 'path'
 
 export function resolvePath(path: string) {
     if (process.execPath.includes('node_modules/electron/dist/Electron.app')) {
-        return path
+        return resolve(path)
     }
     const appName = `${app.getName()}.app`
     let execPath = process.execPath
