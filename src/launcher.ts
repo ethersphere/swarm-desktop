@@ -96,15 +96,15 @@ async function launchBee(abortController?: AbortController) {
     return runProcess(resolve('bee'), ['start', `--config=${configPath}`], onStdout, onStderr, abortController)
 }
 
-function onStdout(data: any) {
+function onStdout(data: string | Uint8Array) {
     process.stdout.write(data)
 }
 
-function onStderr(data: any) {
+function onStderr(data: string | Uint8Array) {
     process.stderr.write(data)
 }
 
-async function runProcess(command: string, args: string[], onStdout: (chunk: any) => void, onStderr: (chunk: any) => void, abortController: AbortController) {
+async function runProcess(command: string, args: string[], onStdout: (chunk: string | Uint8Array) => void, onStderr: (chunk: string | Uint8Array) => void, abortController: AbortController): Promise<number> {
     return new Promise((resolve, reject) => {
         const subprocess = spawn(command, args, { signal: abortController.signal, killSignal: 'SIGINT' })
         subprocess.stdout.on('data', onStdout)
