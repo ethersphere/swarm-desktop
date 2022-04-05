@@ -1,9 +1,9 @@
-const { join } = require('path')
+const { join, resolve } = require('path')
 const { app } = require('electron')
 
 function resolvePath(path) {
     if (process.execPath.includes('node_modules/electron/dist/Electron.app')) {
-        return path
+        return resolve(path)
     }
     const appName = `${app.getName()}.app`
     let execPath = process.execPath

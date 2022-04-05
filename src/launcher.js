@@ -1,7 +1,6 @@
 const fetch = require('node-fetch')
 const { existsSync, readFileSync, writeFileSync, mkdirSync } = require('fs')
 const { exit } = require('process')
-const { resolve } = require('path')
 const { spawn } = require('child_process')
 const { BeeManager } = require('./lifecycle')
 const { resolvePath } = require('./path')
@@ -25,7 +24,7 @@ async function main() {
     const { rebuildElectronTray } = require('./electron')
     const abortController = new AbortController()
     if (!existsSync(resolvePath('bee'))) {
-        console.error(`Please compile bee and place it as follows: ${resolve('bee')}`)
+        console.error(`Please compile bee and place it as follows: ${resolvePath('bee')}`)
         exit(1)
     }
     if (!existsSync(resolvePath('data-dir'))) {
@@ -74,7 +73,7 @@ full-node: false
 chain-enable: false
 cors-allowed-origins: '*'
 use-postage-snapshot: true
-data-dir: ${resolve('data-dir')}`
+data-dir: ${resolvePath('data-dir')}`
 }
 
 function createConfiguration(transaction, blockHash) {
@@ -84,16 +83,16 @@ block-hash: ${blockHash}`
 }
 
 async function initializeBee() {
-    const configPath = resolve('config.yaml')
-    return runProcess(resolve('bee'), ['init', `--config=${configPath}`], onStdout, onStderr, new AbortController())
+    const configPath = resolvePath('config.yaml')
+    return runProcess(resolvePath('bee'), ['init', `--config=${configPath}`], onStdout, onStderr, new AbortController())
 }
 
 async function launchBee(abortController) {
     if (!abortController) {
         abortController = new AbortController()
     }
-    const configPath = resolve('config.yaml')
-    return runProcess(resolve('bee'), ['start', `--config=${configPath}`], onStdout, onStderr, abortController)
+    const configPath = resolvePath('config.yaml')
+    return runProcess(resolvePath('bee'), ['start', `--config=${configPath}`], onStdout, onStderr, abortController)
 }
 
 function onStdout(data) {
@@ -105,6 +104,7 @@ function onStderr(data) {
 }
 
 async function runProcess(command, args, onStdout, onStderr, abortController) {
+    console.log(`Spawning subprocess ${command}...`)
     return new Promise((resolve, reject) => {
         const subprocess = spawn(command, args, { signal: abortController.signal, killSignal: 'SIGINT' })
         subprocess.stdout.on('data', onStdout)
