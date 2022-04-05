@@ -1,11 +1,10 @@
-import fetch from 'node-fetch'
-import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'fs'
-import { exit } from 'process'
-import { resolve } from 'path'
 import { spawn } from 'child_process'
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs'
+import fetch from 'node-fetch'
+import { exit } from 'process'
+import { rebuildElectronTray } from './electron'
 import { BeeManager } from './lifecycle'
 import { resolvePath } from './path'
-import { rebuildElectronTray } from './electron'
 
 export async function createConfigFileAndAddress() {
     writeFileSync(resolvePath('config.yaml'), createStubConfiguration())
@@ -25,7 +24,7 @@ export async function createInitialTransaction() {
 export async function runLauncher() {
     const abortController = new AbortController()
     if (!existsSync(resolvePath('bee'))) {
-        console.error(`Please compile bee and place it as follows: ${resolve('bee')}`)
+        console.error(`Please compile bee and place it as follows: ${resolvePath('bee')}`)
         exit(1)
     }
     if (!existsSync(resolvePath('data-dir'))) {
@@ -74,26 +73,26 @@ full-node: false
 chain-enable: false
 cors-allowed-origins: '*'
 use-postage-snapshot: true
-data-dir: ${resolve('data-dir')}`
+data-dir: ${resolvePath('data-dir')}`
 }
 
-function createConfiguration(transaction:string, blockHash: string) {
+function createConfiguration(transaction: string, blockHash: string) {
     return `${createStubConfiguration()}
 transaction: ${transaction}
 block-hash: ${blockHash}`
 }
 
 async function initializeBee() {
-    const configPath = resolve('config.yaml')
-    return runProcess(resolve('bee'), ['init', `--config=${configPath}`], onStdout, onStderr, new AbortController())
+    const configPath = resolvePath('config.yaml')
+    return runProcess(resolvePath('bee'), ['init', `--config=${configPath}`], onStdout, onStderr, new AbortController())
 }
 
 async function launchBee(abortController?: AbortController) {
     if (!abortController) {
         abortController = new AbortController()
     }
-    const configPath = resolve('config.yaml')
-    return runProcess(resolve('bee'), ['start', `--config=${configPath}`], onStdout, onStderr, abortController)
+    const configPath = resolvePath('config.yaml')
+    return runProcess(resolvePath('bee'), ['start', `--config=${configPath}`], onStdout, onStderr, abortController)
 }
 
 function onStdout(data: string | Uint8Array) {
@@ -104,7 +103,13 @@ function onStderr(data: string | Uint8Array) {
     process.stderr.write(data)
 }
 
-async function runProcess(command: string, args: string[], onStdout: (chunk: string | Uint8Array) => void, onStderr: (chunk: string | Uint8Array) => void, abortController: AbortController): Promise<number> {
+async function runProcess(
+    command: string,
+    args: string[],
+    onStdout: (chunk: string | Uint8Array) => void,
+    onStderr: (chunk: string | Uint8Array) => void,
+    abortController: AbortController
+): Promise<number> {
     return new Promise((resolve, reject) => {
         const subprocess = spawn(command, args, { signal: abortController.signal, killSignal: 'SIGINT' })
         subprocess.stdout.on('data', onStdout)
