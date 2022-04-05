@@ -6,6 +6,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "tsc && electron-forge start",
+    "tsc": "tsc",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
@@ -25,7 +26,9 @@
   "license": "BSD-3-Clause",
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "icon.icns"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
