@@ -1,7 +1,7 @@
 interface State {
-    process: any
+    process: Promise<number | void> | null
     running: boolean
-    abortController: any
+    abortController: AbortController | null
 }
 
 const state: State = {
@@ -11,7 +11,7 @@ const state: State = {
 }
 
 export const BeeManager = {
-    signalRunning: (abortController: any, process: any) => {
+    signalRunning: (abortController: AbortController, process: Promise<number | void>) => {
         state.abortController = abortController
         state.process = process
         state.running = true
