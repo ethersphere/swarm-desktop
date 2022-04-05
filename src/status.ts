@@ -1,9 +1,15 @@
-const { readFileSync, existsSync } = require('fs')
-const { readConfigYaml } = require('./config-yaml')
-const { resolvePath } = require('./path')
+import { readFileSync, existsSync } from 'fs'
+import { readConfigYaml } from './config-yaml'
+import { resolvePath } from './path'
 
-function getStatus() {
-    const statusObject = {
+interface Status {
+    status: 0 | 1 | 2
+    address: string | null
+    config: Record<string, any>
+}
+
+export function getStatus() {
+    const statusObject: Status = {
         status: 0,
         address: null,
         config: null
@@ -12,7 +18,7 @@ function getStatus() {
         return statusObject
     }
     statusObject.config = readConfigYaml()
-    const { address } = JSON.parse(readFileSync(resolvePath('data-dir/keys/swarm.key')))
+    const { address } = JSON.parse(readFileSync(resolvePath('data-dir/keys/swarm.key')).toString())
     statusObject.address = address
     if (!statusObject.config['block-hash']) {
         statusObject.status = 1
@@ -21,5 +27,3 @@ function getStatus() {
     statusObject.status = 2
     return statusObject
 }
-
-module.exports = { getStatus }

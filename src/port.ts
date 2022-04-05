@@ -1,10 +1,10 @@
-const net = require('net')
+import net from 'net'
 
-const port = {
+export const port = {
     value: -1
 }
 
-async function findFreePort() {
+export async function findFreePort() {
     console.log('Finding free port...')
     for (let i = 3000; i < 5000; i++) {
         const free = await testPort(i)
@@ -16,7 +16,7 @@ async function findFreePort() {
     }
 }
 
-async function testPort(port) {
+async function testPort(port: number) {
     return new Promise(resolve => {
         const server = net.createServer()
         server.once('error', () => {
@@ -29,9 +29,4 @@ async function testPort(port) {
         })
         server.listen(port)
     })
-}
-
-module.exports = {
-    port,
-    findFreePort
 }

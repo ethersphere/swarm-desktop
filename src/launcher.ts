@@ -1,28 +1,28 @@
-const fetch = require('node-fetch')
-const { existsSync, readFileSync, writeFileSync, mkdirSync } = require('fs')
-const { exit } = require('process')
-const { resolve } = require('path')
-const { spawn } = require('child_process')
-const { BeeManager } = require('./lifecycle')
-const { resolvePath } = require('./path')
+import fetch from 'node-fetch'
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'fs'
+import { exit } from 'process'
+import { resolve } from 'path'
+import { spawn } from 'child_process'
+import { BeeManager } from './lifecycle'
+import { resolvePath } from './path'
+import { rebuildElectronTray } from './electron'
 
-async function createConfigFileAndAddress() {
+export async function createConfigFileAndAddress() {
     writeFileSync(resolvePath('config.yaml'), createStubConfiguration())
     await initializeBee()
 }
 
-async function createInitialTransaction() {
+export async function createInitialTransaction() {
     const config = readFileSync(resolvePath('config.yaml'), 'utf-8')
     if (!config.includes('block-hash')) {
-        const { address } = JSON.parse(readFileSync(resolvePath('data-dir/keys/swarm.key')))
+        const { address } = JSON.parse(readFileSync(resolvePath('data-dir/keys/swarm.key')).toString())
         console.log('Sending transaction to address', address)
         const { transaction, blockHash } = await sendTransaction(address)
         writeFileSync(resolvePath('config.yaml'), createConfiguration(transaction, blockHash))
     }
 }
 
-async function main() {
-    const { rebuildElectronTray } = require('./electron')
+export async function runLauncher() {
     const abortController = new AbortController()
     if (!existsSync(resolvePath('bee'))) {
         console.error(`Please compile bee and place it as follows: ${resolve('bee')}`)
@@ -35,11 +35,11 @@ async function main() {
         writeFileSync(resolvePath('config.yaml'), createStubConfiguration())
     }
     if (!existsSync(resolvePath('data-dir/keys/swarm.key'))) {
-        await launchBee().catch(() => {})
+        await launchBee().catch()
     }
     const config = readFileSync(resolvePath('config.yaml'), 'utf-8')
     if (!config.includes('block-hash')) {
-        const { address } = JSON.parse(readFileSync(resolvePath('data-dir/keys/swarm.key')))
+        const { address } = JSON.parse(readFileSync(resolvePath('data-dir/keys/swarm.key')).toString())
         console.log('Sending transaction to address', address)
         const { transaction, blockHash } = await sendTransaction(address)
         writeFileSync(resolvePath('config.yaml'), createConfiguration(transaction, blockHash))
@@ -56,7 +56,7 @@ async function main() {
     rebuildElectronTray()
 }
 
-async function sendTransaction(address) {
+async function sendTransaction(address: string) {
     const response = await fetch(`http://getxdai.co/${address}/0`, { method: 'POST' })
     const json = await response.json()
     return { transaction: json.transactionHash, blockHash: json.nextBlockHashBee }
@@ -77,7 +77,7 @@ use-postage-snapshot: true
 data-dir: ${resolve('data-dir')}`
 }
 
-function createConfiguration(transaction, blockHash) {
+function createConfiguration(transaction:string, blockHash: string) {
     return `${createStubConfiguration()}
 transaction: ${transaction}
 block-hash: ${blockHash}`
@@ -88,7 +88,7 @@ async function initializeBee() {
     return runProcess(resolve('bee'), ['init', `--config=${configPath}`], onStdout, onStderr, new AbortController())
 }
 
-async function launchBee(abortController) {
+async function launchBee(abortController?: AbortController) {
     if (!abortController) {
         abortController = new AbortController()
     }
@@ -96,15 +96,15 @@ async function launchBee(abortController) {
     return runProcess(resolve('bee'), ['start', `--config=${configPath}`], onStdout, onStderr, abortController)
 }
 
-function onStdout(data) {
+function onStdout(data: any) {
     process.stdout.write(data)
 }
 
-function onStderr(data) {
+function onStderr(data: any) {
     process.stderr.write(data)
 }
 
-async function runProcess(command, args, onStdout, onStderr, abortController) {
+async function runProcess(command: string, args: string[], onStdout: (chunk: any) => void, onStderr: (chunk: any) => void, abortController: AbortController) {
     return new Promise((resolve, reject) => {
         const subprocess = spawn(command, args, { signal: abortController.signal, killSignal: 'SIGINT' })
         subprocess.stdout.on('data', onStdout)
@@ -120,10 +120,4 @@ async function runProcess(command, args, onStdout, onStderr, abortController) {
             reject(error)
         })
     })
-}
-
-module.exports = {
-    createConfigFileAndAddress,
-    createInitialTransaction,
-    runLauncher: main
 }
