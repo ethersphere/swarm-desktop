@@ -1,7 +1,15 @@
 import { app } from 'electron'
-import { join, resolve } from 'path'
+import { platform } from 'os'
+import { join, parse, resolve } from 'path'
 
 export function resolvePath(path: string) {
+  if (platform() === 'win32') {
+    if (process.execPath.includes('node_modules')) {
+      return join(process.execPath.split('node_modules')[0], path)
+    }
+    const parsedPath = parse(process.execPath)
+    return join(parsedPath.dir, path)
+  }
   if (process.execPath.includes('node_modules/electron/dist/Electron.app')) {
     return resolve(path)
   }

@@ -1,10 +1,19 @@
 import { spawn } from 'child_process'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs'
 import fetch from 'node-fetch'
+import { platform } from 'os'
 import { exit } from 'process'
 import { rebuildElectronTray } from './electron'
 import { BeeManager } from './lifecycle'
 import { resolvePath } from './path'
+
+function getBeeExecutable() {
+  if (platform() === 'win32') {
+    return 'bee.exe'
+  }
+
+  return 'bee'
+}
 
 export async function createConfigFileAndAddress() {
   writeFileSync(resolvePath('config.yaml'), createStubConfiguration())
@@ -25,8 +34,8 @@ export async function createInitialTransaction() {
 export async function runLauncher() {
   const abortController = new AbortController()
 
-  if (!existsSync(resolvePath('bee'))) {
-    console.error(`Please compile bee and place it as follows: ${resolvePath('bee')}`)
+  if (!existsSync(resolvePath(getBeeExecutable()))) {
+    console.error(`Please compile bee and place it as follows: ${resolvePath(getBeeExecutable())}`)
     exit(1)
   }
 
@@ -92,7 +101,13 @@ block-hash: ${blockHash}`
 async function initializeBee() {
   const configPath = resolvePath('config.yaml')
 
-  return runProcess(resolvePath('bee'), ['init', `--config=${configPath}`], onStdout, onStderr, new AbortController())
+  return runProcess(
+    resolvePath(getBeeExecutable()),
+    ['init', `--config=${configPath}`],
+    onStdout,
+    onStderr,
+    new AbortController(),
+  )
 }
 
 async function launchBee(abortController?: AbortController) {
@@ -101,7 +116,13 @@ async function launchBee(abortController?: AbortController) {
   }
   const configPath = resolvePath('config.yaml')
 
-  return runProcess(resolvePath('bee'), ['start', `--config=${configPath}`], onStdout, onStderr, abortController)
+  return runProcess(
+    resolvePath(getBeeExecutable()),
+    ['start', `--config=${configPath}`],
+    onStdout,
+    onStderr,
+    abortController,
+  )
 }
 
 function onStdout(data: string | Uint8Array) {
