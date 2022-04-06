@@ -10,6 +10,7 @@ import { resolvePath } from './path'
 import { port } from './port'
 import { getStatus } from './status'
 import { rebuildElectronTray } from './electron'
+import { subscribeLogServerRequests } from './logger'
 
 export function runServer() {
   const app = new Koa()
@@ -58,5 +59,6 @@ export function runServer() {
   })
   app.use(router.routes())
   app.use(router.allowedMethods())
-  app.listen(port.value)
+  const server = app.listen(port.value)
+  subscribeLogServerRequests(server)
 }
