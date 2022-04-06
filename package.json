@@ -6,7 +6,6 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "tsc && electron-forge start",
-    "tsc": "tsc",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
