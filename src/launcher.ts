@@ -5,6 +5,7 @@ import { exit } from 'process'
 import { rebuildElectronTray } from './electron'
 import { BeeManager } from './lifecycle'
 import { resolvePath } from './path'
+import { logger } from './logger'
 
 export async function createConfigFileAndAddress() {
   writeFileSync(resolvePath('config.yaml'), createStubConfiguration())
@@ -16,7 +17,7 @@ export async function createInitialTransaction() {
 
   if (!config.includes('block-hash')) {
     const { address } = JSON.parse(readFileSync(resolvePath('data-dir/keys/swarm.key')).toString())
-    console.log('Sending transaction to address', address)
+    logger.info('Sending transaction to address', address)
     const { transaction, blockHash } = await sendTransaction(address)
     writeFileSync(resolvePath('config.yaml'), createConfiguration(transaction, blockHash))
   }
@@ -26,7 +27,7 @@ export async function runLauncher() {
   const abortController = new AbortController()
 
   if (!existsSync(resolvePath('bee'))) {
-    console.error(`Please compile bee and place it as follows: ${resolvePath('bee')}`)
+    logger.info(`Please compile bee and place it as follows: ${resolvePath('bee')}`)
     exit(1)
   }
 
@@ -45,17 +46,17 @@ export async function runLauncher() {
 
   if (!config.includes('block-hash')) {
     const { address } = JSON.parse(readFileSync(resolvePath('data-dir/keys/swarm.key')).toString())
-    console.log('Sending transaction to address', address)
+    logger.info('Sending transaction to address', address)
     const { transaction, blockHash } = await sendTransaction(address)
     writeFileSync(resolvePath('config.yaml'), createConfiguration(transaction, blockHash))
   }
   const subprocess = launchBee(abortController).catch(reason => {
-    console.error(reason)
+    logger.error(reason)
   })
   BeeManager.signalRunning(abortController, subprocess)
   rebuildElectronTray()
   await subprocess
-  console.log('Bee subprocess finished running')
+  logger.info('Bee subprocess finished running')
   abortController.abort()
   BeeManager.signalStopped()
   rebuildElectronTray()

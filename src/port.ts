@@ -1,17 +1,18 @@
 import net from 'net'
+import { logger } from './logger'
 
 export const port = {
   value: -1,
 }
 
 export async function findFreePort() {
-  console.log('Finding free port...')
+  logger.info('Finding free port...')
   for (let i = 3000; i < 5000; i++) {
     const free = await testPort(i)
 
     if (free) {
       port.value = i
-      console.log(`Found free port: ${i}`)
+      logger.info(`Found free port: ${i}`)
 
       return
     }
