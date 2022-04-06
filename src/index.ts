@@ -7,14 +7,15 @@ import { runServer } from './server'
 import { getStatus } from './status'
 
 async function main() {
-    await findFreePort()
-    runServer()
-    runElectronTray()
-    if (getStatus().status === 2) {
-        runLauncher()
-    } else {
-        shell.openExternal(`http://localhost:${port.value}/installer/?v=${getApiKey()}`)
-    }
+  await findFreePort()
+  runServer()
+  runElectronTray()
+
+  if (getStatus().status === 2) {
+    runLauncher()
+  } else {
+    shell.openExternal(`http://localhost:${port.value}/installer/?v=${getApiKey()}`)
+  }
 }
 
 main()
