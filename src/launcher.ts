@@ -101,7 +101,7 @@ block-hash: ${blockHash}`
 }
 
 async function initializeBee() {
-  const configPath = resolvePath('config.yaml')
+  const configPath = makePath('config.yaml')
 
   return runProcess(
     resolvePath(getBeeExecutable()),
@@ -116,7 +116,7 @@ async function launchBee(abortController?: AbortController) {
   if (!abortController) {
     abortController = new AbortController()
   }
-  const configPath = resolvePath('config.yaml')
+  const configPath = makePath('config.yaml')
 
   return runProcess(
     resolvePath(getBeeExecutable()),

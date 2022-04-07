@@ -1,4 +1,5 @@
 import { readFileSync } from 'fs'
+import { join } from 'path'
 import { readConfigYaml } from './config-yaml'
 import { canResolvePath, resolvePath } from './path'
 
@@ -19,7 +20,7 @@ export function getStatus() {
     return statusObject
   }
   statusObject.config = readConfigYaml()
-  const { address } = JSON.parse(readFileSync(resolvePath('data-dir/keys/swarm.key')).toString())
+  const { address } = JSON.parse(readFileSync(resolvePath(join('data-dir', 'keys', 'swarm.key'))).toString())
   statusObject.address = address
 
   if (!statusObject.config['block-hash']) {

@@ -6,9 +6,9 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "tsc && electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
+    "package": "tsc && electron-forge package",
+    "make": "tsc && electron-forge make",
+    "publish": "tsc && electron-forge publish",
     "lint": "eslint --fix \"src/**/*.ts\" && prettier --write \"src/**/*.ts\"",
     "lint:check": "eslint \"src/**/*.ts\" && prettier --check \"src/**/*.ts\""
   },
