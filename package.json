@@ -11,7 +11,9 @@
     "publish": "electron-forge publish",
     "depcheck": "depcheck .",
     "lint": "eslint --fix \"src/**/*.ts\" && prettier --write \"src/**/*.ts\"",
-    "lint:check": "eslint \"src/**/*.ts\" && prettier --check \"src/**/*.ts\""
+    "lint:check": "eslint \"src/**/*.ts\" && prettier --check \"src/**/*.ts\"",
+    "check:types": "tsc --project tsconfig.test.json",
+    "test:unit": "jest --verbose -config=jest.config.ts "
   },
   "keywords": [
     "bee",
@@ -60,6 +62,8 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.63",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
     "@electron-forge/maker-zip": "^6.0.0-beta.63",
+    "@kayahr/jest-electron-runner": "^4.4.1",
+    "@types/jest": "^27.4.1",
     "@types/js-yaml": "^4.0.5",
     "@types/koa": "^2.13.4",
     "@types/koa__router": "^8.0.11",
@@ -77,7 +81,9 @@
     "eslint-plugin-jest": "^25.7.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
+    "jest": "^27.5.1",
     "prettier": "^2.6.2",
+    "ts-jest": "^27.1.4",
     "typescript": "~4.5.4"
   },
   "dependencies": {
