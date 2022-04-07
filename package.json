@@ -26,6 +26,7 @@
   "license": "BSD-3-Clause",
   "config": {
     "forge": {
+      "hooks": "require:./hooks.js",
       "packagerConfig": {
         "icon": "icon.icns"
       },
@@ -50,6 +51,17 @@
           "name": "@electron-forge/maker-rpm",
           "config": {}
         }
+      ],
+      "publishers": [
+        {
+          "name": "@electron-forge/publisher-github",
+          "config": {
+            "repository": {
+              "owner": "ethersphere",
+              "name": "bee-desktop"
+            }
+          }
+        }
       ]
     }
   },
@@ -59,6 +71,7 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.63",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
     "@electron-forge/maker-zip": "^6.0.0-beta.63",
+    "@electron-forge/publisher-github": "^6.0.0-beta.63",
     "@types/js-yaml": "^4.0.5",
     "@types/koa": "^2.13.4",
     "@types/koa__router": "^8.0.11",
@@ -75,6 +88,7 @@
     "eslint-plugin-jest": "^25.7.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
+    "fs-extra": "^10.0.1",
     "prettier": "^2.6.2",
     "typescript": "~4.5.4"
   },
