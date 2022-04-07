@@ -1,6 +1,6 @@
-import { readFileSync, existsSync } from 'fs'
+import { readFileSync } from 'fs'
 import { readConfigYaml } from './config-yaml'
-import { resolvePath } from './path'
+import { canResolvePath, resolvePath } from './path'
 
 interface Status {
   status: 0 | 1 | 2
@@ -15,7 +15,7 @@ export function getStatus() {
     config: null,
   }
 
-  if (!existsSync(resolvePath('config.yaml')) || !existsSync(resolvePath('data-dir'))) {
+  if (!canResolvePath('config.yaml') || !canResolvePath('data-dir')) {
     return statusObject
   }
   statusObject.config = readConfigYaml()

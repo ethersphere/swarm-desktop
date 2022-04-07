@@ -14,3 +14,13 @@ export function resolvePath(path: string) {
   }
   throw Error(`Path ${path} is not found`)
 }
+
+export function canResolvePath(path: string) {
+  try {
+    resolvePath(path)
+
+    return true
+  } catch {
+    return false
+  }
+}
