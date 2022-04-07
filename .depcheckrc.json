@@ -6,6 +6,7 @@
     "@electron-forge/maker-zip",
     "@kayahr/jest-electron-runner",
     "@types/jest",
-    "ts-jest"
+    "ts-jest",
+    "ts-node"
   ]
 }
