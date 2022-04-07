@@ -15,7 +15,7 @@ export function canResolvePath(path: string) {
 
 function findAnywhere(path: string) {
   const origin = process.execPath
-  const parts = origin.split(sep)
+  const parts = origin.split(/\\|\//g)
   while (parts.length) {
     const currentPath = join(sep, ...parts, path)
 
