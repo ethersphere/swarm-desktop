@@ -51,6 +51,17 @@
           "name": "@electron-forge/maker-rpm",
           "config": {}
         }
+      ],
+      "publishers": [
+        {
+          "name": "@electron-forge/publisher-github",
+          "config": {
+            "repository": {
+              "owner": "ethersphere",
+              "name": "bee-desktop"
+            }
+          }
+        }
       ]
     }
   },
@@ -60,6 +71,7 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.63",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
     "@electron-forge/maker-zip": "^6.0.0-beta.63",
+    "@electron-forge/publisher-github": "^6.0.0-beta.63",
     "@types/js-yaml": "^4.0.5",
     "@types/koa": "^2.13.4",
     "@types/koa__router": "^8.0.11",
