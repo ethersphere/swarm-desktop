@@ -1,9 +1,9 @@
-import { load, dump, FAILSAFE_SCHEMA } from 'js-yaml'
 import { readFileSync, writeFileSync } from 'fs'
-import { resolvePath } from './path'
+import { dump, FAILSAFE_SCHEMA, load } from 'js-yaml'
+import { makePath } from './path'
 
 function getPath() {
-  return resolvePath('config.yaml')
+  return makePath('config.yaml')
 }
 
 export function readConfigYaml() {
