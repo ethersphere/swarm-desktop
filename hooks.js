@@ -6,9 +6,9 @@ const { default: fetch } = require('node-fetch')
 const { execSync } = require('child_process')
 
 const binaries = {
-  darwin: ['https://github.com/ethersphere/bee/releases/download/v1.5.1-rc1/bee-darwin-amd64', 'bee'],
-  linux: ['https://github.com/ethersphere/bee/releases/download/v1.5.1-rc1/bee-linux-amd64', 'bee'],
-  win32: ['https://github.com/ethersphere/bee/releases/download/v1.5.1-rc1/bee-windows-amd64.exe', 'bee.exe'],
+  darwin: ['https://github.com/ethersphere/bee/releases/download/v1.5.1/bee-darwin-amd64', 'bee'],
+  linux: ['https://github.com/ethersphere/bee/releases/download/v1.5.1/bee-linux-amd64', 'bee'],
+  win32: ['https://github.com/ethersphere/bee/releases/download/v1.5.1/bee-windows-amd64.exe', 'bee.exe'],
 }
 
 module.exports = {
