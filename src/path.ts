@@ -1,7 +1,7 @@
 import { app } from 'electron'
 import { join, resolve } from 'path'
 
-export function resolvePath(path: string) {
+export function resolvePath(path: string): string {
   if (process.execPath.includes('node_modules/electron/dist/Electron.app')) {
     return resolve(path)
   }
