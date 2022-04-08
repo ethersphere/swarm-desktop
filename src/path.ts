@@ -1,4 +1,5 @@
 import { existsSync } from 'fs'
+import { platform } from 'os'
 import { join, parse, sep } from 'path'
 
 export function resolvePath(path: string) {
@@ -17,7 +18,7 @@ function findAnywhere(path: string) {
   const origin = process.execPath
   const parts = origin.split(/\\|\//g)
   while (parts.length) {
-    const currentPath = join(sep, ...parts, path)
+    const currentPath = join(platform() === 'win32' ? '' : sep, ...parts, path)
 
     if (existsSync(currentPath)) {
       return currentPath
