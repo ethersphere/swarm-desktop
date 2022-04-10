@@ -51,6 +51,9 @@ export function runServer() {
     writeConfigYaml(context.request.body)
     context.body = readConfigYaml()
   })
+  router.get('/config', context => {
+    context.body = readConfigYaml()
+  })
   router.post('/restart', async context => {
     BeeManager.stop()
     await BeeManager.waitForSigtermToFinish()
