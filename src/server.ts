@@ -12,6 +12,19 @@ import { getStatus } from './status'
 import { rebuildElectronTray } from './electron'
 import { subscribeLogServerRequests } from './logger'
 
+function aunthenticated(context: Koa.Context): boolean {
+  const { authorization } = context.headers
+
+  if (authorization !== getApiKey()) {
+    context.status = 401
+    context.body = 'Unauthorized'
+
+    return false
+  }
+
+  return true
+}
+
 export function runServer() {
   const app = new Koa()
   app.use(serve(resolvePath('static')))
@@ -22,39 +35,37 @@ export function runServer() {
     context.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS')
     await next()
   })
-  app.use(async (context, next) => {
-    const { authorization } = context.headers
-
-    if (authorization !== getApiKey()) {
-      context.status = 401
-      context.body = 'Unauthorized'
-
-      return
-    }
-    await next()
-  })
   app.use(koaBodyparser())
   const router = new Router()
+  router.get('/info', context => {
+    context.body = { name: 'bee-desktop' }
+  })
   router.get('/status', context => {
+    if (!aunthenticated(context)) return
     context.body = getStatus()
   })
   router.post('/setup/address', async context => {
+    if (!aunthenticated(context)) return
     await createConfigFileAndAddress()
     context.body = getStatus()
   })
   router.post('/setup/transaction', async context => {
+    if (!aunthenticated(context)) return
     await createInitialTransaction()
     rebuildElectronTray()
     context.body = getStatus()
   })
   router.post('/config', context => {
+    if (!aunthenticated(context)) return
     writeConfigYaml(context.request.body)
     context.body = readConfigYaml()
   })
   router.get('/config', context => {
+    if (!aunthenticated(context)) return
     context.body = readConfigYaml()
   })
   router.post('/restart', async context => {
+    if (!aunthenticated(context)) return
     BeeManager.stop()
     await BeeManager.waitForSigtermToFinish()
     runLauncher()
