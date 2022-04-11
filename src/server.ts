@@ -12,9 +12,6 @@ import { getStatus } from './status'
 import { rebuildElectronTray } from './electron'
 import { subscribeLogServerRequests } from './logger'
 
-// These are endpoints that do not require authentication
-const openEndpoints = ['/info']
-
 export function runServer() {
   const app = new Koa()
   app.use(serve(resolvePath('static')))
@@ -25,11 +22,18 @@ export function runServer() {
     context.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS')
     await next()
   })
-  app.use(async (context, next) => {
-    const { authorization } = context.headers
-    const path = context.request.path.replace(/\/$/, '') // Remove trailing slash
+  app.use(koaBodyparser())
+  const router = new Router()
 
-    if (!openEndpoints.includes(path) && authorization !== getApiKey()) {
+  // Open endpoints without any authentication
+  router.get('/info', context => {
+    context.body = { name: 'bee-desktop' }
+  })
+
+  router.use(async (context, next) => {
+    const { authorization } = context.headers
+
+    if (authorization !== getApiKey()) {
       context.status = 401
       context.body = 'Unauthorized'
 
@@ -37,11 +41,8 @@ export function runServer() {
     }
     await next()
   })
-  app.use(koaBodyparser())
-  const router = new Router()
-  router.get('/info', context => {
-    context.body = { name: 'bee-desktop' }
-  })
+
+  // Authenticated endpoints
   router.get('/status', context => {
     context.body = getStatus()
   })
