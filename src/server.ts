@@ -22,7 +22,15 @@ export function runServer() {
     context.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS')
     await next()
   })
-  app.use(async (context, next) => {
+  app.use(koaBodyparser())
+  const router = new Router()
+
+  // Open endpoints without any authentication
+  router.get('/info', context => {
+    context.body = { name: 'bee-desktop' }
+  })
+
+  router.use(async (context, next) => {
     const { authorization } = context.headers
 
     if (authorization !== getApiKey()) {
@@ -33,8 +41,8 @@ export function runServer() {
     }
     await next()
   })
-  app.use(koaBodyparser())
-  const router = new Router()
+
+  // Authenticated endpoints
   router.get('/status', context => {
     context.body = getStatus()
   })
@@ -49,6 +57,9 @@ export function runServer() {
   })
   router.post('/config', context => {
     writeConfigYaml(context.request.body)
+    context.body = readConfigYaml()
+  })
+  router.get('/config', context => {
     context.body = readConfigYaml()
   })
   router.post('/restart', async context => {
