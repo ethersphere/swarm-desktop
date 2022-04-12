@@ -1,0 +1,12 @@
+{
+  "ignores": [
+    "@electron-forge/maker-deb",
+    "@electron-forge/maker-rpm",
+    "@electron-forge/maker-squirrel",
+    "@electron-forge/maker-zip",
+    "@kayahr/jest-electron-runner",
+    "@types/jest",
+    "ts-jest",
+    "ts-node"
+  ]
+}

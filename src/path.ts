@@ -3,11 +3,7 @@ import { platform } from 'os'
 import { join, parse, sep } from 'path'
 
 export function resolvePath(path: string) {
-  return makePath(path)
-}
-
-export function makePath(path: string) {
-  return join(parse(findAnywhere('tray.png')).dir, path) // FIXME
+  return join(parse(findAnywhere('tray.png')).dir, path)
 }
 
 export function canResolvePath(path: string) {

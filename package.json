@@ -9,8 +9,11 @@
     "package": "tsc && electron-forge package",
     "make": "tsc && electron-forge make",
     "publish": "tsc && electron-forge publish",
+    "depcheck": "depcheck .",
     "lint": "eslint --fix \"src/**/*.ts\" && prettier --write \"src/**/*.ts\"",
-    "lint:check": "eslint \"src/**/*.ts\" && prettier --check \"src/**/*.ts\""
+    "lint:check": "eslint \"src/**/*.ts\" && prettier --check \"src/**/*.ts\"",
+    "check:types": "tsc --project tsconfig.test.json",
+    "test:unit": "jest --verbose -config=jest.config.ts "
   },
   "keywords": [
     "bee",
@@ -72,6 +75,8 @@
     "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
     "@electron-forge/maker-zip": "^6.0.0-beta.63",
     "@electron-forge/publisher-github": "^6.0.0-beta.63",
+    "@kayahr/jest-electron-runner": "^4.4.1",
+    "@types/jest": "^27.4.1",
     "@types/js-yaml": "^4.0.5",
     "@types/koa": "^2.13.4",
     "@types/koa__router": "^8.0.11",
@@ -82,6 +87,7 @@
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
+    "depcheck": "^1.4.3",
     "electron": "18.0.1",
     "eslint": "^8.12.0",
     "eslint-config-prettier": "^8.3.0",
@@ -89,12 +95,14 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
     "fs-extra": "^10.0.1",
+    "jest": "^27.5.1",
     "prettier": "^2.6.2",
+    "ts-jest": "^27.1.4",
+    "ts-node": "^10.7.0",
     "typescript": "~4.5.4"
   },
   "dependencies": {
     "@koa/router": "^10.1.1",
-    "electron-squirrel-startup": "^1.0.0",
     "js-yaml": "^4.1.0",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
