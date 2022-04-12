@@ -10,7 +10,7 @@
     "make": "rimraf dist out && tsc && electron-forge make",
     "publish": "rimraf dist out && tsc && electron-forge publish",
     "clean": "rimraf dist out",
-    "depcheck": "depcheck . --ignores=\"@electron-forge/*,*jest*,ts-node\"",
+    "depcheck": "depcheck .",
     "lint": "eslint --fix \"src/**/*.ts\" && prettier --write \"src/**/*.ts\"",
     "lint:check": "eslint \"src/**/*.ts\" && prettier --check \"src/**/*.ts\"",
     "check:types": "tsc --project tsconfig.test.json",

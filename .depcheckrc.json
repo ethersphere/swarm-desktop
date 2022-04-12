@@ -1,5 +1,7 @@
 {
   "ignores": [
+    "@electron-forge/publisher-github",
+    "@electron-forge/maker-deb",
     "@electron-forge/maker-deb",
     "@electron-forge/maker-rpm",
     "@electron-forge/maker-squirrel",
