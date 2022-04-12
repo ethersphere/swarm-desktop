@@ -7,7 +7,7 @@ import { exit } from 'process'
 import { rebuildElectronTray } from './electron'
 import { BeeManager } from './lifecycle'
 import { logger } from './logger'
-import { canResolvePath, makePath, resolvePath } from './path'
+import { canResolvePath, resolvePath } from './path'
 
 function getBeeExecutable() {
   if (platform() === 'win32') {
@@ -18,7 +18,7 @@ function getBeeExecutable() {
 }
 
 export async function createConfigFileAndAddress() {
-  writeFileSync(makePath('config.yaml'), createStubConfiguration())
+  writeFileSync(resolvePath('config.yaml'), createStubConfiguration())
   await initializeBee()
 }
 
@@ -29,7 +29,7 @@ export async function createInitialTransaction() {
     const { address } = JSON.parse(readFileSync(resolvePath('data-dir/keys/swarm.key')).toString())
     logger.info('Sending transaction to address', address)
     const { transaction, blockHash } = await sendTransaction(address)
-    writeFileSync(makePath('config.yaml'), createConfiguration(transaction, blockHash))
+    writeFileSync(resolvePath('config.yaml'), createConfiguration(transaction, blockHash))
   }
 }
 
@@ -37,16 +37,16 @@ export async function runLauncher() {
   const abortController = new AbortController()
 
   if (!canResolvePath(getBeeExecutable())) {
-    logger.info(`Please compile bee and place it as follows: ${makePath(getBeeExecutable())}`)
+    logger.info(`Please compile bee and place it as follows: ${resolvePath(getBeeExecutable())}`)
     exit(1)
   }
 
   if (!canResolvePath('data-dir')) {
-    mkdirSync(makePath('data-dir'))
+    mkdirSync(resolvePath('data-dir'))
   }
 
   if (!canResolvePath('config.yaml')) {
-    writeFileSync(makePath('config.yaml'), createStubConfiguration())
+    writeFileSync(resolvePath('config.yaml'), createStubConfiguration())
   }
 
   if (!canResolvePath(join('data-dir', 'keys', 'swarm.key'))) {
@@ -58,7 +58,7 @@ export async function runLauncher() {
     const { address } = JSON.parse(readFileSync(resolvePath(join('data-dir', 'keys', 'swarm.key'))).toString())
     logger.info('Sending transaction to address', address)
     const { transaction, blockHash } = await sendTransaction(address)
-    writeFileSync(makePath('config.yaml'), createConfiguration(transaction, blockHash))
+    writeFileSync(resolvePath('config.yaml'), createConfiguration(transaction, blockHash))
   }
   const subprocess = launchBee(abortController).catch(reason => {
     logger.error(reason)
@@ -91,7 +91,7 @@ full-node: false
 chain-enable: false
 cors-allowed-origins: '*'
 use-postage-snapshot: true
-data-dir: ${makePath('data-dir')}`
+data-dir: ${resolvePath('data-dir')}`
 }
 
 function createConfiguration(transaction: string, blockHash: string) {
@@ -101,7 +101,7 @@ block-hash: ${blockHash}`
 }
 
 async function initializeBee() {
-  const configPath = makePath('config.yaml')
+  const configPath = resolvePath('config.yaml')
 
   return runProcess(
     resolvePath(getBeeExecutable()),
@@ -116,7 +116,7 @@ async function launchBee(abortController?: AbortController) {
   if (!abortController) {
     abortController = new AbortController()
   }
-  const configPath = makePath('config.yaml')
+  const configPath = resolvePath('config.yaml')
 
   return runProcess(
     resolvePath(getBeeExecutable()),

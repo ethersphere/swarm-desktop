@@ -1,5 +1,5 @@
+import { resolve } from 'path'
 import { resolvePath } from '../src/path'
-import {resolve} from "path"
 
 describe('resolvePath', () => {
   it('should read path ', async () => {
