@@ -5,10 +5,10 @@
   "description": "Desktop client for running and managing bee",
   "main": "dist/index.js",
   "scripts": {
-    "start": "tsc && electron-forge start",
-    "package": "tsc && electron-forge package",
-    "make": "tsc && electron-forge make",
-    "publish": "tsc && electron-forge publish",
+    "start": "rimraf dist && tsc && electron-forge start",
+    "package": "rimraf dist out && tsc && electron-forge package",
+    "make": "rimraf dist out && tsc && electron-forge make",
+    "publish": "rimraf dist out && tsc && electron-forge publish",
     "depcheck": "depcheck .",
     "lint": "eslint --fix \"src/**/*.ts\" && prettier --write \"src/**/*.ts\"",
     "lint:check": "eslint \"src/**/*.ts\" && prettier --check \"src/**/*.ts\"",
@@ -97,6 +97,7 @@
     "fs-extra": "^10.0.1",
     "jest": "^27.5.1",
     "prettier": "^2.6.2",
+    "rimraf": "^3.0.2",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
     "typescript": "~4.5.4"
