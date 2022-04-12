@@ -1,16 +1,25 @@
-import { app } from 'electron'
-import { join, resolve } from 'path'
+import { existsSync } from 'fs'
+import { platform } from 'os'
+import { join, parse, sep } from 'path'
 
-export function resolvePath(path: string): string {
-  if (process.execPath.includes('node_modules/electron/dist/Electron.app')) {
-    return resolve(path)
+export function resolvePath(path: string) {
+  return join(parse(findAnywhere('tray.png')).dir, path)
+}
+
+export function canResolvePath(path: string) {
+  return existsSync(resolvePath(path))
+}
+
+function findAnywhere(path: string) {
+  const origin = process.execPath
+  const parts = origin.split(/\\|\//g)
+  while (parts.length) {
+    const currentPath = join(platform() === 'win32' ? '' : sep, ...parts, path)
+
+    if (existsSync(currentPath)) {
+      return currentPath
+    }
+    parts.pop()
   }
-  const appName = `${app.getName()}.app`
-  let execPath = process.execPath
-
-  if (execPath.includes(appName)) {
-    execPath = execPath.split(appName)[0]
-  }
-
-  return join(execPath, path)
+  throw Error(`Path ${path} is not found`)
 }

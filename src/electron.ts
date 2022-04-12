@@ -1,4 +1,4 @@
-import { app, Tray, Menu, shell } from 'electron'
+import { app, Menu, shell, Tray } from 'electron'
 import { getApiKey } from './api-key'
 import { runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
@@ -62,8 +62,10 @@ export function rebuildElectronTray() {
 
 export function runElectronTray() {
   app.whenReady().then(() => {
-    app.dock.setIcon(resolvePath('icon.png'))
-    app.dock.hide()
+    if (app.dock) {
+      app.dock.setIcon(resolvePath('icon.png'))
+      app.dock.hide()
+    }
     tray = new Tray(resolvePath('tray.png'))
     rebuildElectronTray()
   })

@@ -1,5 +1,5 @@
-import { load, dump, FAILSAFE_SCHEMA } from 'js-yaml'
 import { readFileSync, writeFileSync } from 'fs'
+import { dump, FAILSAFE_SCHEMA, load } from 'js-yaml'
 import { resolvePath } from './path'
 
 function getPath() {
