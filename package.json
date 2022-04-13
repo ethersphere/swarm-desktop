@@ -36,24 +36,13 @@
       },
       "makers": [
         {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "bee_desktop"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
+          "name": "electron-forge-maker-zip-all",
           "platforms": [
-            "darwin"
+            "darwin",
+            "mas",
+            "win32",
+            "linux"
           ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
         }
       ],
       "publishers": [
@@ -71,10 +60,7 @@
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.63",
-    "@electron-forge/maker-deb": "^6.0.0-beta.63",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
-    "@electron-forge/maker-zip": "^6.0.0-beta.63",
+    "electron-forge-maker-zip-all": "^0.1.0",
     "@electron-forge/publisher-github": "^6.0.0-beta.63",
     "@kayahr/jest-electron-runner": "^4.4.1",
     "@types/jest": "^27.4.1",
