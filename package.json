@@ -42,7 +42,7 @@
           }
         },
         {
-          "name": "@electron-forge/maker-zip",
+          "name": "electron-forge-maker-zip-all",
           "platforms": [
             "darwin"
           ]
@@ -74,7 +74,6 @@
     "@electron-forge/maker-deb": "^6.0.0-beta.63",
     "@electron-forge/maker-rpm": "^6.0.0-beta.63",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
-    "@electron-forge/maker-zip": "^6.0.0-beta.63",
     "@electron-forge/publisher-github": "^6.0.0-beta.63",
     "@kayahr/jest-electron-runner": "^4.4.1",
     "@types/jest": "^27.4.1",
@@ -90,6 +89,7 @@
     "@typescript-eslint/parser": "^5.17.0",
     "depcheck": "^1.4.3",
     "electron": "18.0.1",
+    "electron-forge-maker-zip-all": "^0.1.0",
     "eslint": "^8.12.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-jest": "^25.7.0",

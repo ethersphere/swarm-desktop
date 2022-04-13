@@ -8,6 +8,7 @@
     "@electron-forge/maker-zip",
     "@kayahr/jest-electron-runner",
     "@types/jest",
+    "electron-forge-maker-zip-all",
     "ts-jest",
     "ts-node"
   ]
