@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.1](https://www.github.com/ethersphere/bee-desktop/compare/v0.1.0...v0.1.1) (2022-04-13)
+
+
+### Bug Fixes
+
+* use zip-all maker on os x ([#60](https://www.github.com/ethersphere/bee-desktop/issues/60)) ([403aeb4](https://www.github.com/ethersphere/bee-desktop/commit/403aeb4774acbb2b150259030bf51ba858c1900b))
+
 ## 0.1.0 (2022-04-13)
 
 
