@@ -16,8 +16,3 @@
 * add unauthenticated info endpoint ([#52](https://www.github.com/ethersphere/bee-desktop/issues/52)) ([766ad50](https://www.github.com/ethersphere/bee-desktop/commit/766ad50a5cfc546220877743ce042f605aa20125))
 * add winston logger with features commonly used in other JS Team projects ([#35](https://www.github.com/ethersphere/bee-desktop/issues/35)) ([c3eb0a6](https://www.github.com/ethersphere/bee-desktop/commit/c3eb0a6b064abdf98b1c7991f88cffe3cade0d8f))
 * find free port for app ([9639279](https://www.github.com/ethersphere/bee-desktop/commit/9639279ffcb5c097f567667e82bbfe085e97de25))
-
-
-### Miscellaneous Chores
-
-* release 0.1.0 ([b26f96b](https://www.github.com/ethersphere/bee-desktop/commit/b26f96ba603166030306eb0c29be0775e54a9e4e))
