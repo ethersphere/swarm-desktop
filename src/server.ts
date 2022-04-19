@@ -3,18 +3,18 @@ import Koa from 'koa'
 import koaBodyparser from 'koa-bodyparser'
 import serve from 'koa-static'
 import { getApiKey } from './api-key'
-import { writeConfigYaml, readConfigYaml } from './config-yaml'
-import { createInitialTransaction, createConfigFileAndAddress, runLauncher } from './launcher'
+import { readConfigYaml, writeConfigYaml } from './config-yaml'
+import { rebuildElectronTray } from './electron'
+import { createConfigFileAndAddress, createInitialTransaction, runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
-import { resolvePath } from './path'
+import { subscribeLogServerRequests } from './logger'
+import { getPath } from './path'
 import { port } from './port'
 import { getStatus } from './status'
-import { rebuildElectronTray } from './electron'
-import { subscribeLogServerRequests } from './logger'
 
 export function runServer() {
   const app = new Koa()
-  app.use(serve(resolvePath('static')))
+  app.use(serve(getPath('static')))
   app.use(async (context, next) => {
     context.set('Access-Control-Allow-Origin', `http://localhost:${port.value}`)
     context.set('Access-Control-Allow-Credentials', 'true')
