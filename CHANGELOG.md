@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.1.1...v0.2.0) (2022-04-21)
+
+
+### Features
+
+* download resources during runtime ([#63](https://www.github.com/ethersphere/bee-desktop/issues/63)) ([1de87fd](https://www.github.com/ethersphere/bee-desktop/commit/1de87fd96219ed35fcafff4dd60baea70766bf95))
+
 ### [0.1.1](https://www.github.com/ethersphere/bee-desktop/compare/v0.1.0...v0.1.1) (2022-04-13)
 
 
