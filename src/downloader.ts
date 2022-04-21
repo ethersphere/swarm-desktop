@@ -9,60 +9,37 @@ import { logger } from './logger'
 import { getPath, paths } from './path'
 
 const unzipAsync = promisify(unzip)
-const thisPlatform = platform()
-const thisArch = arch()
+
+const archTable = {
+  arm64: 'arm64',
+  x64: 'amd64',
+}
+
+const platformTable = {
+  win32: 'windows',
+  darwin: 'darwin',
+  linux: 'linux',
+}
 
 export async function runDownloader(): Promise<void> {
+  const archString = Reflect.get(archTable, process.arch)
+  const platformString = Reflect.get(platformTable, process.platform)
+  const suffixString = process.platform === 'win32' ? '.exe' : ''
+
+  if (!archString || !platformString) {
+    throw Error(`Unsupport system: arch=${arch()} platform=${platform()}`)
+  }
   await ensureDir(paths.data)
   await ensureAsset(
-    'https://github.com/ethersphere/bee/releases/download/v1.5.1/bee-darwin-amd64',
-    'bee',
-    'darwin',
-    'x64',
-    true,
-  )
-  await ensureAsset(
-    'https://github.com/ethersphere/bee/releases/download/v1.5.1/bee-darwin-arm64',
-    'bee',
-    'darwin',
-    'arm64',
-    true,
-  )
-  await ensureAsset(
-    'https://github.com/ethersphere/bee/releases/download/v1.5.1/bee-linux-amd64',
-    'bee',
-    'linux',
-    'x64',
-    true,
-  )
-  await ensureAsset(
-    'https://github.com/ethersphere/bee/releases/download/v1.5.1/bee-windows-amd64.exe',
-    'bee.exe',
-    'win32',
-    'x64',
+    `https://github.com/ethersphere/bee/releases/download/v1.5.1/bee-${platformString}-${archString}${suffixString}`,
+    `bee${suffixString}`,
+    process.platform !== 'win32',
   )
   await ensureAsset('https://github.com/ethersphere/bee-desktop/releases/download/v0.1.1/static.zip', 'static.zip')
 }
 
-async function ensureAsset(
-  url: string,
-  target: string,
-  requiredPlatform?: string,
-  requiredArch?: string,
-  chmod?: boolean,
-): Promise<void> {
+async function ensureAsset(url: string, target: string, chmod?: boolean): Promise<void> {
   logger.info(`Checking asset ${url}...`)
-  if (requiredPlatform && thisPlatform !== requiredPlatform) {
-    logger.info('Skipping because of platform mismatch')
-
-    return
-  }
-
-  if (requiredArch && thisArch !== requiredArch) {
-    logger.info('Skipping because of arch mismatch')
-
-    return
-  }
   const finalPath = getPath(target)
 
   if (existsSync(finalPath)) {
