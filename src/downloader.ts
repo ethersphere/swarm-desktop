@@ -1,12 +1,17 @@
 import { execSync } from 'child_process'
 import { unzip } from 'cross-zip'
-import { ensureDir, existsSync, writeFileSync } from 'fs-extra'
+import { ensureDir, existsSync, unlinkSync, writeFileSync } from 'fs-extra'
 import fetch from 'node-fetch'
 import { arch, platform } from 'os'
 import { parse } from 'path'
 import { promisify } from 'util'
 import { logger } from './logger'
 import { getPath, paths } from './path'
+
+interface DownloadOptions {
+  checkTarget?: string
+  chmod?: boolean
+}
 
 const unzipAsync = promisify(unzip)
 
@@ -33,31 +38,34 @@ export async function runDownloader(): Promise<void> {
   await ensureAsset(
     `https://github.com/ethersphere/bee/releases/download/v1.5.1/bee-${platformString}-${archString}${suffixString}`,
     `bee${suffixString}`,
-    process.platform !== 'win32',
+    { chmod: process.platform !== 'win32' },
   )
-  await ensureAsset('https://github.com/ethersphere/bee-desktop/releases/download/v0.1.1/static.zip', 'static.zip')
+  await ensureAsset('https://github.com/ethersphere/bee-desktop/releases/download/v0.1.1/static.zip', 'static.zip', {
+    checkTarget: 'static',
+  })
 }
 
-async function ensureAsset(url: string, target: string, chmod?: boolean): Promise<void> {
-  logger.info(`Checking asset ${url}...`)
+async function ensureAsset(url: string, target: string, options?: DownloadOptions): Promise<void> {
+  logger.info(`Checking asset ${url}`)
   const finalPath = getPath(target)
 
-  if (existsSync(finalPath)) {
+  if (existsSync(getPath(options?.checkTarget || target))) {
     logger.info('Skipping, already exists')
 
     return
   }
 
   const parsedPath = parse(finalPath)
-  logger.info(`Downloading to ${finalPath}...`)
+  logger.info(`Downloading to ${finalPath}`)
   await downloadFile(url, finalPath)
 
   if (finalPath.endsWith('.zip')) {
     logger.info('Extracting...')
     await unzipAsync(finalPath, parsedPath.dir)
+    unlinkSync(finalPath)
   }
 
-  if (chmod) {
+  if (options.chmod) {
     logger.info('Running chmod +x...')
     try {
       execSync(`chmod +x "${finalPath}"`)
