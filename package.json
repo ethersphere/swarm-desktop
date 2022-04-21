@@ -30,7 +30,6 @@
   "license": "BSD-3-Clause",
   "config": {
     "forge": {
-      "hooks": "require:./hooks.js",
       "packagerConfig": {
         "icon": "icon.icns"
       },
@@ -42,7 +41,7 @@
           }
         },
         {
-          "name": "electron-forge-maker-zip-all",
+          "name": "@electron-forge/maker-zip",
           "platforms": [
             "darwin"
           ]
@@ -73,9 +72,11 @@
     "@electron-forge/cli": "^6.0.0-beta.63",
     "@electron-forge/maker-deb": "^6.0.0-beta.63",
     "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
     "@electron-forge/publisher-github": "^6.0.0-beta.63",
     "@kayahr/jest-electron-runner": "^4.4.1",
+    "@types/cross-zip": "^4.0.0",
     "@types/jest": "^27.4.1",
     "@types/js-yaml": "^4.0.5",
     "@types/koa": "^2.13.4",
@@ -89,13 +90,11 @@
     "@typescript-eslint/parser": "^5.17.0",
     "depcheck": "^1.4.3",
     "electron": "18.0.1",
-    "electron-forge-maker-zip-all": "^0.1.0",
     "eslint": "^8.12.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-jest": "^25.7.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
-    "fs-extra": "^10.0.1",
     "jest": "^27.5.1",
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
@@ -105,6 +104,9 @@
   },
   "dependencies": {
     "@koa/router": "^10.1.1",
+    "cross-zip": "^4.0.0",
+    "env-paths": "2",
+    "fs-extra": "^10.1.0",
     "js-yaml": "^4.1.0",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",

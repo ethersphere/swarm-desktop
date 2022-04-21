@@ -1,11 +1,11 @@
 import { resolve } from 'path'
-import { resolvePath } from '../src/path'
+import { getPath } from '../src/path'
 
 describe('resolvePath', () => {
   it('should read path ', async () => {
     const filename = 'test-file.txt'
     const expectedPath = resolve(filename)
-    const path = resolvePath(filename)
+    const path = getPath(filename)
 
     expect(path).toBe(expectedPath)
   })

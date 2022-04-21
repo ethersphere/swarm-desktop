@@ -1,13 +1,9 @@
 import { readFileSync, writeFileSync } from 'fs'
 import { dump, FAILSAFE_SCHEMA, load } from 'js-yaml'
-import { resolvePath } from './path'
-
-function getPath() {
-  return resolvePath('config.yaml')
-}
+import { getPath } from './path'
 
 export function readConfigYaml() {
-  const raw = readFileSync(getPath(), 'utf-8')
+  const raw = readFileSync(getPath('config.yaml'), 'utf-8')
   const data = load(raw, {
     schema: FAILSAFE_SCHEMA,
   })
@@ -20,5 +16,5 @@ export function writeConfigYaml(newValues: Record<string, any>) {
   for (const [key, value] of Object.entries(newValues)) {
     data[key] = value
   }
-  writeFileSync(getPath(), dump(data))
+  writeFileSync(getPath('config.yaml'), dump(data))
 }

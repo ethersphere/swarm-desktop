@@ -3,11 +3,10 @@ import { mkdirSync, readFileSync, writeFileSync } from 'fs'
 import fetch from 'node-fetch'
 import { platform } from 'os'
 import { join } from 'path'
-import { exit } from 'process'
 import { rebuildElectronTray } from './electron'
 import { BeeManager } from './lifecycle'
 import { logger } from './logger'
-import { canResolvePath, resolvePath } from './path'
+import { checkPath, getPath } from './path'
 
 function getBeeExecutable() {
   if (platform() === 'win32') {
@@ -18,47 +17,42 @@ function getBeeExecutable() {
 }
 
 export async function createConfigFileAndAddress() {
-  writeFileSync(resolvePath('config.yaml'), createStubConfiguration())
+  writeFileSync(getPath('config.yaml'), createStubConfiguration())
   await initializeBee()
 }
 
 export async function createInitialTransaction() {
-  const config = readFileSync(resolvePath('config.yaml'), 'utf-8')
+  const config = readFileSync(getPath('config.yaml'), 'utf-8')
 
   if (!config.includes('block-hash')) {
-    const { address } = JSON.parse(readFileSync(resolvePath('data-dir/keys/swarm.key')).toString())
+    const { address } = JSON.parse(readFileSync(getPath('data-dir/keys/swarm.key')).toString())
     logger.info('Sending transaction to address', address)
     const { transaction, blockHash } = await sendTransaction(address)
-    writeFileSync(resolvePath('config.yaml'), createConfiguration(transaction, blockHash))
+    writeFileSync(getPath('config.yaml'), createConfiguration(transaction, blockHash))
   }
 }
 
 export async function runLauncher() {
   const abortController = new AbortController()
 
-  if (!canResolvePath(getBeeExecutable())) {
-    logger.info(`Please compile bee and place it as follows: ${resolvePath(getBeeExecutable())}`)
-    exit(1)
+  if (!checkPath('data-dir')) {
+    mkdirSync(getPath('data-dir'))
   }
 
-  if (!canResolvePath('data-dir')) {
-    mkdirSync(resolvePath('data-dir'))
+  if (!checkPath('config.yaml')) {
+    writeFileSync(getPath('config.yaml'), createStubConfiguration())
   }
 
-  if (!canResolvePath('config.yaml')) {
-    writeFileSync(resolvePath('config.yaml'), createStubConfiguration())
-  }
-
-  if (!canResolvePath(join('data-dir', 'keys', 'swarm.key'))) {
+  if (!checkPath(join('data-dir', 'keys', 'swarm.key'))) {
     await launchBee().catch()
   }
-  const config = readFileSync(resolvePath('config.yaml'), 'utf-8')
+  const config = readFileSync(getPath('config.yaml'), 'utf-8')
 
   if (!config.includes('block-hash')) {
-    const { address } = JSON.parse(readFileSync(resolvePath(join('data-dir', 'keys', 'swarm.key'))).toString())
+    const { address } = JSON.parse(readFileSync(getPath(join('data-dir', 'keys', 'swarm.key'))).toString())
     logger.info('Sending transaction to address', address)
     const { transaction, blockHash } = await sendTransaction(address)
-    writeFileSync(resolvePath('config.yaml'), createConfiguration(transaction, blockHash))
+    writeFileSync(getPath('config.yaml'), createConfiguration(transaction, blockHash))
   }
   const subprocess = launchBee(abortController).catch(reason => {
     logger.error(reason)
@@ -91,7 +85,7 @@ full-node: false
 chain-enable: false
 cors-allowed-origins: '*'
 use-postage-snapshot: true
-data-dir: ${resolvePath('data-dir')}`
+data-dir: ${getPath('data-dir')}`
 }
 
 function createConfiguration(transaction: string, blockHash: string) {
@@ -101,10 +95,10 @@ block-hash: ${blockHash}`
 }
 
 async function initializeBee() {
-  const configPath = resolvePath('config.yaml')
+  const configPath = getPath('config.yaml')
 
   return runProcess(
-    resolvePath(getBeeExecutable()),
+    getPath(getBeeExecutable()),
     ['init', `--config=${configPath}`],
     onStdout,
     onStderr,
@@ -116,10 +110,10 @@ async function launchBee(abortController?: AbortController) {
   if (!abortController) {
     abortController = new AbortController()
   }
-  const configPath = resolvePath('config.yaml')
+  const configPath = getPath('config.yaml')
 
   return runProcess(
-    resolvePath(getBeeExecutable()),
+    getPath(getBeeExecutable()),
     ['start', `--config=${configPath}`],
     onStdout,
     onStderr,
