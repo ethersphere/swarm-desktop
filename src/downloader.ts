@@ -27,7 +27,7 @@ export async function runDownloader(): Promise<void> {
   const suffixString = process.platform === 'win32' ? '.exe' : ''
 
   if (!archString || !platformString) {
-    throw Error(`Unsupport system: arch=${arch()} platform=${platform()}`)
+    throw Error(`Unsupported system: arch=${arch()} platform=${platform()}`)
   }
   await ensureDir(paths.data)
   await ensureAsset(
