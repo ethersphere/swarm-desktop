@@ -1,7 +1,7 @@
 {
   "name": "bee-desktop",
   "productName": "bee-desktop",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Desktop client for running and managing bee",
   "main": "dist/index.js",
   "scripts": {
