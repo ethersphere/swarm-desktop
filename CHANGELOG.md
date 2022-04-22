@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.2.2](https://www.github.com/ethersphere/bee-desktop/compare/v0.2.1...v0.2.2) (2022-04-22)
+
+
+### Bug Fixes
+
+* set author for building desktop app ([#70](https://www.github.com/ethersphere/bee-desktop/issues/70)) ([bdccabf](https://www.github.com/ethersphere/bee-desktop/commit/bdccabfa042124a40cec63a0e8d3ab4417ee8162))
+
 ### [0.2.1](https://www.github.com/ethersphere/bee-desktop/compare/v0.2.0...v0.2.1) (2022-04-22)
 
 
