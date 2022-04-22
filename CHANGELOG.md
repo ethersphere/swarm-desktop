@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.2.1](https://www.github.com/ethersphere/bee-desktop/compare/v0.2.0...v0.2.1) (2022-04-22)
+
+
+### Bug Fixes
+
+* add missing type declaration for fs-extra ([#68](https://www.github.com/ethersphere/bee-desktop/issues/68)) ([dddf474](https://www.github.com/ethersphere/bee-desktop/commit/dddf474fbc271bbd4193e3c785dcccdbfc8ac46a))
+
 ## [0.2.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.1.1...v0.2.0) (2022-04-21)
 
 
