@@ -1,6 +1,10 @@
 {
   "name": "bee-desktop",
   "productName": "bee-desktop",
+  "author": {
+    "name": "Swarm",
+    "email": "info@ethswarm.org"
+  },
   "version": "0.2.1",
   "description": "Desktop client for running and managing bee",
   "main": "dist/index.js",
