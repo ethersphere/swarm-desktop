@@ -1,12 +1,14 @@
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { readConfigYaml } from './config-yaml'
+import { isBeeAssetReady } from './downloader'
 import { checkPath, getPath } from './path'
 
 interface Status {
   status: 0 | 1 | 2
   address: string | null
   config: Record<string, any>
+  assetsReady: boolean
 }
 
 export function getStatus() {
@@ -14,6 +16,7 @@ export function getStatus() {
     status: 0,
     address: null,
     config: null,
+    assetsReady: isBeeAssetReady(),
   }
 
   if (!checkPath('config.yaml') || !checkPath('data-dir')) {

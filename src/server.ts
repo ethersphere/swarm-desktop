@@ -4,7 +4,6 @@ import koaBodyparser from 'koa-bodyparser'
 import serve from 'koa-static'
 import { getApiKey } from './api-key'
 import { readConfigYaml, writeConfigYaml } from './config-yaml'
-import { waitForBeeAssetReadiness } from './downloader'
 import { rebuildElectronTray } from './electron'
 import { createConfigFileAndAddress, createInitialTransaction, runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
@@ -48,7 +47,6 @@ export function runServer() {
     context.body = getStatus()
   })
   router.post('/setup/address', async context => {
-    await waitForBeeAssetReadiness()
     await createConfigFileAndAddress()
     context.body = getStatus()
   })

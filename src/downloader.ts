@@ -30,8 +30,8 @@ export async function waitForInstallerReadiness(): Promise<void> {
   return waitForAsset('static')
 }
 
-export async function waitForBeeAssetReadiness(): Promise<void> {
-  return waitForAsset(process.platform === 'win32' ? 'bee.exe' : 'bee')
+export function isBeeAssetReady(): boolean {
+  return existsSync(getPath(process.platform === 'win32' ? 'bee.exe' : 'bee'))
 }
 
 export async function runDownloader(): Promise<void> {
