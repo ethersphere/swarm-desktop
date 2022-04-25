@@ -43,7 +43,7 @@ export async function runDownloader(): Promise<void> {
     throw Error(`Unsupported system: arch=${arch()} platform=${platform()}`)
   }
   await ensureDir(paths.data)
-  await ensureAsset('https://github.com/ethersphere/bee-desktop/releases/download/v0.1.1/static.zip', 'static.zip', {
+  await ensureAsset('https://github.com/ethersphere/bee-desktop/releases/download/v0.2.2/static.zip', 'static.zip', {
     checkTarget: 'static',
   })
   await ensureAsset(
