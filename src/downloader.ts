@@ -26,6 +26,14 @@ const platformTable = {
   linux: 'linux',
 }
 
+export async function waitForInstallerReadiness(): Promise<void> {
+  return waitForAsset('static')
+}
+
+export async function waitForBeeAssetReadiness(): Promise<void> {
+  return waitForAsset(process.platform === 'win32' ? 'bee.exe' : 'bee')
+}
+
 export async function runDownloader(): Promise<void> {
   const archString = Reflect.get(archTable, process.arch)
   const platformString = Reflect.get(platformTable, process.platform)
@@ -35,14 +43,14 @@ export async function runDownloader(): Promise<void> {
     throw Error(`Unsupported system: arch=${arch()} platform=${platform()}`)
   }
   await ensureDir(paths.data)
+  await ensureAsset('https://github.com/ethersphere/bee-desktop/releases/download/v0.1.1/static.zip', 'static.zip', {
+    checkTarget: 'static',
+  })
   await ensureAsset(
     `https://github.com/ethersphere/bee/releases/download/v1.5.1/bee-${platformString}-${archString}${suffixString}`,
     `bee${suffixString}`,
     { chmod: process.platform !== 'win32' },
   )
-  await ensureAsset('https://github.com/ethersphere/bee-desktop/releases/download/v0.1.1/static.zip', 'static.zip', {
-    checkTarget: 'static',
-  })
 }
 
 async function ensureAsset(url: string, target: string, options?: DownloadOptions): Promise<void> {
@@ -81,4 +89,26 @@ async function downloadFile(url: string, target: string): Promise<void> {
   return fetch(url)
     .then(async x => x.arrayBuffer())
     .then(x => writeFileSync(target, Buffer.from(x)))
+}
+
+async function waitForAsset(path: string): Promise<void> {
+  return new Promise(async (resolve, reject) => {
+    for (let i = 0; i < 600; i++) {
+      logger.debug(`Waiting for asset ${path}`)
+
+      if (existsSync(getPath(path))) {
+        resolve()
+
+        return
+      }
+      await wait(1000)
+    }
+    reject()
+  })
+}
+
+async function wait(ms: number): Promise<void> {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms)
+  })
 }
