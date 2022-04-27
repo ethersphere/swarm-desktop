@@ -5,33 +5,38 @@ import { isBeeAssetReady } from './downloader'
 import { checkPath, getPath } from './path'
 
 interface Status {
-  status: 0 | 1 | 2
   address: string | null
   config: Record<string, any>
+  hasInitialTransaction: boolean
   assetsReady: boolean
 }
 
 export function getStatus() {
-  const statusObject: Status = {
-    status: 0,
+  const status: Status = {
     address: null,
     config: null,
+    hasInitialTransaction: false,
     assetsReady: isBeeAssetReady(),
   }
 
   if (!checkPath('config.yaml') || !checkPath('data-dir')) {
-    return statusObject
+    return status
   }
-  statusObject.config = readConfigYaml()
-  const { address } = JSON.parse(readFileSync(getPath(join('data-dir', 'keys', 'swarm.key'))).toString())
-  statusObject.address = address
 
-  if (!statusObject.config['block-hash']) {
-    statusObject.status = 1
+  status.config = readConfigYaml()
+  status.address = readEthereumAddress()
 
-    return statusObject
+  if (status.config['block-hash']) {
+    status.hasInitialTransaction = true
   }
-  statusObject.status = 2
 
-  return statusObject
+  return status
+}
+
+function readEthereumAddress() {
+  const path = getPath(join('data-dir', 'keys', 'swarm.key'))
+  const swarmKeyFile = readFileSync(path, 'utf-8')
+  const v3 = JSON.parse(swarmKeyFile)
+
+  return v3.address
 }
