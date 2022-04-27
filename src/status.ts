@@ -26,7 +26,7 @@ export function getStatus() {
   status.config = readConfigYaml()
   status.address = readEthereumAddress()
 
-  if (status.config['block-hash']) {
+  if (status.config['block-hash'] && status.config.transaction) {
     status.hasInitialTransaction = true
   }
 
