@@ -67,7 +67,7 @@ export async function runLauncher() {
 }
 
 async function sendTransaction(address: string) {
-  const response = await fetch(`http://getxdai.co/${address}/0`, { method: 'POST' })
+  const response = await fetch(`https://onboarding.ethswarm.org/faucet/overlay/${address}`, { method: 'POST' })
   const json = await response.json()
 
   return { transaction: json.transactionHash, blockHash: json.nextBlockHashBee }
@@ -77,7 +77,6 @@ function createStubConfiguration() {
   return `api-addr: 127.0.0.1:1633
 debug-api-addr: 127.0.0.1:1635
 debug-api-enable: true
-password: Test
 swap-enable: false
 swap-initial-deposit: 0
 mainnet: true
@@ -99,7 +98,7 @@ async function initializeBee() {
 
   return runProcess(
     getPath(getBeeExecutable()),
-    ['init', `--config=${configPath}`],
+    ['init', `--config=${configPath}`, `--password=Test`],
     onStdout,
     onStderr,
     new AbortController(),
@@ -114,7 +113,7 @@ async function launchBee(abortController?: AbortController) {
 
   return runProcess(
     getPath(getBeeExecutable()),
-    ['start', `--config=${configPath}`],
+    ['start', `--config=${configPath}`, '--password=Test'],
     onStdout,
     onStderr,
     abortController,

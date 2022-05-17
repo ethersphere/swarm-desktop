@@ -1,8 +1,11 @@
 import Router from '@koa/router'
+import Wallet from 'ethereumjs-wallet'
+import { readFileSync } from 'fs'
 import Koa from 'koa'
 import koaBodyparser from 'koa-bodyparser'
 import serve from 'koa-static'
 import { getApiKey } from './api-key'
+import { sendBzzTransaction, sendNativeTransaction } from './blockchain'
 import { readConfigYaml, writeConfigYaml } from './config-yaml'
 import { rebuildElectronTray } from './electron'
 import { createConfigFileAndAddress, createInitialTransaction, runLauncher } from './launcher'
@@ -66,6 +69,17 @@ export function runServer() {
     BeeManager.stop()
     await BeeManager.waitForSigtermToFinish()
     runLauncher()
+    context.body = { success: true }
+  })
+  router.post('/gift-wallet/:address', async context => {
+    const config = readConfigYaml()
+    const swapEndpoint = Reflect.get(config, 'swap-endpoint')
+    const v3 = readFileSync(getPath('data-dir/keys/swarm.key'), 'utf-8')
+    const wallet = await Wallet.fromV3(v3, 'Test')
+    const privateKeyString = wallet.getPrivateKeyString()
+    const { address } = context.params
+    await sendNativeTransaction(privateKeyString, address, '100000000000000000', swapEndpoint)
+    await sendBzzTransaction(privateKeyString, address, '5000000000000000', swapEndpoint)
     context.body = { success: true }
   })
   app.use(router.routes())

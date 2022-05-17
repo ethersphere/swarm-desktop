@@ -47,7 +47,7 @@ export async function runDownloader(): Promise<void> {
     checkTarget: 'static',
   })
   await ensureAsset(
-    `https://github.com/ethersphere/bee/releases/download/v1.5.1/bee-${platformString}-${archString}${suffixString}`,
+    `https://github.com/ethersphere/bee/releases/download/v1.6.0/bee-${platformString}-${archString}${suffixString}`,
     `bee${suffixString}`,
     { chmod: process.platform !== 'win32' },
   )
