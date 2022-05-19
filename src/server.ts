@@ -14,6 +14,7 @@ import { subscribeLogServerRequests } from './logger'
 import { getPath } from './path'
 import { port } from './port'
 import { getStatus } from './status'
+import { wait } from './utility'
 
 export function runServer() {
   const app = new Koa()
@@ -78,8 +79,9 @@ export function runServer() {
     const wallet = await Wallet.fromV3(v3, 'Test')
     const privateKeyString = wallet.getPrivateKeyString()
     const { address } = context.params
-    await sendNativeTransaction(privateKeyString, address, '100000000000000000', swapEndpoint)
-    await sendBzzTransaction(privateKeyString, address, '5000000000000000', swapEndpoint)
+    await sendBzzTransaction(privateKeyString, address, '50000000000000000', swapEndpoint)
+    await wait(15000)
+    await sendNativeTransaction(privateKeyString, address, '1000000000000000000', swapEndpoint)
     context.body = { success: true }
   })
   app.use(router.routes())

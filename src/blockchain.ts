@@ -8,7 +8,8 @@ export async function sendNativeTransaction(
   amount: string,
   providerHost: string,
 ): Promise<providers.TransactionResponse> {
-  const provider = new JsonRpcProvider(providerHost)
+  const provider = new JsonRpcProvider(providerHost, 100)
+  await provider.ready
   const signer = new Wallet(privateKey, provider)
   const gasPrice = await signer.getGasPrice()
 
@@ -25,7 +26,8 @@ export async function sendBzzTransaction(
   amount: string,
   providerHost: string,
 ): Promise<providers.TransactionResponse> {
-  const provider = new JsonRpcProvider(providerHost)
+  const provider = new JsonRpcProvider(providerHost, 100)
+  await provider.ready
   const signer = new Wallet(privateKey, provider)
   const bzz = new Contract('0xdBF3Ea6F5beE45c02255B2c26a16F300502F68da', bzzContractInterface, signer)
   const gasPrice = await signer.getGasPrice()
