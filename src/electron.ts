@@ -13,7 +13,7 @@ export function rebuildElectronTray() {
     return
   }
 
-  if (getStatus().status !== 2) {
+  if (!getStatus().hasInitialTransaction) {
     const contextMenu = Menu.buildFromTemplate([
       {
         label: 'Open Installer',

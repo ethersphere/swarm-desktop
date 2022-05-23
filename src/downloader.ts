@@ -7,6 +7,7 @@ import { parse } from 'path'
 import { promisify } from 'util'
 import { logger } from './logger'
 import { getPath, paths } from './path'
+import { wait } from './utility'
 
 interface DownloadOptions {
   checkTarget?: string
@@ -47,7 +48,7 @@ export async function runDownloader(): Promise<void> {
     checkTarget: 'static',
   })
   await ensureAsset(
-    `https://github.com/ethersphere/bee/releases/download/v1.5.1/bee-${platformString}-${archString}${suffixString}`,
+    `https://github.com/ethersphere/bee/releases/download/v1.6.0/bee-${platformString}-${archString}${suffixString}`,
     `bee${suffixString}`,
     { chmod: process.platform !== 'win32' },
   )
@@ -104,11 +105,5 @@ async function waitForAsset(path: string): Promise<void> {
       await wait(1000)
     }
     reject()
-  })
-}
-
-async function wait(ms: number): Promise<void> {
-  return new Promise(resolve => {
-    setTimeout(resolve, ms)
   })
 }

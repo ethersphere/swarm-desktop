@@ -13,7 +13,7 @@ async function main() {
   runServer()
   runElectronTray()
 
-  if (getStatus().status === 2) {
+  if (getStatus().hasInitialTransaction) {
     runLauncher()
   } else {
     shell.openExternal(`http://localhost:${port.value}/installer/?v=${getApiKey()}`)
