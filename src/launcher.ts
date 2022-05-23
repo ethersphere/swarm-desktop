@@ -84,6 +84,7 @@ full-node: false
 chain-enable: false
 cors-allowed-origins: '*'
 use-postage-snapshot: true
+resolver-options: https://cloudflare-eth.com
 data-dir: ${getPath('data-dir')}`
 }
 
