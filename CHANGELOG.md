@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.2.2...v0.3.0) (2022-05-23)
+
+
+### Features
+
+* add top up flows ([e22fe87](https://www.github.com/ethersphere/bee-desktop/commit/e22fe8759d30ca3423bbd29b8e24218e484db4d7))
+* download and open installer first ([#72](https://www.github.com/ethersphere/bee-desktop/issues/72)) ([c986e3d](https://www.github.com/ethersphere/bee-desktop/commit/c986e3d18eeccebe94c5160192751ce8f8001206))
+
 ### [0.2.2](https://www.github.com/ethersphere/bee-desktop/compare/v0.2.1...v0.2.2) (2022-04-22)
 
 
