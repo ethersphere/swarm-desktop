@@ -1,9 +1,10 @@
 import Router from '@koa/router'
 import Wallet from 'ethereumjs-wallet'
-import { readFileSync } from 'fs'
+import { readFile } from 'fs/promises'
 import Koa from 'koa'
 import koaBodyparser from 'koa-bodyparser'
 import serve from 'koa-static'
+import { join } from 'path'
 import { getApiKey } from './api-key'
 import { sendBzzTransaction, sendNativeTransaction } from './blockchain'
 import { readConfigYaml, writeConfigYaml } from './config-yaml'
@@ -14,6 +15,7 @@ import { subscribeLogServerRequests } from './logger'
 import { getPath } from './path'
 import { port } from './port'
 import { getStatus } from './status'
+import { swap } from './swap'
 import { wait } from './utility'
 
 export function runServer() {
@@ -75,17 +77,30 @@ export function runServer() {
   router.post('/gift-wallet/:address', async context => {
     const config = readConfigYaml()
     const swapEndpoint = Reflect.get(config, 'swap-endpoint')
-    const v3 = readFileSync(getPath('data-dir/keys/swarm.key'), 'utf-8')
-    const wallet = await Wallet.fromV3(v3, 'Test')
-    const privateKeyString = wallet.getPrivateKeyString()
+    const privateKeyString = await getPrivateKey()
     const { address } = context.params
     await sendBzzTransaction(privateKeyString, address, '50000000000000000', swapEndpoint)
     await wait(15000)
     await sendNativeTransaction(privateKeyString, address, '1000000000000000000', swapEndpoint)
     context.body = { success: true }
   })
+  router.post('/swap', async context => {
+    const config = readConfigYaml()
+    const swapEndpoint = Reflect.get(config, 'swap-endpoint')
+    const privateKeyString = await getPrivateKey()
+    await swap(privateKeyString, context.request.body.dai, '10000', swapEndpoint)
+    context.body = { success: true }
+  })
   app.use(router.routes())
   app.use(router.allowedMethods())
   const server = app.listen(port.value)
   subscribeLogServerRequests(server)
+}
+
+async function getPrivateKey(): Promise<string> {
+  const v3 = await readFile(getPath(join('data-dir', 'keys', 'swarm.key')), 'utf-8')
+  const wallet = await Wallet.fromV3(v3, 'Test')
+  const privateKeyString = wallet.getPrivateKeyString()
+
+  return privateKeyString
 }
