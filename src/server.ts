@@ -16,7 +16,6 @@ import { getPath } from './path'
 import { port } from './port'
 import { getStatus } from './status'
 import { swap } from './swap'
-import { wait } from './utility'
 
 export function runServer() {
   const app = new Koa()
@@ -80,7 +79,6 @@ export function runServer() {
     const privateKeyString = await getPrivateKey()
     const { address } = context.params
     await sendBzzTransaction(privateKeyString, address, '50000000000000000', swapEndpoint)
-    await wait(15000)
     await sendNativeTransaction(privateKeyString, address, '1000000000000000000', swapEndpoint)
     context.body = { success: true }
   })
