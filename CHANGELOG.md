@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.4.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.3.0...v0.4.0) (2022-05-25)
+
+
+### Features
+
+* add loading screens ([0116bb0](https://www.github.com/ethersphere/bee-desktop/commit/0116bb09d277c04e36fc72995654a9c35b445fe8))
+* add reliable transfers ([3653530](https://www.github.com/ethersphere/bee-desktop/commit/36535304c634f655ac3e995bb98e3144205c5cce))
+* set initial deposit to 0.1 bzz ([227a6cb](https://www.github.com/ethersphere/bee-desktop/commit/227a6cbc654625d87db4943f920eef8af4e9ebd2))
+
 ## [0.3.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.2.2...v0.3.0) (2022-05-23)
 
 
