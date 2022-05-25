@@ -1,9 +1,8 @@
-import { app, Menu, shell, Tray } from 'electron'
-import { getApiKey } from './api-key'
+import { app, Menu, Tray } from 'electron'
+import { openDashboardInBrowser, openInstallerInBrowser } from './browser'
 import { runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
 import { getPath } from './path'
-import { port } from './port'
 import { getStatus } from './status'
 
 let tray: Tray
@@ -17,7 +16,7 @@ export function rebuildElectronTray() {
     const contextMenu = Menu.buildFromTemplate([
       {
         label: 'Open Installer',
-        click: async () => shell.openExternal(`http://localhost:${port.value}/installer/?v=${getApiKey()}`),
+        click: openInstallerInBrowser,
       },
       { type: 'separator' },
       {
@@ -45,7 +44,7 @@ export function rebuildElectronTray() {
     { type: 'separator' },
     {
       label: 'Open Web UI',
-      click: async () => shell.openExternal(`http://localhost:${port.value}/dashboard/?v=${getApiKey()}#/`),
+      click: openDashboardInBrowser,
     },
     { type: 'separator' },
     {
