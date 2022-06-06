@@ -89,6 +89,7 @@
     "@types/koa-bodyparser": "^4.3.7",
     "@types/koa-static": "^4.0.2",
     "@types/node-fetch": "^2.6.1",
+    "@types/node-notifier": "^8.0.2",
     "@types/request-stats": "^3.0.0",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
@@ -119,6 +120,7 @@
     "koa-bodyparser": "^4.3.0",
     "koa-static": "^5.0.0",
     "node-fetch": "^2.6.7",
+    "node-notifier": "^10.0.1",
     "request-stats": "^3.0.0",
     "uuid": "^8.3.2",
     "winston": "^3.7.2"

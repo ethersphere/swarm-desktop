@@ -12,6 +12,7 @@ import { wait } from './utility'
 interface DownloadOptions {
   checkTarget?: string
   chmod?: boolean
+  force?: boolean
 }
 
 const unzipAsync = promisify(unzip)
@@ -35,7 +36,7 @@ export function isBeeAssetReady(): boolean {
   return existsSync(getPath(process.platform === 'win32' ? 'bee.exe' : 'bee'))
 }
 
-export async function runDownloader(): Promise<void> {
+export async function runDownloader(force = false): Promise<void> {
   const archString = Reflect.get(archTable, process.arch)
   const platformString = Reflect.get(platformTable, process.platform)
   const suffixString = process.platform === 'win32' ? '.exe' : ''
@@ -46,19 +47,20 @@ export async function runDownloader(): Promise<void> {
   await ensureDir(paths.data)
   await ensureAsset('https://github.com/ethersphere/bee-desktop/releases/download/v0.2.2/static.zip', 'static.zip', {
     checkTarget: 'static',
+    force,
   })
   await ensureAsset(
-    `https://github.com/ethersphere/bee/releases/download/v1.6.0/bee-${platformString}-${archString}${suffixString}`,
+    `https://github.com/ethersphere/bee/releases/download/v1.6.1/bee-${platformString}-${archString}${suffixString}`,
     `bee${suffixString}`,
-    { chmod: process.platform !== 'win32' },
+    { chmod: process.platform !== 'win32', force },
   )
 }
 
-async function ensureAsset(url: string, target: string, options?: DownloadOptions): Promise<void> {
+async function ensureAsset(url: string, target: string, options: DownloadOptions): Promise<void> {
   logger.info(`Checking asset ${url}`)
   const finalPath = getPath(target)
 
-  if (existsSync(getPath(options?.checkTarget || target))) {
+  if (!options.force && existsSync(getPath(options?.checkTarget || target))) {
     logger.info('Skipping, already exists')
 
     return

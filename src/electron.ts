@@ -1,5 +1,7 @@
 import { app, Menu, Tray } from 'electron'
+import Notifier from 'node-notifier'
 import { openDashboardInBrowser, openInstallerInBrowser } from './browser'
+import { runDownloader } from './downloader'
 import { runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
 import { getPath } from './path'
@@ -19,6 +21,10 @@ export function rebuildElectronTray() {
         click: openInstallerInBrowser,
       },
       { type: 'separator' },
+      {
+        label: 'Redownload assets',
+        click: redownloadAssets,
+      },
       {
         label: 'Exit',
         click: async () => {
@@ -48,6 +54,10 @@ export function rebuildElectronTray() {
     },
     { type: 'separator' },
     {
+      label: 'Redownload assets',
+      click: redownloadAssets,
+    },
+    {
       label: 'Exit',
       click: async () => {
         BeeManager.stop()
@@ -68,4 +78,18 @@ export function runElectronTray() {
     tray = new Tray(getPath('tray.png'))
     rebuildElectronTray()
   })
+}
+
+async function redownloadAssets(): Promise<void> {
+  if (BeeManager.isRunning()) {
+    BeeManager.stop()
+  }
+  await runDownloader(true)
+  Notifier.notify({ title: 'Swarm', message: 'New assets fetched successfully' })
+
+  if (getStatus().hasInitialTransaction) {
+    runLauncher()
+  } else {
+    openInstallerInBrowser()
+  }
 }
