@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.4.0...v0.5.0) (2022-06-07)
+
+
+### Features
+
+* add keep alive ([#85](https://www.github.com/ethersphere/bee-desktop/issues/85)) ([5ff3d1b](https://www.github.com/ethersphere/bee-desktop/commit/5ff3d1b07874695fead2e064bdd57ecfd19e4034))
+* add tray action to redownload assets ([#87](https://www.github.com/ethersphere/bee-desktop/issues/87)) ([90514dc](https://www.github.com/ethersphere/bee-desktop/commit/90514dcf2cf4c3deae524528b29e5a2a694c4ae1))
+
 ## [0.4.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.3.0...v0.4.0) (2022-05-25)
 
 
