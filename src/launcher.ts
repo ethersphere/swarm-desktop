@@ -8,6 +8,14 @@ import { BeeManager } from './lifecycle'
 import { logger } from './logger'
 import { checkPath, getPath } from './path'
 
+export function runKeepAliveLoop() {
+  setInterval(() => {
+    if (!BeeManager.isRunning() && BeeManager.shouldRestart()) {
+      runLauncher()
+    }
+  }, 10000)
+}
+
 function getBeeExecutable() {
   if (platform() === 'win32') {
     return 'bee.exe'
@@ -54,6 +62,7 @@ export async function runLauncher() {
     const { transaction, blockHash } = await sendTransaction(address)
     writeFileSync(getPath('config.yaml'), createConfiguration(transaction, blockHash))
   }
+  BeeManager.setUserIntention(true)
   const subprocess = launchBee(abortController).catch(reason => {
     logger.error(reason)
   })
