@@ -1,9 +1,9 @@
 import { app, Menu, Tray } from 'electron'
-import Notifier from 'node-notifier'
 import { openDashboardInBrowser, openInstallerInBrowser } from './browser'
 import { runDownloader } from './downloader'
 import { runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
+import { createNotification } from './notify'
 import { getPath } from './path'
 import { getStatus } from './status'
 
@@ -70,6 +70,16 @@ export function rebuildElectronTray() {
 }
 
 export function runElectronTray() {
+  const gotTheLock = app.requestSingleInstanceLock()
+
+  if (!gotTheLock) {
+    app.quit()
+  } else {
+    app.on('second-instance', () => {
+      createNotification('Swarm is already running. Please close the previous instance first.')
+    })
+  }
+
   app.whenReady().then(() => {
     if (app.dock) {
       app.dock.setIcon(getPath('icon.png'))
@@ -85,7 +95,7 @@ async function redownloadAssets(): Promise<void> {
     BeeManager.stop()
   }
   await runDownloader(true)
-  Notifier.notify({ title: 'Swarm', message: 'New assets fetched successfully' })
+  createNotification('New assets fetched successfully')
 
   if (getStatus().hasInitialTransaction) {
     runLauncher()
