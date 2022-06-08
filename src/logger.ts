@@ -3,6 +3,7 @@ import requestStats from 'request-stats'
 import type { Server } from 'http'
 
 import { SupportedLevels, SUPPORTED_LEVELS, logLevel } from './config'
+import { getLogPath } from './path'
 
 const supportedLevels: Record<SupportedLevels, number> = SUPPORTED_LEVELS.reduce(
   (acc, cur, idx) => ({ ...acc, [cur]: idx }),
@@ -17,9 +18,16 @@ export const logger: Logger = createLogger({
     format.metadata(),
     format.timestamp(),
     format.printf(formatLogMessage),
-    format.colorize({ all: true }),
   ),
-  transports: [new transports.Console({ level: logLevel })],
+  transports: [
+    new transports.Console({ level: logLevel, format: format.colorize({ all: true }) }),
+    new transports.File({
+      filename: getLogPath('bee-desktop.log'),
+      maxsize: 1_000_000,
+      maxFiles: 10,
+      tailable: true,
+    }),
+  ],
 })
 
 logger.info(`using max log level=${logLevel}`)
