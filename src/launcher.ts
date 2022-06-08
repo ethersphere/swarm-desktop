@@ -6,7 +6,8 @@ import { join } from 'path'
 import { rebuildElectronTray } from './electron'
 import { BeeManager } from './lifecycle'
 import { logger } from './logger'
-import { checkPath, getPath } from './path'
+import { checkPath, getLogPath, getPath } from './path'
+import * as FileStreamRotator from 'file-stream-rotator'
 
 export function runKeepAliveLoop() {
   setInterval(() => {
@@ -109,8 +110,6 @@ async function initializeBee() {
   return runProcess(
     getPath(getBeeExecutable()),
     ['init', `--config=${configPath}`, `--password=Test`],
-    onStdout,
-    onStderr,
     new AbortController(),
   )
 }
@@ -124,31 +123,29 @@ async function launchBee(abortController?: AbortController) {
   return runProcess(
     getPath(getBeeExecutable()),
     ['start', `--config=${configPath}`, '--password=Test'],
-    onStdout,
-    onStderr,
     abortController,
   )
 }
 
-function onStdout(data: string | Uint8Array) {
-  process.stdout.write(data)
-}
-
-function onStderr(data: string | Uint8Array) {
-  process.stderr.write(data)
-}
-
-async function runProcess(
-  command: string,
-  args: string[],
-  onStdout: (chunk: string | Uint8Array) => void,
-  onStderr: (chunk: string | Uint8Array) => void,
-  abortController: AbortController,
-): Promise<number> {
+async function runProcess(command: string, args: string[], abortController: AbortController): Promise<number> {
   return new Promise((resolve, reject) => {
     const subprocess = spawn(command, args, { signal: abortController.signal, killSignal: 'SIGINT' })
-    subprocess.stdout.on('data', onStdout)
-    subprocess.stderr.on('data', onStderr)
+
+    // Print the logs to console
+    subprocess.stdout.pipe(process.stdout)
+    subprocess.stderr.pipe(process.stderr)
+
+    // Also store the logs to log dir
+    const fileStream = FileStreamRotator.getStream({
+      filename: getLogPath('bee'),
+      verbose: false,
+      size: '500k',
+      max_logs: '10',
+      extension: '.log',
+    })
+    subprocess.stdout.pipe(fileStream)
+    subprocess.stderr.pipe(fileStream)
+
     subprocess.on('close', code => {
       if (code === 0) {
         resolve(code)
