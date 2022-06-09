@@ -11,3 +11,7 @@ export function checkPath(path: string): boolean {
 export function getPath(path: string): string {
   return join(paths.data, path)
 }
+
+export function getLogPath(logFileName: string): string {
+  return join(paths.log, logFileName)
+}

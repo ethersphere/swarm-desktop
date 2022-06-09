@@ -10,6 +10,14 @@ Linux: `bee-desktop-0.4.0-1.x86_64.rpm` or `bee-desktop_0.4.0_amd64.deb`
 
 > You can alternatively clone this repository and run `npm install` and then `npm start`
 
+# Logs
+
+If you run the build version you can access logs of Bee Desktop at:
+
+ - macOS: `~/Library/Logs/bee-desktop-nodejs/bee-desktop.log`
+ - Windows: `%LOCALAPPDATA%\bee-desktop-nodejs\Log\bee-desktop.log` (for example, `C:\Users\USERNAME\AppData\Local\MyApp-nodejs\Log\bee-desktop.log`)
+ - Linux: `~/.local/state/bee-desktop-nodejs/bee-desktop.log`
+
 # If you have a previous installation
 
 You need to delete the previous assets first to receive updates
