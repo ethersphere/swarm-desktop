@@ -114,6 +114,7 @@
     "env-paths": "2",
     "ethereumjs-wallet": "^1.0.2",
     "ethers": "^5.6.6",
+    "file-stream-rotator": "^0.6.1",
     "fs-extra": "^10.1.0",
     "js-yaml": "^4.1.0",
     "koa": "^2.13.4",
