@@ -4,6 +4,7 @@ import { readFile } from 'fs/promises'
 import Koa from 'koa'
 import koaBodyparser from 'koa-bodyparser'
 import serve from 'koa-static'
+import fetch from 'node-fetch'
 import { join } from 'path'
 import { getApiKey } from './api-key'
 import { sendBzzTransaction, sendNativeTransaction } from './blockchain'
@@ -11,7 +12,7 @@ import { readConfigYaml, writeConfigYaml } from './config-yaml'
 import { rebuildElectronTray } from './electron'
 import { createConfigFileAndAddress, createInitialTransaction, runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
-import { subscribeLogServerRequests } from './logger'
+import { logger, subscribeLogServerRequests } from './logger'
 import { getPath } from './path'
 import { port } from './port'
 import { getStatus } from './status'
@@ -50,6 +51,17 @@ export function runServer() {
   // Authenticated endpoints
   router.get('/status', context => {
     context.body = getStatus()
+  })
+  router.get('/peers', async context => {
+    try {
+      const response = await fetch('http://127.0.0.1:1635/peers')
+      const { peers } = await response.json()
+
+      context.body = { connections: peers ? peers.length || 0 : 0 }
+    } catch (error) {
+      logger.error(error)
+      context.body = { connections: 0 }
+    }
   })
   router.post('/setup/address', async context => {
     await createConfigFileAndAddress()
