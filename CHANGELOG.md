@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.6.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.5.0...v0.6.0) (2022-06-11)
+
+
+### Features
+
+* add peers endpoint ([#93](https://www.github.com/ethersphere/bee-desktop/issues/93)) ([06fa3f4](https://www.github.com/ethersphere/bee-desktop/commit/06fa3f4cadeb9bf3dd74c55c911ee59729754060))
+* only allow one instance running ([#89](https://www.github.com/ethersphere/bee-desktop/issues/89)) ([5975b76](https://www.github.com/ethersphere/bee-desktop/commit/5975b76be42a4d54f9e6f3d247241e371cf5b027))
+* persistant bee logs ([#92](https://www.github.com/ethersphere/bee-desktop/issues/92)) ([7ccfd39](https://www.github.com/ethersphere/bee-desktop/commit/7ccfd39539ef1427bb76c3dd3a91700b87f167c3))
+* persistant logs ([#91](https://www.github.com/ethersphere/bee-desktop/issues/91)) ([0c5d67d](https://www.github.com/ethersphere/bee-desktop/commit/0c5d67dc6eb709bc4ab342f8b9f0b05fc259b9c9))
+
 ## [0.5.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.4.0...v0.5.0) (2022-06-07)
 
 
