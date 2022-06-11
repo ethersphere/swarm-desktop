@@ -7,7 +7,7 @@ export const port = {
 
 export async function findFreePort() {
   logger.info('Finding free port...')
-  for (let i = 3000; i < 5000; i++) {
+  for (let i = 3633; i < 5000; i++) {
     const free = await testPort(i)
 
     if (free) {
