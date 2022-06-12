@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.6.0...v0.7.0) (2022-06-12)
+
+
+### Features
+
+* add new static folder location ([#95](https://www.github.com/ethersphere/bee-desktop/issues/95)) ([a6dd808](https://www.github.com/ethersphere/bee-desktop/commit/a6dd808ff73858e529cd0a3f3a9c437bcbe62cc0))
+
 ## [0.6.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.5.0...v0.6.0) (2022-06-11)
 
 
