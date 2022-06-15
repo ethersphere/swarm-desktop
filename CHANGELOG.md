@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.7.0...v0.8.0) (2022-06-15)
+
+
+### Features
+
+* add new assets and static ([07ae295](https://www.github.com/ethersphere/bee-desktop/commit/07ae29586cd8d55e44850ced0f5cbb543de52a54))
+
 ## [0.7.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.6.0...v0.7.0) (2022-06-12)
 
 
