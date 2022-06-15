@@ -10,7 +10,7 @@ import { getPath, paths } from './path'
 import { wait } from './utility'
 
 interface DownloadOptions {
-  checkTarget?: string
+  checkTarget?: string[]
   chmod?: boolean
   force?: boolean
 }
@@ -49,7 +49,7 @@ export async function runDownloader(force = false): Promise<void> {
     'https://github.com/Cafe137/bee-desktop-static-maker/releases/download/c834220bdd3c84a3e503b873c08ec4858884d81864ae40cd8f5f35756eec86ef/static.zip',
     'static.zip',
     {
-      checkTarget: 'static',
+      checkTarget: ['trayTemplate.png', 'static'],
       force,
     },
   )
@@ -64,10 +64,16 @@ async function ensureAsset(url: string, target: string, options: DownloadOptions
   logger.info(`Checking asset ${url}`)
   const finalPath = getPath(target)
 
-  if (!options.force && existsSync(getPath(options?.checkTarget || target))) {
-    logger.info('Skipping, already exists')
+  const pathsToCheck = options?.checkTarget || [target]
 
-    return
+  if (!options.force) {
+    const isPresent = pathsToCheck.map(getPath).every(existsSync)
+
+    if (isPresent) {
+      logger.info('Skipping, already exists')
+
+      return
+    }
   }
 
   const parsedPath = parse(finalPath)
