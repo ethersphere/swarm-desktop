@@ -1,5 +1,13 @@
 # Changelog
 
+### [0.8.1](https://www.github.com/ethersphere/bee-desktop/compare/v0.8.0...v0.8.1) (2022-06-15)
+
+
+### Bug Fixes
+
+* do not open restart ([#104](https://www.github.com/ethersphere/bee-desktop/issues/104)) ([07718d4](https://www.github.com/ethersphere/bee-desktop/commit/07718d4d2ca1765fee120ec81143db4f9ef64e04))
+* support multiple file check when determining redownload ([#102](https://www.github.com/ethersphere/bee-desktop/issues/102)) ([6b51c8b](https://www.github.com/ethersphere/bee-desktop/commit/6b51c8bd74f1a028a43a000d49d42574107a494f))
+
 ## [0.8.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.7.0...v0.8.0) (2022-06-15)
 
 
