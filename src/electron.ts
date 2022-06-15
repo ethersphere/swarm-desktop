@@ -38,6 +38,11 @@ export function rebuildElectronTray() {
   }
   const contextMenu = Menu.buildFromTemplate([
     {
+      label: 'Open Web UI',
+      click: openDashboardInBrowser,
+    },
+    { type: 'separator' },
+    {
       label: BeeManager.isRunning() ? 'Stop Bee' : 'Start Bee',
       click: () => {
         if (BeeManager.isRunning()) {
@@ -49,14 +54,10 @@ export function rebuildElectronTray() {
     },
     { type: 'separator' },
     {
-      label: 'Open Web UI',
-      click: openDashboardInBrowser,
-    },
-    { type: 'separator' },
-    {
       label: 'Redownload assets',
       click: redownloadAssets,
     },
+    { type: 'separator' },
     {
       label: 'Exit',
       click: async () => {
@@ -85,7 +86,7 @@ export function runElectronTray() {
       app.dock.setIcon(getPath('icon.png'))
       app.dock.hide()
     }
-    tray = new Tray(getPath('tray.png'))
+    tray = new Tray(getPath('trayTemplate.png'))
     rebuildElectronTray()
   })
 }

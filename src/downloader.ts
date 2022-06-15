@@ -46,7 +46,7 @@ export async function runDownloader(force = false): Promise<void> {
   }
   await ensureDir(paths.data)
   await ensureAsset(
-    'https://github.com/Cafe137/bee-desktop-static-maker/releases/download/3ccdba68b93095a1daa29656b4ee989649858fadffaf6b92500488c71dc3bd34/static.zip',
+    'https://github.com/Cafe137/bee-desktop-static-maker/releases/download/c834220bdd3c84a3e503b873c08ec4858884d81864ae40cd8f5f35756eec86ef/static.zip',
     'static.zip',
     {
       checkTarget: 'static',
