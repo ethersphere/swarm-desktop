@@ -7,5 +7,5 @@ export function openInstallerInBrowser() {
 }
 
 export function openDashboardInBrowser() {
-  shell.openExternal(`http://localhost:${port.value}/dashboard/?v=${getApiKey()}#/restart`)
+  shell.openExternal(`http://localhost:${port.value}/dashboard/?v=${getApiKey()}`)
 }
