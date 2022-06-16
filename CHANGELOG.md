@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.8.2](https://www.github.com/ethersphere/bee-desktop/compare/v0.8.1...v0.8.2) (2022-06-16)
+
+
+### Bug Fixes
+
+* add support for latest bee log ([#107](https://www.github.com/ethersphere/bee-desktop/issues/107)) ([7726c1b](https://www.github.com/ethersphere/bee-desktop/commit/7726c1b41dafd91b639919b9c20e0f67fbb7bfbb))
+
 ### [0.8.1](https://www.github.com/ethersphere/bee-desktop/compare/v0.8.0...v0.8.1) (2022-06-15)
 
 
