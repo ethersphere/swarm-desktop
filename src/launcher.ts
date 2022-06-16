@@ -142,6 +142,8 @@ async function runProcess(command: string, args: string[], abortController: Abor
       size: '500k',
       max_logs: '10',
       extension: '.log',
+      create_symlink: true,
+      symlink_name: 'bee.current.log',
     })
     subprocess.stdout.pipe(fileStream)
     subprocess.stderr.pipe(fileStream)
