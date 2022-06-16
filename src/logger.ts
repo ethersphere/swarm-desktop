@@ -73,5 +73,5 @@ export async function readBeeDesktopLogs(): Promise<string> {
 }
 
 export async function readBeeLogs(): Promise<string> {
-  return readFile(getLogPath('bee.log'), { encoding: 'utf8' })
+  return readFile(getLogPath('bee.current.log'), { encoding: 'utf8' })
 }
