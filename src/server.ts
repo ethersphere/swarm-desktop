@@ -12,7 +12,7 @@ import { readConfigYaml, writeConfigYaml } from './config-yaml'
 import { rebuildElectronTray } from './electron'
 import { createConfigFileAndAddress, createInitialTransaction, runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
-import { logger, subscribeLogServerRequests } from './logger'
+import { logger, readBeeDesktopLogs, readBeeLogs, subscribeLogServerRequests } from './logger'
 import { getPath } from './path'
 import { port } from './port'
 import { getStatus } from './status'
@@ -22,9 +22,13 @@ export function runServer() {
   const app = new Koa()
   app.use(serve(getPath('static')))
   app.use(async (context, next) => {
-    context.set('Access-Control-Allow-Origin', `http://localhost:${port.value}`)
+    const corsOrigin = process.env.NODE_ENV === 'development' ? '*' : `http://localhost:${port.value}`
+    context.set('Access-Control-Allow-Origin', corsOrigin)
     context.set('Access-Control-Allow-Credentials', 'true')
-    context.set('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With')
+    context.set(
+      'Access-Control-Allow-Headers',
+      'Content-Type, Content-Length, Authorization, Accept, X-Requested-With, Referer, Baggage, Sentry-Trace',
+    )
     context.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS')
     await next()
   })
@@ -78,6 +82,23 @@ export function runServer() {
   })
   router.get('/config', context => {
     context.body = readConfigYaml()
+  })
+  router.get('/logs/bee-desktop', async context => {
+    context.body = await readBeeDesktopLogs()
+  })
+  router.get('/logs/bee', async context => {
+    try {
+      context.body = await readBeeLogs()
+    } catch (e) {
+      // Bee might not be started and hence the logs might not be available
+      if ((e as NodeJS.ErrnoException).code === 'ENOENT') {
+        context.status = 400
+
+        return
+      }
+
+      throw e
+    }
   })
   router.post('/restart', async context => {
     BeeManager.stop()
