@@ -5,44 +5,34 @@ on:
       - created
 
 jobs:
-  publish_on_linux:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@master
-        with:
-          node-version: 14
-      - name: install dependencies
-        run: npm install
-      - name: publish
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run publish
+  publish:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
-  publish_on_mac:
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@master
         with:
           node-version: 14
-      - name: install dependencies
+      - name: Install dependencies
         run: npm install
-      - name: publish
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run publish
-
-  publish_on_win:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@master
+      - name: Configure secrets
+        uses: jossef/action-set-json-field@v1
         with:
-          node-version: 14
-      - name: install dependencies
-        run: npm install
+          file: src/.sentry.json
+          field: KEY
+          value: ${{ secrets.SENTRY_KEY }}
       - name: publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run publish
+      - name: Create Sentry release
+        uses: getsentry/action-release@v1
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+        with:
+          sourcemaps: ./dist/src

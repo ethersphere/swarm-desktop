@@ -1,3 +1,4 @@
+import { readFile } from 'node:fs/promises'
 import { createLogger, format, transports, Logger, Logform } from 'winston'
 import requestStats from 'request-stats'
 import type { Server } from 'http'
@@ -65,4 +66,12 @@ export function subscribeLogServerRequests(server: Server): void {
       'user-agent': raw.headers['user-agent'],
     })
   })
+}
+
+export async function readBeeDesktopLogs(): Promise<string> {
+  return readFile(getLogPath('bee-desktop.log'), { encoding: 'utf8' })
+}
+
+export async function readBeeLogs(): Promise<string> {
+  return readFile(getLogPath('bee.current.log'), { encoding: 'utf8' })
 }
