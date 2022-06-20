@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.11.5](https://www.github.com/ethersphere/bee-desktop/compare/v0.11.4...v0.11.5) (2022-06-20)
+
+
+### Bug Fixes
+
+* set executableName to be the same as name ([c4bcb40](https://www.github.com/ethersphere/bee-desktop/commit/c4bcb40cf09a9f28b49bb34aa9d7412177e0edfe))
+
 ### [0.11.4](https://www.github.com/ethersphere/bee-desktop/compare/v0.11.3...v0.11.4) (2022-06-20)
 
 
