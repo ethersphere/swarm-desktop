@@ -1,4 +1,4 @@
-import { openInstallerInBrowser } from './browser'
+import { openDashboardInBrowser, openInstallerInBrowser } from './browser'
 import { runDownloader, waitForInstallerReadiness } from './downloader'
 import { runElectronTray } from './electron'
 import { runKeepAliveLoop, runLauncher } from './launcher'
@@ -14,6 +14,7 @@ async function main() {
 
   if (getStatus().hasInitialTransaction) {
     runLauncher()
+    openDashboardInBrowser()
   } else {
     openInstallerInBrowser()
   }
