@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.12.1](https://www.github.com/ethersphere/bee-desktop/compare/v0.12.0...v0.12.1) (2022-06-20)
+
+
+### Bug Fixes
+
+* change envPaths to Swarm Desktop ([43b231d](https://www.github.com/ethersphere/bee-desktop/commit/43b231dc42e6d49d2915272fc869fea179129bb2))
+
 ## [0.12.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.11.5...v0.12.0) (2022-06-20)
 
 
