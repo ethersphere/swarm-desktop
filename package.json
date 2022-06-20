@@ -1,5 +1,5 @@
 {
-  "name": "bee-desktop",
+  "name": "swarm-desktop",
   "productName": "Swarm Desktop",
   "author": {
     "name": "Swarm",
@@ -35,7 +35,8 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon": "icon.icns"
+        "icon": "icon.icns",
+        "executableName": "swarm-desktop"
       },
       "electronInstallerDebian": {
         "bin": "Swarm Desktop"
