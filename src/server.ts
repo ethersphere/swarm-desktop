@@ -5,6 +5,7 @@ import Koa from 'koa'
 import koaBodyparser from 'koa-bodyparser'
 import serve from 'koa-static'
 import fetch from 'node-fetch'
+import { URL } from 'url'
 import { join } from 'path'
 import { getApiKey } from './api-key'
 import { sendBzzTransaction, sendNativeTransaction } from './blockchain'
@@ -17,6 +18,8 @@ import { getPath } from './path'
 import { port } from './port'
 import { getStatus } from './status'
 import { swap } from './swap'
+import { captureException } from '@sentry/electron'
+import { bufferRequest } from './utility'
 
 export function runServer() {
   const app = new Koa()
@@ -32,12 +35,50 @@ export function runServer() {
     context.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS')
     await next()
   })
-  app.use(koaBodyparser())
+  app.use(koaBodyparser({ onerror: logger.error }))
   const router = new Router()
 
   // Open endpoints without any authentication
   router.get('/info', context => {
     context.body = { name: 'bee-desktop' }
+  })
+
+  /**
+   * This is proxy endpoint for Sentry to circumvent ad-blockers
+   * @see https://docs.sentry.io/platforms/javascript/troubleshooting/#using-the-tunnel-option
+   */
+  router.all('/sentry', async context => {
+    // OPTION request is used to verify that Desktop can proxy the requests
+    if (context.request.method.toLowerCase() === 'options') {
+      context.status = 204
+
+      return
+    }
+
+    try {
+      // We can't use the `context.request.body` as the incoming request is not valid JSON
+      // It is multiline string where each line contain a JSON field and because of that the `koa-bodyparser`
+      // is not able to correctly detect and parse the body and because of that nothing is attached.
+      // So we need to Buffer the body into string ourselves.
+      const envelope = await bufferRequest(context.req)
+      const pieces = envelope.split('\n')
+      const header = JSON.parse(pieces[0])
+      const dnsUrl = new URL(header.dsn)
+      const projectId = dnsUrl.pathname.endsWith('/') ? dnsUrl.pathname.slice(0, -1) : dnsUrl.pathname
+      const url = `https://${dnsUrl.host}/api/${projectId}/envelope/`
+      const response = await fetch(url, {
+        method: 'POST',
+        body: envelope,
+      })
+
+      context.body = await response.json()
+    } catch (e) {
+      logger.error(e)
+      captureException(e)
+
+      context.status = 400
+      context.body = { status: 'invalid request' }
+    }
   })
 
   router.use(async (context, next) => {
@@ -122,6 +163,7 @@ export function runServer() {
     await swap(privateKeyString, context.request.body.dai, '10000', swapEndpoint)
     context.body = { success: true }
   })
+
   app.use(router.routes())
   app.use(router.allowedMethods())
   const server = app.listen(port.value)
