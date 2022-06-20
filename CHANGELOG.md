@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.10.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.9.0...v0.10.0) (2022-06-20)
+
+
+### Features
+
+* add new icons ([#116](https://www.github.com/ethersphere/bee-desktop/issues/116)) ([7fe76a4](https://www.github.com/ethersphere/bee-desktop/commit/7fe76a4d8f59f8b36da81fc05feee19ef3f95474))
+
+
+### Bug Fixes
+
+* use sentry release only on linux release ([#114](https://www.github.com/ethersphere/bee-desktop/issues/114)) ([308c28e](https://www.github.com/ethersphere/bee-desktop/commit/308c28efbc9697a68eaabbb7caccb983de25b1c1))
+
 ## [0.9.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.8.1...v0.9.0) (2022-06-20)
 
 
