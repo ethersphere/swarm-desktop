@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.10.0...v0.11.0) (2022-06-20)
+
+
+### Features
+
+* add assets with Swarm copy ([#119](https://www.github.com/ethersphere/bee-desktop/issues/119)) ([77d243c](https://www.github.com/ethersphere/bee-desktop/commit/77d243cdce29129de86308e4efb0b70a78f202e3))
+
 ## [0.10.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.9.0...v0.10.0) (2022-06-20)
 
 
