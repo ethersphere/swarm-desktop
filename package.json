@@ -1,5 +1,6 @@
 {
   "name": "bee-desktop",
+  "productName": "Swarm Desktop",
   "author": {
     "name": "Swarm",
     "email": "info@ethswarm.org"
@@ -35,6 +36,9 @@
     "forge": {
       "packagerConfig": {
         "icon": "icon.icns"
+      },
+      "electronInstallerDebian": {
+        "bin": "Swarm Desktop"
       },
       "makers": [
         {
