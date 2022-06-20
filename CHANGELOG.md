@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.9.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.8.1...v0.9.0) (2022-06-20)
+
+
+### Features
+
+* add new static version and auto open ui ([#113](https://www.github.com/ethersphere/bee-desktop/issues/113)) ([5d43eed](https://www.github.com/ethersphere/bee-desktop/commit/5d43eed353892143dcedbdd640228a185bc26274))
+* sentry proxy ([#112](https://www.github.com/ethersphere/bee-desktop/issues/112)) ([39bf2b4](https://www.github.com/ethersphere/bee-desktop/commit/39bf2b421cece9e71795eda3360eb2c968dc6c1a))
+* sentry support ([#105](https://www.github.com/ethersphere/bee-desktop/issues/105)) ([29b9f24](https://www.github.com/ethersphere/bee-desktop/commit/29b9f24a3d4a062893b25fa59e0fe4aaddde633b))
+
+
+### Bug Fixes
+
+* add support for latest bee log ([#107](https://www.github.com/ethersphere/bee-desktop/issues/107)) ([7726c1b](https://www.github.com/ethersphere/bee-desktop/commit/7726c1b41dafd91b639919b9c20e0f67fbb7bfbb))
+
 ### [0.8.1](https://www.github.com/ethersphere/bee-desktop/compare/v0.8.0...v0.8.1) (2022-06-15)
 
 
