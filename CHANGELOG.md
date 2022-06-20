@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.11.5...v0.12.0) (2022-06-20)
+
+
+### Features
+
+* add remix icons ([ce32077](https://www.github.com/ethersphere/bee-desktop/commit/ce32077d8b6872ed8e0a17003541eff51fb3e479))
+
 ### [0.11.5](https://www.github.com/ethersphere/bee-desktop/compare/v0.11.4...v0.11.5) (2022-06-20)
 
 
