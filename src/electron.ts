@@ -26,7 +26,7 @@ export function rebuildElectronTray() {
         click: redownloadAssets,
       },
       {
-        label: 'Exit',
+        label: 'Quit',
         click: async () => {
           app.quit()
         },
@@ -59,7 +59,7 @@ export function rebuildElectronTray() {
     },
     { type: 'separator' },
     {
-      label: 'Exit',
+      label: 'Quit',
       click: async () => {
         BeeManager.stop()
         await BeeManager.waitForSigtermToFinish()
