@@ -46,7 +46,7 @@ export async function runDownloader(force = false): Promise<void> {
   }
   await ensureDir(paths.data)
   await ensureAsset(
-    'https://github.com/Cafe137/bee-desktop-static-maker/releases/download/a8d82a50302775c72a57c48597d3e5be7906cc3bfa7f1498e368fe4dc9525049/static.zip',
+    'https://github.com/ethersphere/bee-desktop-static-maker/releases/download/59d3afab00f22f6cfb10513af35515a9ed4bb38ad63f04d378549bb310d872ec/static.zip',
     'static.zip',
     {
       checkTarget: ['trayTemplate.png', 'static'],
