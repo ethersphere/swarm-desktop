@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.11.1](https://www.github.com/ethersphere/bee-desktop/compare/v0.11.0...v0.11.1) (2022-06-20)
+
+
+### Bug Fixes
+
+* set productName to Swarm ([3013b29](https://www.github.com/ethersphere/bee-desktop/commit/3013b29b49613a2615c13abc0109a76160531bbc))
+
 ## [0.11.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.10.0...v0.11.0) (2022-06-20)
 
 
