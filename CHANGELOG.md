@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.11.3](https://www.github.com/ethersphere/bee-desktop/compare/v0.11.2...v0.11.3) (2022-06-20)
+
+
+### Bug Fixes
+
+* remove custom names ([158068c](https://www.github.com/ethersphere/bee-desktop/commit/158068cb3c3a1cb0c48833d596739458098a0f12))
+
 ### [0.11.2](https://www.github.com/ethersphere/bee-desktop/compare/v0.11.1...v0.11.2) (2022-06-20)
 
 
