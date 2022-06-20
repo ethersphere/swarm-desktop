@@ -2,7 +2,7 @@ import envPaths from 'env-paths'
 import { existsSync } from 'fs'
 import { join } from 'path'
 
-export const paths = envPaths('bee-desktop')
+export const paths = envPaths('SwarmDesktop')
 
 export function checkPath(path: string): boolean {
   return existsSync(getPath(path))

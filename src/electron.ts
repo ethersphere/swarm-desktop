@@ -1,6 +1,5 @@
 import { app, Menu, Tray } from 'electron'
 import { openDashboardInBrowser, openInstallerInBrowser } from './browser'
-import { runDownloader } from './downloader'
 import { runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
 import { createNotification } from './notify'
@@ -19,11 +18,6 @@ export function rebuildElectronTray() {
       {
         label: 'Open Installer',
         click: openInstallerInBrowser,
-      },
-      { type: 'separator' },
-      {
-        label: 'Redownload assets',
-        click: redownloadAssets,
       },
       {
         label: 'Quit',
@@ -51,11 +45,6 @@ export function rebuildElectronTray() {
           runLauncher()
         }
       },
-    },
-    { type: 'separator' },
-    {
-      label: 'Redownload assets',
-      click: redownloadAssets,
     },
     { type: 'separator' },
     {
@@ -89,18 +78,4 @@ export function runElectronTray() {
     tray = new Tray(getPath('trayTemplate.png'))
     rebuildElectronTray()
   })
-}
-
-async function redownloadAssets(): Promise<void> {
-  if (BeeManager.isRunning()) {
-    BeeManager.stop()
-  }
-  await runDownloader(true)
-  createNotification('New assets fetched successfully')
-
-  if (getStatus().hasInitialTransaction) {
-    runLauncher()
-  } else {
-    openInstallerInBrowser()
-  }
 }
