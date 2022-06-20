@@ -1,5 +1,13 @@
 # Changelog
 
+### [0.11.4](https://www.github.com/ethersphere/bee-desktop/compare/v0.11.3...v0.11.4) (2022-06-20)
+
+
+### Bug Fixes
+
+* add electronInstallerDebian ([822a0e5](https://www.github.com/ethersphere/bee-desktop/commit/822a0e5df91bc17e4b96e6fa8ac3cded7b258085))
+* remove suffix from envPaths ([00ae128](https://www.github.com/ethersphere/bee-desktop/commit/00ae128b813e4b19eb508f8a814f76887a5bbd9b))
+
 ### [0.11.3](https://www.github.com/ethersphere/bee-desktop/compare/v0.11.2...v0.11.3) (2022-06-20)
 
 
