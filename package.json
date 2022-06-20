@@ -1,6 +1,5 @@
 {
   "name": "bee-desktop",
-  "productName": "Swarm",
   "author": {
     "name": "Swarm",
     "email": "info@ethswarm.org"
@@ -35,8 +34,7 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon": "icon.icns",
-        "executableName": "Swarm"
+        "icon": "icon.icns"
       },
       "makers": [
         {
