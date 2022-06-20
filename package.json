@@ -5,7 +5,7 @@
     "name": "Swarm",
     "email": "info@ethswarm.org"
   },
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Desktop client for running and managing bee",
   "main": "dist/src/index.js",
   "scripts": {
