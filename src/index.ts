@@ -10,6 +10,24 @@ import * as Sentry from '@sentry/electron'
 import SENTRY from './.sentry.json'
 import PACKAGE_JSON from '../package.json'
 import { logger } from './logger'
+import { readFileSync, writeFileSync } from 'fs-extra'
+import { getPath } from './path'
+
+const DESKTOP_VERSION_FILE = 'desktop.version'
+
+function getDesktopVersionFromFile(): string | undefined {
+  try {
+    const desktopFile = readFileSync(getPath(DESKTOP_VERSION_FILE))
+
+    return desktopFile.toString('utf-8')
+  } catch (e) {
+    return
+  }
+}
+
+function writeDesktopVersionFile() {
+  writeFileSync(getPath(DESKTOP_VERSION_FILE), PACKAGE_JSON.version)
+}
 
 async function main() {
   logger.info(`Bee Desktop version: ${PACKAGE_JSON.version} (${process.env.NODE_ENV ?? 'production'})`)
@@ -40,7 +58,19 @@ async function main() {
     })
   }
 
-  runDownloader()
+  // check if the assets and the bee binary matches the desktop version
+  const desktopFileVersion = getDesktopVersionFromFile()
+  const force = desktopFileVersion !== PACKAGE_JSON.version
+
+  logger.info(
+    `Desktop version: ${PACKAGE_JSON.version}, desktop file version: ${desktopFileVersion}, downloading assets: ${force}`,
+  )
+
+  if (force) {
+    await runDownloader(force)
+    writeDesktopVersionFile()
+  }
+
   await Promise.all([waitForInstallerReadiness(), findFreePort()])
   runServer()
   runElectronTray()
