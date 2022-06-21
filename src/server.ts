@@ -20,6 +20,7 @@ import { getStatus } from './status'
 import { swap } from './swap'
 import { captureException } from '@sentry/electron'
 import { bufferRequest } from './utility'
+import PACKAGE_JSON from '../package.json'
 
 export function runServer() {
   const app = new Koa()
@@ -40,7 +41,7 @@ export function runServer() {
 
   // Open endpoints without any authentication
   router.get('/info', context => {
-    context.body = { name: 'bee-desktop' }
+    context.body = { name: 'bee-desktop', version: PACKAGE_JSON.version }
   })
 
   /**
