@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.13.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.12.1...v0.13.0) (2022-06-21)
+
+
+### Features
+
+* expose desktop version ([#129](https://www.github.com/ethersphere/bee-desktop/issues/129)) ([0e42b58](https://www.github.com/ethersphere/bee-desktop/commit/0e42b58c5f52c2c4eed11d54165a12d472d12ef8))
+
 ### [0.12.1](https://www.github.com/ethersphere/bee-desktop/compare/v0.12.0...v0.12.1) (2022-06-20)
 
 
