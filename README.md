@@ -20,9 +20,9 @@ After the 1.0 release this will be changed to opt-in instead.
 
 If you run the build version you can access logs of Bee Desktop at:
 
- - macOS: `~/Library/Logs/bee-desktop-nodejs/bee-desktop.log`
- - Windows: `%LOCALAPPDATA%\bee-desktop-nodejs\Log\bee-desktop.log` (for example, `C:\Users\USERNAME\AppData\Local\MyApp-nodejs\Log\bee-desktop.log`)
- - Linux: `~/.local/state/bee-desktop-nodejs/bee-desktop.log`
+ - macOS: `~/Library/Logs/Swarm Desktop/bee-desktop.log`
+ - Windows: `%LOCALAPPDATA%\Swarm Desktop\Log\bee-desktop.log` (for example, `C:\Users\USERNAME\AppData\Local\Swarm Desktop\Log\bee-desktop.log`)
+ - Linux: `~/.local/state/Swarm Desktop/bee-desktop.log`
 
 ## If you have a previous installation
 
@@ -30,12 +30,12 @@ You need to delete the previous assets first to receive updates
 
 To do so, delete the `static` folder under the following location:
 
-Windows: `%LOCALAPPDATA%\bee-desktop-nodejs\Data` (for example,
-`C:\Users\USERNAME\AppData\Local\bee-desktop-nodejs\Data`)
+Windows: `%LOCALAPPDATA%\Swarm Desktop\Data` (for example,
+`C:\Users\USERNAME\AppData\Local\Swarm Desktop\Data`)
 
-Mac OS: `~/Library/Application Support/bee-desktop-nodejs`
+Mac OS: `~/Library/Application Support/Swarm Desktop`
 
-Linux: `~/.local/share/bee-desktop-nodejs` (or `$XDG_DATA_HOME/bee-desktop-nodejs`)
+Linux: `~/.local/share/Swarm Desktop` (or `$XDG_DATA_HOME/Swarm Desktop`)
 
 ## Allow running on Mac OS
 
