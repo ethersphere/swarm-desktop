@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.13.0...v0.14.0) (2022-06-21)
+
+
+### Features
+
+* asset version check ([#132](https://www.github.com/ethersphere/bee-desktop/issues/132)) ([db2b4af](https://www.github.com/ethersphere/bee-desktop/commit/db2b4af9251af7591881e90d04c7a5c28cf3a046))
+
 ## [0.13.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.12.1...v0.13.0) (2022-06-21)
 
 
