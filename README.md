@@ -41,3 +41,10 @@ Linux: `~/.local/share/Swarm Desktop` (or `$XDG_DATA_HOME/Swarm Desktop`)
 
 Mac OS may not allow you to run the `.app` after unzipping. To solve this, right click the `.app` and click Open. You
 will have an option to ignore the warning.
+
+## Release process
+
+ 1. have whatever to be released from the Installer and Dashboard in their `master`
+ 2. trigger the [`bee-desktop-static-maker` release](https://github.com/ethersphere/bee-desktop-static-maker/actions/workflows/build.yaml)
+ 3. sync the URL of the released ZIP to `/src/downloader.ts`
+ 4. merge bee-desktop release please PR
