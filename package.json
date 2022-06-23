@@ -39,52 +39,6 @@
     "desktop"
   ],
   "license": "BSD-3-Clause",
-  "config": {
-    "forge": {
-      "packagerConfig": {
-        "icon": "icon.icns",
-        "executableName": "swarm-desktop"
-      },
-      "electronInstallerDebian": {
-        "bin": "Swarm Desktop"
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "bee_desktop"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ],
-      "publishers": [
-        {
-          "name": "@electron-forge/publisher-github",
-          "config": {
-            "repository": {
-              "owner": "ethersphere",
-              "name": "bee-desktop"
-            },
-            "prerelease": true,
-            "draft": false
-          }
-        }
-      ]
-    }
-  },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.63",
     "@electron-forge/maker-deb": "^6.0.0-beta.63",
