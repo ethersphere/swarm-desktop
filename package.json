@@ -70,7 +70,8 @@
             "repository": {
               "owner": "ethersphere",
               "name": "bee-desktop"
-            }
+            },
+            "prerelease": true
           }
         }
       ]
