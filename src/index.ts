@@ -12,6 +12,7 @@ import PACKAGE_JSON from '../package.json'
 import { logger } from './logger'
 import { readFileSync, writeFileSync } from 'fs-extra'
 import { getPath } from './path'
+import { ensureApiKey } from './api-key'
 
 const DESKTOP_VERSION_FILE = 'desktop.version'
 
@@ -71,6 +72,7 @@ async function main() {
     writeDesktopVersionFile()
   }
 
+  ensureApiKey()
   await findFreePort()
   runServer()
   runElectronTray()
