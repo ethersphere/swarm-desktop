@@ -3,7 +3,7 @@ import { openDashboardInBrowser, openInstallerInBrowser } from './browser'
 import { runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
 import { createNotification } from './notify'
-import { getPath } from './path'
+import { getAssetPath } from './path'
 import { getStatus } from './status'
 
 let tray: Tray
@@ -72,10 +72,10 @@ export function runElectronTray() {
 
   app.whenReady().then(() => {
     if (app.dock) {
-      app.dock.setIcon(getPath('icon.png'))
+      app.dock.setIcon(getAssetPath('icon.png'))
       app.dock.hide()
     }
-    tray = new Tray(getPath('trayTemplate.png'))
+    tray = new Tray(getAssetPath('trayTemplate.png'))
     rebuildElectronTray()
   })
 }

@@ -1,5 +1,5 @@
 import { openDashboardInBrowser, openInstallerInBrowser } from './browser'
-import { runDownloader, waitForInstallerReadiness } from './downloader'
+import { runDownloader } from './downloader'
 import { runElectronTray } from './electron'
 import { runKeepAliveLoop, runLauncher } from './launcher'
 import { findFreePort } from './port'
@@ -71,7 +71,7 @@ async function main() {
     writeDesktopVersionFile()
   }
 
-  await Promise.all([waitForInstallerReadiness(), findFreePort()])
+  await findFreePort()
   runServer()
   runElectronTray()
 
