@@ -71,7 +71,8 @@
               "owner": "ethersphere",
               "name": "bee-desktop"
             },
-            "prerelease": true
+            "prerelease": true,
+            "draft": false
           }
         }
       ]
