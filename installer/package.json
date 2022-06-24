@@ -4,11 +4,16 @@
     "private": true,
     "homepage": "http://localhost:5000/installer",
     "dependencies": {
+        "@types/jest": "^28.1.3",
+        "@types/node": "^18.0.0",
+        "@types/react": "^18.0.14",
+        "@types/react-dom": "^18.0.5",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
         "react-scripts": "5.0.0",
         "remixicon": "^2.5.0",
-        "remixicon-react": "^1.0.0"
+        "remixicon-react": "^1.0.0",
+        "typescript": "^4.7.4"
     },
     "scripts": {
         "start": "react-scripts start",
