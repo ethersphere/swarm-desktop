@@ -1,50 +1,116 @@
-# Bee Desktop
+# Swarm Desktop
 
-## Downloading the corresponding version
+[![Tests](https://github.com/ethersphere/swarm-desktop/actions/workflows/tests.yaml/badge.svg)](https://github.com/ethersphere/swarm-desktop/actions/workflows/tests.yaml)
+[![](https://img.shields.io/badge/made%20by-Swarm-blue.svg?style=flat-square)](https://swarm.ethereum.org/)
+[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
+![](https://img.shields.io/badge/npm-%3E%3D6.9.0-orange.svg?style=flat-square)
+![](https://img.shields.io/badge/Node.js-%3E%3D14.0.0-orange.svg?style=flat-square)
+![](https://img.shields.io/badge/runs%20on-macOS%20%7C%20Linux%20%7C%20Windows-orange)
 
-Go to the [releases page](https://github.com/ethersphere/bee-desktop/releases/tag/v0.4.0)
+> Electron Desktop app that helps you easily spin up and manage Swarm's Bee node
 
-Windows: `bee-desktop-0.4.0.Setup.exe`
+**Warning: This project is in beta state. There might (and most probably will) be changes in the future to its API and working. Also, no guarantees can be made about its stability, efficiency, and security at this stage.**
 
-Mac OS: `bee-desktop-darwin-x64-0.4.0.zip`
+Stay up to date by joining the [official Discord](https://discord.gg/GU22h2utj6) and by keeping an eye on the [releases tab](https://github.com/ethersphere/swarm-desktop/releases).
 
-Linux: `bee-desktop-0.4.0-1.x86_64.rpm` or `bee-desktop_0.4.0_amd64.deb`
+## Table of Contents
 
-> You can alternatively clone this repository and run `npm install` and then `npm start`
+- [Install](#install)
+- [Usage](#usage)
+- [Contribute](#contribute)
+  - [Development](#development)
+  - [Test](#test)
+- [License](#license)
 
-**Until 1.0 release, all our developer releases has enabled error tracking and reporting using [sentry.io](https://sentry.io/)!**
+## Install
 
-After the 1.0 release this will be changed to opt-in instead.
+Go to the [releases page](https://github.com/ethersphere/swarm-desktop/releases/latest) and download the correct build for your operation system:
 
-## Logs
+ - Windows: `Swarm.Desktop-***.Setup.exe`
+ - macOS: `Swarm.Desktop-darwin-x64-***.zip`
+ - Linux: `swarm-desktop_***_amd64.deb` or `swarm-desktop-***-1.x86_64.rpm`
 
-If you run the build version you can access logs of Bee Desktop at:
+> Until 1.0 release, all our developer releases has automatically enabled error tracking and reporting using sentry.io which is not possible to opt-out!
 
- - macOS: `~/Library/Logs/Swarm Desktop/bee-desktop.log`
- - Windows: `%LOCALAPPDATA%\Swarm Desktop\Log\bee-desktop.log` (for example, `C:\Users\USERNAME\AppData\Local\Swarm Desktop\Log\bee-desktop.log`)
- - Linux: `~/.local/state/Swarm Desktop/bee-desktop.log`
+### macOS
 
-## If you have a previous installation
+macOS may not allow you to run the .app after unzipping. To solve this, right click the .app and click Open. You will have an option to ignore the warning.
 
-You need to delete the previous assets first to receive updates
+## Usage
 
-To do so, delete the `static` folder under the following location:
+TODO
 
-Windows: `%LOCALAPPDATA%\Swarm Desktop\Data` (for example,
-`C:\Users\USERNAME\AppData\Local\Swarm Desktop\Data`)
+## Contribute
 
-Mac OS: `~/Library/Application Support/Swarm Desktop`
+There are some ways you can make this module better:
 
-Linux: `~/.local/share/Swarm Desktop` (or `$XDG_DATA_HOME/Swarm Desktop`)
+- Consult our [open issues](https://github.com/ethersphere/swarm-desktop/issues) and take on one of them
+- Help our tests reach 100% coverage!
+- Join us in our [Discord chat](https://discord.gg/wdghaQsGq5) in the #develop-on-swarm channel if you have questions or want to give feedback
 
-## Allow running on Mac OS
+### Architecture
 
-Mac OS may not allow you to run the `.app` after unzipping. To solve this, right click the `.app` and click Open. You
-will have an option to ignore the warning.
+Swarm Desktop consists of 3 components:
 
-## Release process
+ 1. Electron back-end that provides orchestration API that retrieve, spins, stops and manage the Bee node
+ 2. Installer front-end that provides UI that walk user through installation of all the components
+ 3. Bundled [Bee Dashboard](https://github.com/ethersphere/bee-dashboard) that provides UI to manage Bee node and provides access to Swarm network
 
- 1. have whatever to be released from the Installer and Dashboard in their `master`
- 2. trigger the [`bee-desktop-static-maker` release](https://github.com/ethersphere/bee-desktop-static-maker/actions/workflows/build.yaml)
- 3. sync the URL of the released ZIP to `/src/downloader.ts`
- 4. merge bee-desktop release please PR
+The Electron back-end is placed in `src` folder and the Installer is placed in `installer` folder.
+
+The Bee Desktop stores logs of both itself and Bee in the application's logs folder:
+
+ - macOS: `~/Library/Logs/Swarm Desktop/`
+ - Windows: `%LOCALAPPDATA%\Swarm Desktop\Log\` (for example, `C:\Users\USERNAME\AppData\Local\Swarm Desktop\Log\`)
+ - Linux: `~/.local/state/Swarm Desktop/`
+
+It also stores configuration files, Bee assets and other things in application's data folder:
+
+ - Windows: `%LOCALAPPDATA%\Swarm Desktop\Data` (for example, `C:\Users\USERNAME\AppData\Local\Swarm Desktop\Data`)
+ - Mac OS: `~/Library/Application Support/Swarm Desktop`
+ - Linux: `~/.local/share/Swarm Desktop` (or `$XDG_DATA_HOME/Swarm Desktop`)
+
+### Development
+
+As there are several independent components it bit depends on what you want to develop.
+
+#### Electron Desktop
+
+To work on the Electron Desktop back-end you just need to do your work and then run `npm start`. This will launch the
+Electron app and shows the Tray icon. No UI will be opened automatically. If you need to make more adjustment you have to exit
+the process with `SIGINT (CTRL+C)` and relaunch.
+
+#### Installer
+
+To work on the Installer, run first `npm start` that will spin up the Electron Desktop back-end and also launches the `/installer` development
+server. In order for the UI to be able to access the Desktop API it needs to have injected API token, which you can do by running `npm run open:installer`
+that will open the Installer UI served by the development server with API key be passed in the URL. Changes to the Installer UI are automatically
+hot-reloaded.
+
+The UI served by the Desktop itself is updated only when you restart the `npm start`.
+
+#### Dashboard
+
+To work on the Dashboard, run first `npm start` that will spin up the Electron Desktop back-end. Then go to your locally cloned `bee-dashboard` repo and
+in it start the development server with `npm start`. Similarly to Installer, the Dashboard also needs to have API key injected in order to use the
+Desktop's API. You can inject it similarly by running `npm run desktop` in the Dashboard repo that will open the Dashboard UI with API key in the URL.
+Changes to the Installer UI are automatically hot-reloaded.
+
+The UI served by the Desktop itself is updated only when you update the `@ethersphere/bee-dashboard` NPM package in the Desktop repo.
+
+#### Maintenance tasks
+
+There are several handy scripts:
+
+ - `npm run purge:data` that purge's the Desktop's data folder
+ - `npm run purge:logs` that purge's the Dekstop's logs folder
+
+## Maintainers
+
+- [Cafe137](https://github.com/Cafe137)
+- [vojtechsimetka](https://github.com/vojtechsimetka)
+
+## License
+
+[BSD-3-Clause](./LICENSE)

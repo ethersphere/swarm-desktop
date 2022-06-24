@@ -29,6 +29,7 @@ function App() {
 
   const urlSearchParams = new URLSearchParams(window.location.search)
   const newApiKey = urlSearchParams.get('v')
+
   if (newApiKey) {
     localStorage.setItem('apiKey', newApiKey)
     window.location.search = ''
@@ -43,6 +44,7 @@ function App() {
       setMessage('Downloading Bee binary...')
       for (let i = 0; i < 600; i++) {
         const status = await getStatus()
+
         if (status.assetsReady) {
           return
         }
@@ -53,6 +55,7 @@ function App() {
     async function connectToDesktopApi() {
       setMessage('Connecting to Desktop API...')
       const status = await getStatus()
+
       if (!status.assetsReady) {
         await waitForBeeAsset()
       }
@@ -60,6 +63,7 @@ function App() {
 
     async function generateAddress() {
       setMessage('Generating Bee Ethereum address...')
+
       return postJson(`${getHost()}/setup/address`)
     }
 
@@ -68,8 +72,10 @@ function App() {
       for (let i = 0; i < 5; i++) {
         try {
           await postJson(`${getHost()}/setup/transaction`)
+
           return
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.error(error)
         }
       }
@@ -78,6 +84,7 @@ function App() {
 
     async function restartBee() {
       setMessage('Starting Bee...')
+
       return postJson(`${getHost()}/restart`)
     }
 
@@ -85,6 +92,7 @@ function App() {
       setMessage('Waiting for ultra light mode...')
       for (let i = 0; i < MAX_RETRIES; i++) {
         const { connections } = await getJson(`${getHost()}/peers`)
+
         if (connections > 0) {
           return
         }
@@ -105,6 +113,7 @@ function App() {
       .then(wait)
       .then(() => window.location.replace(`${getHost()}/dashboard/`))
       .catch(error => {
+        // eslint-disable-next-line no-console
         console.error(error)
         setError(error)
       })

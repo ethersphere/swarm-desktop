@@ -16,5 +16,6 @@ export function Circle({ color, size, borderSize, borderColor, quarter = false, 
     borderRadius: '9999px',
     borderRightColor: quarter ? 'transparent' : borderColor,
   }
+
   return <div className={spinner ? 'spinner' : ''} style={style}></div>
 }

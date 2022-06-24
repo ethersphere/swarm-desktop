@@ -8,6 +8,7 @@ export async function postJson(url: string, data?: Record<string, unknown>) {
 
 async function sendRequest(url: string, method: string, body?: Record<string, unknown>): Promise<Record<string, any>> {
   const authorization = localStorage.getItem('apiKey')
+
   if (!authorization) {
     throw Error('API key not found in local storage')
   }
@@ -20,5 +21,6 @@ async function sendRequest(url: string, method: string, body?: Record<string, un
     headers,
     body: body ? JSON.stringify(body) : undefined,
   })
+
   return await response.json()
 }

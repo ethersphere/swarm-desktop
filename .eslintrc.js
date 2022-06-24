@@ -1,8 +1,6 @@
 module.exports = {
   extends: ['plugin:@typescript-eslint/recommended', 'prettier', 'plugin:prettier/recommended'],
   parserOptions: {
-    sourceType: 'module',
-    ecmaVersion: 2018,
     project: './tsconfig.test.json',
   },
   env: {
@@ -99,6 +97,12 @@ module.exports = {
     ],
   },
   overrides: [
+    {
+      files: ['installer/**/*'],
+      parserOptions: {
+        project: './installer/tsconfig.json',
+      },
+    },
     {
       files: ['*.spec.ts'],
       rules: {

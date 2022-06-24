@@ -1,15 +1,12 @@
 {
   "ignores": [
-    "@electron-forge/publisher-github",
-    "@electron-forge/maker-deb",
-    "@electron-forge/maker-deb",
-    "@electron-forge/maker-rpm",
-    "@electron-forge/maker-squirrel",
-    "@electron-forge/maker-zip",
+    "@electron-forge/*",
+    "@types/*",
     "@kayahr/jest-electron-runner",
-    "@types/jest",
     "electron-forge-maker-zip-all",
     "ts-jest",
-    "ts-node"
+    "ts-node",
+    "concurrently",
+    "cross-env"
   ]
 }
