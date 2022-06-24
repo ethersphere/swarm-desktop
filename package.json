@@ -22,8 +22,8 @@
     "purge:logs": "node devkit.mjs purge:logs",
     "clean": "rimraf dist out",
     "depcheck": "depcheck . && depcheck installer/",
-    "lint": "eslint --fix \"src/**/*.ts\" \"installer/**/*.{ts,tsx}\"",
-    "lint:check": "eslint \"src/**/*.ts\" \"installer/**/*.{ts,tsx}\"",
+    "lint": "eslint --fix \"src/**/*.ts\" && cd installer && npm run lint",
+    "lint:check": "eslint \"src/**/*.ts\" && cd installer && npm run lint:check",
     "check:types": "tsc --project tsconfig.test.json && cd installer && tsc --project tsconfig.test.json",
     "test:unit": "jest --verbose -config=jest.config.ts "
   },

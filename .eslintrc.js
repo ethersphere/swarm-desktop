@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['plugin:@typescript-eslint/recommended', 'prettier', 'plugin:prettier/recommended'],
+  extends: ['plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
   parserOptions: {
     project: './tsconfig.test.json',
   },
@@ -97,12 +97,6 @@ module.exports = {
     ],
   },
   overrides: [
-    {
-      files: ['installer/**/*'],
-      parserOptions: {
-        project: './installer/tsconfig.json',
-      },
-    },
     {
       files: ['*.spec.ts'],
       rules: {
