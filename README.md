@@ -114,6 +114,8 @@ There are several handy scripts:
 - [Cafe137](https://github.com/Cafe137)
 - [vojtechsimetka](https://github.com/vojtechsimetka)
 
+See what "Maintainer" means [here](https://github.com/ethersphere/repo-maintainer).
+
 ## License
 
 [BSD-3-Clause](./LICENSE)
