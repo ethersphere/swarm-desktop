@@ -75,6 +75,9 @@ It also stores configuration files, Bee assets and other things in application's
 
 As there are several independent components it bit depends on what you want to develop.
 
+**Be aware!** The UIs (Installer and Dashboard) won't automatically open during development in order not to confuse on which
+environment they are running. You have to open them manually.
+
 #### Electron Desktop
 
 To work on the Electron Desktop back-end you just need to do your work and then run `npm start`. This will launch the

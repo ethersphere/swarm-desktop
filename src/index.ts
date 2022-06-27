@@ -79,9 +79,10 @@ async function main() {
 
   if (getStatus().hasInitialTransaction) {
     runLauncher()
-    openDashboardInBrowser()
+
+    if (process.env.NODE_ENV !== 'development') openDashboardInBrowser()
   } else {
-    openInstallerInBrowser()
+    if (process.env.NODE_ENV !== 'development') openInstallerInBrowser()
   }
   runKeepAliveLoop()
 }
