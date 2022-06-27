@@ -25,7 +25,7 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci && cd ./installer && npm ci
 
       - name: Install custom Bee Dashboard
         if: github.event.inputs.dashboard != ''
