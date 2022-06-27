@@ -1,12 +1,12 @@
-export async function getJson(url: string) {
-  return sendRequest(url, 'GET')
+export async function getJson<T>(url: string): Promise<T> {
+  return sendRequest<T>(url, 'GET')
 }
 
 export async function postJson(url: string, data?: Record<string, unknown>) {
   return sendRequest(url, 'POST', data)
 }
 
-async function sendRequest(url: string, method: string, body?: Record<string, unknown>): Promise<Record<string, any>> {
+async function sendRequest<T = void>(url: string, method: string, body?: Record<string, unknown>): Promise<T> {
   const authorization = localStorage.getItem('apiKey')
 
   if (!authorization) {

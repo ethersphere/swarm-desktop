@@ -18,8 +18,15 @@ function getHost() {
   return process.env.REACT_APP_BEE_DESKTOP_URL || `${window.location.protocol}//${window.location.host}`
 }
 
-async function getStatus() {
-  return await getJson(`${getHost()}/status`)
+interface Status {
+  address: string | null
+  config: Record<string, unknown>
+  hasInitialTransaction: boolean
+  assetsReady: boolean
+}
+
+async function getStatus(): Promise<Status> {
+  return await getJson<Status>(`${getHost()}/status`)
 }
 
 function App() {
@@ -91,7 +98,7 @@ function App() {
     async function waitForUltraLightNode() {
       setMessage('Waiting for ultra light mode...')
       for (let i = 0; i < MAX_RETRIES; i++) {
-        const { connections } = await getJson(`${getHost()}/peers`)
+        const { connections } = await getJson<{ connections: number }>(`${getHost()}/peers`)
 
         if (connections > 0) {
           return
@@ -127,44 +134,52 @@ function App() {
     window.location.reload()
   }
 
-  const content = error ? (
-    <Center>
-      <Box mb={1}>
-        <p className="strong">Installation failed!</p>
-      </Box>
-      <Box mb={4}>
-        <p className="light">Sorry… if this happens again you may try to install Swarm manually.</p>
-      </Box>
-      <button onClick={onRetry}>
-        <RestartIcon size={18} color="#dd7200" /> Retry now
-      </button>
-    </Center>
-  ) : isLoading ? (
-    <Center>
-      <Box mb={7}>
-        <Circle color="#ededed" size="216px" borderSize="24px" borderColor="#f8f8f8" spinner quarter />
-      </Box>
-      <Box mb={1}>
-        <p className="strong">Installation in progress...</p>
-      </Box>
-      <p className="light">{message}</p>
-    </Center>
-  ) : (
-    <Center>
-      <Box mb={1}>
-        <p className="strong">Welcome to Swarm!</p>
-      </Box>
-      <Box mb={4}>
-        <p className="light">
-          Thanks for downloading Swarm Desktop. Click the button below to install Swarm and set up your node. This
-          shouldn't take more than 30 seconds.
-        </p>
-      </Box>
-      <button onClick={onClick}>
-        <InstallIcon size={18} color="#dd7200" /> Install Swarm
-      </button>
-    </Center>
-  )
+  let content
+
+  if (error) {
+    content = (
+      <Center>
+        <Box mb={1}>
+          <p className="strong">Installation failed!</p>
+        </Box>
+        <Box mb={4}>
+          <p className="light">Sorry… if this happens again you may try to install Swarm manually.</p>
+        </Box>
+        <button onClick={onRetry}>
+          <RestartIcon size={18} color="#dd7200" /> Retry now
+        </button>
+      </Center>
+    )
+  } else if (isLoading) {
+    content = (
+      <Center>
+        <Box mb={7}>
+          <Circle color="#ededed" size="216px" borderSize="24px" borderColor="#f8f8f8" spinner quarter />
+        </Box>
+        <Box mb={1}>
+          <p className="strong">Installation in progress...</p>
+        </Box>
+        <p className="light">{message}</p>
+      </Center>
+    )
+  } else {
+    content = (
+      <Center>
+        <Box mb={1}>
+          <p className="strong">Welcome to Swarm!</p>
+        </Box>
+        <Box mb={4}>
+          <p className="light">
+            Thanks for downloading Swarm Desktop. Click the button below to install Swarm and set up your node. This
+            shouldn't take more than 30 seconds.
+          </p>
+        </Box>
+        <button onClick={onClick}>
+          <InstallIcon size={18} color="#dd7200" /> Install Swarm
+        </button>
+      </Center>
+    )
+  }
 
   return (
     <Container>
