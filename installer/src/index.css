@@ -1,0 +1,129 @@
+@font-face {
+    font-family: 'iA-Writer';
+    src: url('/public/iAWriterQuattroS-Regular.woff');
+}
+
+body {
+    margin: 0;
+}
+
+body,
+button {
+    font-family: 'iA-Writer', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+        'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #303030;
+    background: #ededed;
+    font-size: 14px;
+    text-align: center;
+}
+
+.todo-item {
+    background: #fff;
+    padding: 1rem;
+    margin-bottom: 16px;
+    color: #888;
+    box-shadow: 0 0 4px #ddd;
+    width: 500px;
+}
+
+.todo-body {
+    display: flex;
+    align-items: center;
+}
+
+.todo-item p {
+    margin-left: 8px;
+}
+
+.todo-item code {
+    display: block;
+    margin-top: 8px;
+    font-size: 90%;
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    animation: spinner 1s infinite linear;
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    border-radius: 0;
+    outline: none;
+    font-size: 14px;
+    color: #303030;
+    background: #f9f9f9;
+    width: 160px;
+    height: 42px;
+}
+
+button > svg {
+    margin-right: 8px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 640px;
+}
+
+.container-item {
+    flex: 1;
+}
+
+.center {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    max-width: 100%;
+    width: 172px;
+    margin-top: 64px;
+    margin-bottom: 64px;
+}
+
+.strong {
+    font-size: 16px;
+}
+
+.light {
+    font-style: italic;
+    color: #6c6c6c;
+}

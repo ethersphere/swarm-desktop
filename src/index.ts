@@ -1,5 +1,5 @@
 import { openDashboardInBrowser, openInstallerInBrowser } from './browser'
-import { runDownloader, waitForInstallerReadiness } from './downloader'
+import { runDownloader } from './downloader'
 import { runElectronTray } from './electron'
 import { runKeepAliveLoop, runLauncher } from './launcher'
 import { findFreePort } from './port'
@@ -12,6 +12,7 @@ import PACKAGE_JSON from '../package.json'
 import { logger } from './logger'
 import { readFileSync, writeFileSync } from 'fs-extra'
 import { getPath } from './path'
+import { ensureApiKey } from './api-key'
 
 const DESKTOP_VERSION_FILE = 'desktop.version'
 
@@ -71,15 +72,17 @@ async function main() {
     writeDesktopVersionFile()
   }
 
-  await Promise.all([waitForInstallerReadiness(), findFreePort()])
+  ensureApiKey()
+  await findFreePort()
   runServer()
   runElectronTray()
 
   if (getStatus().hasInitialTransaction) {
     runLauncher()
-    openDashboardInBrowser()
+
+    if (process.env.NODE_ENV !== 'development') openDashboardInBrowser()
   } else {
-    openInstallerInBrowser()
+    if (process.env.NODE_ENV !== 'development') openInstallerInBrowser()
   }
   runKeepAliveLoop()
 }

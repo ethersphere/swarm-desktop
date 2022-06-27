@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
-    "allowJs": true,
+    "allowJs": false,
     "module": "commonjs",
     "esModuleInterop": true,
     "noImplicitAny": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "outDir": "dist",
+    "outDir": "dist/desktop",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "typeRoots": ["./src/types", "node_modules/@types"],

@@ -14,21 +14,23 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [18.x]
 
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          cache: 'npm'
+          cache: npm
           node-version: ${{ matrix.node-version }}
 
-      - name: Install deps
-        run: npm ci
+      - name: Install npm deps
+        run: npm ci && cd ./installer && npm ci
+
+      - name: Build assets
+        run: npm run build
 
       - name: Commit linting
         uses: wagoid/commitlint-github-action@v2

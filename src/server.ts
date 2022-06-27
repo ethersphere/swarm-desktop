@@ -3,10 +3,13 @@ import Wallet from 'ethereumjs-wallet'
 import { readFile } from 'fs/promises'
 import Koa from 'koa'
 import koaBodyparser from 'koa-bodyparser'
+import mount from 'koa-mount'
 import serve from 'koa-static'
 import fetch from 'node-fetch'
+import * as path from 'path'
 import { URL } from 'url'
-import { join } from 'path'
+import { captureException } from '@sentry/electron'
+
 import { getApiKey } from './api-key'
 import { sendBzzTransaction, sendNativeTransaction } from './blockchain'
 import { readConfigYaml, writeConfigYaml } from './config-yaml'
@@ -18,13 +21,17 @@ import { getPath } from './path'
 import { port } from './port'
 import { getStatus } from './status'
 import { swap } from './swap'
-import { captureException } from '@sentry/electron'
 import { bufferRequest } from './utility'
 import PACKAGE_JSON from '../package.json'
 
 export function runServer() {
   const app = new Koa()
-  app.use(serve(getPath('static')))
+  app.use(mount('/installer', serve(path.join(__dirname, '..', '..', 'installer'))))
+
+  // require.resolve() gives you the `main` entrypoint so for Dashboard `lib/App.js`.
+  const dashboardPath = path.join(path.dirname(require.resolve('@ethersphere/bee-dashboard')), '..', 'build')
+  app.use(mount('/dashboard', serve(dashboardPath)))
+
   app.use(async (context, next) => {
     const corsOrigin = process.env.NODE_ENV === 'development' ? '*' : `http://localhost:${port.value}`
     context.set('Access-Control-Allow-Origin', corsOrigin)
@@ -36,6 +43,7 @@ export function runServer() {
     context.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS')
     await next()
   })
+
   app.use(koaBodyparser({ onerror: logger.error }))
   const router = new Router()
 
@@ -172,7 +180,7 @@ export function runServer() {
 }
 
 async function getPrivateKey(): Promise<string> {
-  const v3 = await readFile(getPath(join('data-dir', 'keys', 'swarm.key')), 'utf-8')
+  const v3 = await readFile(getPath(path.join('data-dir', 'keys', 'swarm.key')), 'utf-8')
   const wallet = await Wallet.fromV3(v3, 'Test')
   const privateKeyString = wallet.getPrivateKeyString()
 
