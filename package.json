@@ -7,6 +7,8 @@
   },
   "version": "0.14.0",
   "description": "Desktop client for running and managing bee",
+  "homepage": "https://desktop.ethswarm.org/",
+  "repository": "https://github.com/ethersphere/swarm-desktop",
   "main": "dist/desktop/src/index.js",
   "scripts": {
     "start": "concurrently -n \"desktop,installer\" \"cross-env-shell NODE_ENV=development 'npm run clean && npm run build && electron-forge start'\" \"cd ./installer && npm start\"",
@@ -99,6 +101,7 @@
     "node-fetch": "^2.6.7",
     "node-notifier": "^10.0.1",
     "request-stats": "^3.0.0",
+    "update-electron-app": "^2.0.1",
     "uuid": "^8.3.2",
     "winston": "^3.7.2"
   }
