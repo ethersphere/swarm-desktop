@@ -19,7 +19,7 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci && cd ./installer && npm ci
 
       - name: Configure secrets
         uses: jossef/action-set-json-field@v1
