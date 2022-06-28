@@ -68,7 +68,7 @@ jobs:
         run: npm --production ci
 
       - name: Purge installer src
-        run: rm -rf installer
+        run: rimraf ./installer
 
       - name: Publish
         env:
