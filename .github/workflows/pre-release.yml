@@ -24,7 +24,7 @@ jobs:
           cache: 'npm'
           node-version: 18
 
-      - name: Install dependencies
+      - name: Install all dependencies
         run: npm ci && cd ./installer && npm ci
 
       - name: Install custom Bee Dashboard
@@ -60,6 +60,15 @@ jobs:
         with:
           fileName: 'win-certificate.pfx'
           encodedString: ${{ secrets.WINDOWS_CODESIGN_P12 }}
+
+      - name: Build
+        run: npm run build
+
+      - name: Purge dev dependencies
+        run: npm --production ci
+
+      - name: Purge installer src
+        run: rm -rf installer
 
       - name: Publish
         env:
