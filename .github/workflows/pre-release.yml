@@ -48,6 +48,7 @@ jobs:
       - name: Publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEBUG: electron
         run: npm run publish
 
       - name: Publish arm64
@@ -65,5 +66,6 @@ jobs:
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
         with:
           ignore_missing: true
+          ignore_empty: true
           sourcemaps: ./dist/src
           version: ${{ github.event.inputs.version }}
