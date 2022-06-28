@@ -86,5 +86,5 @@ jobs:
         with:
           ignore_missing: true
           ignore_empty: true
-          sourcemaps: ./dist/src
+          sourcemaps: ./dist/desktop/src
           version: ${{ github.event.inputs.version }}
