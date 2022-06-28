@@ -25,7 +25,7 @@ const config = {
       OriginalFilename: 'Swarm Desktop',
     },
     osxSign: {
-      identity: '3rd Party Mac Developer Application: Swarm Association (9J9SPHU9RP)',
+      identity: 'Apple Distribution: Swarm Association (9J9SPHU9RP)',
       hardenedRuntime: true,
       'gatekeeper-assess': false,
       entitlements: 'assets/entitlements.plist',
