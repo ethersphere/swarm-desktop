@@ -1,3 +1,7 @@
+import { readFileSync, writeFileSync } from 'fs-extra'
+import * as Sentry from '@sentry/electron'
+import { dialog } from 'electron'
+
 import { openDashboardInBrowser, openInstallerInBrowser } from './browser'
 import { runDownloader } from './downloader'
 import { runElectronTray } from './electron'
@@ -5,12 +9,9 @@ import { runKeepAliveLoop, runLauncher } from './launcher'
 import { findFreePort } from './port'
 import { runServer } from './server'
 import { getStatus } from './status'
-import * as Sentry from '@sentry/electron'
-
 import SENTRY from './.sentry.json'
 import PACKAGE_JSON from '../package.json'
 import { logger } from './logger'
-import { readFileSync, writeFileSync } from 'fs-extra'
 import { getPath } from './path'
 import { ensureApiKey } from './api-key'
 
@@ -87,4 +88,6 @@ async function main() {
   runKeepAliveLoop()
 }
 
-main()
+main().catch(e => {
+  dialog.showErrorBox('There was an error in Swarm Desktop', e.message)
+})
