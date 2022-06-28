@@ -64,9 +64,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Purge dev dependencies
-        run: npm --production ci
-
       - name: Purge installer src
         run: rm -rf installer
 
