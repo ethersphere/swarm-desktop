@@ -65,7 +65,7 @@ jobs:
         run: npm run build
 
       - name: Purge installer src
-        run: rimraf ./installer
+        run: npx rimraf ./installer
 
       - name: Publish
         env:
