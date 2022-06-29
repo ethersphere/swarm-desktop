@@ -157,7 +157,7 @@ function App() {
           <Circle color="#ededed" size="216px" borderSize="24px" borderColor="#f8f8f8" spinner quarter />
         </Box>
         <Box mb={1}>
-          <p className="strong">Installation in progress...</p>
+          <p className="strong">Installation in progress</p>
         </Box>
         <p className="light">{message}</p>
       </Center>
