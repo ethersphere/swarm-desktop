@@ -12,7 +12,7 @@ if (process.env['WINDOWS_CODESIGN_FILE']) {
   }
 }
 
-const iconPath = path.resolve(__dirname, 'assets', 'icon.icns')
+const iconPath = path.resolve(__dirname, 'assets', 'icon')
 
 const config = {
   packagerConfig: {
@@ -20,10 +20,7 @@ const config = {
     executableName: 'swarm-desktop',
     name: 'Swarm Desktop',
     appBundleId: 'org.ethswarm.swarmDesktop',
-    win32metadata: {
-      CompanyName: 'Swarm Foundation',
-      OriginalFilename: 'Swarm Desktop',
-    },
+    asar: true,
     osxSign: {
       // identity: 'Apple Distribution: Swarm Association (9J9SPHU9RP)',
       hardenedRuntime: true,
