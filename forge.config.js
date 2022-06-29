@@ -22,12 +22,12 @@ const config = {
     appBundleId: 'org.ethswarm.swarmDesktop',
     asar: true,
     osxSign: {
-      // identity: 'Apple Distribution: Swarm Association (9J9SPHU9RP)',
+      identity: 'Developer ID Application: Swarm Association (9J9SPHU9RP)',
       hardenedRuntime: true,
       'gatekeeper-assess': false,
       entitlements: 'assets/entitlements.plist',
       'entitlements-inherit': 'assets/entitlements.plist',
-      // 'signature-flags': 'library',
+      'signature-flags': 'library',
     },
   },
   electronInstallerDebian: {
@@ -38,8 +38,8 @@ const config = {
       name: '@electron-forge/maker-squirrel',
       config: {
         name: 'swarm-desktop',
-        // certificateFile: process.env['WINDOWS_CODESIGN_FILE'],
-        // certificatePassword: process.env['WINDOWS_CODESIGN_PASSWORD'],
+        certificateFile: process.env['WINDOWS_CODESIGN_FILE'],
+        certificatePassword: process.env['WINDOWS_CODESIGN_PASSWORD'],
       },
     },
     {
@@ -96,6 +96,6 @@ function notarizeMaybe() {
   }
 }
 
-// notarizeMaybe()
+notarizeMaybe()
 
 module.exports = config
