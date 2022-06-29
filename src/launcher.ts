@@ -77,7 +77,10 @@ export async function runLauncher() {
 }
 
 async function sendTransaction(address: string) {
-  const response = await fetch(`https://onboarding.ethswarm.org/faucet/overlay/${address}`, { method: 'POST' })
+  const response = await fetch(`https://onboarding.ethswarm.org/faucet/overlay/${address}`, {
+    method: 'POST',
+    headers: { 'app-name': 'swarm-desktop' },
+  })
   const json = await response.json()
 
   return { transaction: json.transactionHash, blockHash: json.nextBlockHashBee }
