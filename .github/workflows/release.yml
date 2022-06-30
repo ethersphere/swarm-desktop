@@ -21,6 +21,19 @@ jobs:
       - name: Install dependencies
         run: npm ci && cd ./installer && npm ci
 
+      - name: Read Bee Dashboard version
+        id: dashboardVersion
+        uses:  ashley-taylor/read-json-property-action@v1.0
+        with:
+          path: package.json
+          property: dependencies.@ethersphere/bee-dashboard
+
+      - name: Custom build Bee Dashboard with Sentry enabled
+        run: npm install ethersphere/bee-dashboard#${{dashboardVersion}}
+        env:
+          REACT_APP_SENTRY_KEY: ${{ secrets.SENTRY_KEY_DASHBOARD }}
+          REACT_APP_SENTRY_ENVIRONMENT: 'desktop'
+
       - name: Set MacOS signing certs
         if: matrix.os == 'macos-latest'
         run: .github/tools/add-macos-cert.sh
