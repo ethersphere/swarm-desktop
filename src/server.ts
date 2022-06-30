@@ -1,4 +1,5 @@
 import Router from '@koa/router'
+import { captureException } from '@sentry/electron'
 import Wallet from 'ethereumjs-wallet'
 import { readFile } from 'fs/promises'
 import Koa from 'koa'
@@ -8,8 +9,8 @@ import serve from 'koa-static'
 import fetch from 'node-fetch'
 import * as path from 'path'
 import { URL } from 'url'
-import { captureException } from '@sentry/electron'
 
+import PACKAGE_JSON from '../package.json'
 import { getApiKey } from './api-key'
 import { sendBzzTransaction, sendNativeTransaction } from './blockchain'
 import { readConfigYaml, writeConfigYaml } from './config-yaml'
@@ -22,7 +23,6 @@ import { port } from './port'
 import { getStatus } from './status'
 import { swap } from './swap'
 import { bufferRequest } from './utility'
-import PACKAGE_JSON from '../package.json'
 
 export function runServer() {
   const app = new Koa()
@@ -50,6 +50,16 @@ export function runServer() {
   // Open endpoints without any authentication
   router.get('/info', context => {
     context.body = { name: 'bee-desktop', version: PACKAGE_JSON.version }
+  })
+  router.get('/price', async context => {
+    try {
+      const response = await fetch('https://tokenservice.ethswarm.org/token_price')
+      context.body = await response.text()
+    } catch (error) {
+      logger.error(error)
+      context.status = 503
+      context.body = { message: 'Failed to fetch price from token service', error }
+    }
   })
 
   /**
