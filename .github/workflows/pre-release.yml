@@ -30,6 +30,9 @@ jobs:
       - name: Install custom Bee Dashboard
         if: github.event.inputs.dashboard != ''
         run: npm install github:ethersphere/bee-dashboard#${{ github.event.inputs.dashboard }}
+        env:
+          REACT_APP_SENTRY_KEY: ${{ secrets.SENTRY_KEY_DASHBOARD }}
+          REACT_APP_SENTRY_ENVIRONMENT: 'desktop-prerelease'
 
       - name: Replace Version in package.json
         uses: jossef/action-set-json-field@v1
@@ -80,6 +83,8 @@ jobs:
         if: matrix.os == 'macos-latest'
         run: npx electron-forge publish --arch=arm64
         env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Sentry release
