@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from 'fs-extra'
 import * as Sentry from '@sentry/electron'
-import { dialog } from 'electron'
+import { dialog, app } from 'electron'
 
 import { openDashboardInBrowser, openInstallerInBrowser } from './browser'
 import { runDownloader } from './downloader'
@@ -14,6 +14,15 @@ import PACKAGE_JSON from '../package.json'
 import { logger } from './logger'
 import { getPath } from './path'
 import { ensureApiKey } from './api-key'
+
+// TODO: Add types definition
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import isMainRun from 'electron-squirrel-startup'
+
+if (!isMainRun) {
+  app.quit()
+}
 
 const DESKTOP_VERSION_FILE = 'desktop.version'
 

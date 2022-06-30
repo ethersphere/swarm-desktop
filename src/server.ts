@@ -24,12 +24,16 @@ import { getStatus } from './status'
 import { swap } from './swap'
 import { bufferRequest } from './utility'
 
+const INSTALLER_DIST = path.join(__dirname, '..', '..', 'installer')
+
 export function runServer() {
   const app = new Koa()
-  app.use(mount('/installer', serve(path.join(__dirname, '..', '..', 'installer'))))
+  logger.info(`Serving installer from path: ${INSTALLER_DIST}`)
+  app.use(mount('/installer', serve(INSTALLER_DIST)))
 
   // require.resolve() gives you the `main` entrypoint so for Dashboard `lib/App.js`.
   const dashboardPath = path.join(path.dirname(require.resolve('@ethersphere/bee-dashboard')), '..', 'build')
+  logger.info(`Serving dashboard from path: ${dashboardPath}`)
   app.use(mount('/dashboard', serve(dashboardPath)))
 
   app.use(async (context, next) => {
