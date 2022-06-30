@@ -38,6 +38,8 @@ const config = {
       name: '@electron-forge/maker-squirrel',
       config: {
         name: 'swarm-desktop',
+        iconUrl: iconPath + '.ico',
+        setupIcon: iconPath + '.ico',
         certificateFile: process.env['WINDOWS_CODESIGN_FILE'],
         certificatePassword: process.env['WINDOWS_CODESIGN_PASSWORD'],
       },
