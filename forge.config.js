@@ -45,6 +45,7 @@ const config = {
     {
       name: '@electron-forge/maker-dmg',
       config: {
+        icon: `${iconPath}.icns`,
         format: 'ULFO',
       },
     },
