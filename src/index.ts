@@ -18,9 +18,9 @@ import { ensureApiKey } from './api-key'
 // TODO: Add types definition
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import isMainRun from 'electron-squirrel-startup'
+import squirrelInstallingExecution from 'electron-squirrel-startup'
 
-if (!isMainRun) {
+if (squirrelInstallingExecution) {
   app.quit()
 }
 
