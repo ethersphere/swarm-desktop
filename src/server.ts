@@ -26,6 +26,8 @@ import { bufferRequest } from './utility'
 
 const INSTALLER_DIST = path.join(__dirname, '..', '..', 'installer')
 
+const AUTO_UPDATE_ENABLED_PLATFORMS = ['darwin', 'win32']
+
 export function runServer() {
   const app = new Koa()
   logger.info(`Serving installer from path: ${INSTALLER_DIST}`)
@@ -53,7 +55,11 @@ export function runServer() {
 
   // Open endpoints without any authentication
   router.get('/info', context => {
-    context.body = { name: 'bee-desktop', version: PACKAGE_JSON.version }
+    context.body = {
+      name: 'bee-desktop',
+      version: PACKAGE_JSON.version,
+      autoUpdateEnabled: AUTO_UPDATE_ENABLED_PLATFORMS.includes(process.platform),
+    }
   })
   router.get('/price', async context => {
     try {

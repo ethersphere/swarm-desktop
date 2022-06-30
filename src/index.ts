@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync } from 'fs-extra'
 import * as Sentry from '@sentry/electron'
 import { dialog, app } from 'electron'
+import updater from 'update-electron-app'
 
 import { openDashboardInBrowser, openInstallerInBrowser } from './browser'
 import { runDownloader } from './downloader'
@@ -68,6 +69,9 @@ async function main() {
       // },
     })
   }
+
+  // Auto updater
+  updater({ logger })
 
   // check if the assets and the bee binary matches the desktop version
   const desktopFileVersion = getDesktopVersionFromFile()
