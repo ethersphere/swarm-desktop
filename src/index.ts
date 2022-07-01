@@ -20,6 +20,7 @@ import { ensureApiKey } from './api-key'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import squirrelInstallingExecution from 'electron-squirrel-startup'
+import { initSplash } from './splash'
 
 if (squirrelInstallingExecution) {
   app.quit()
@@ -69,6 +70,7 @@ async function main() {
       // },
     })
   }
+  const hideSplash = await initSplash()
 
   // Auto updaterg
   // @ts-ignore: https://github.com/electron/update-electron-app/pull/96
@@ -99,6 +101,8 @@ async function main() {
   } else {
     if (process.env.NODE_ENV !== 'development') openInstallerInBrowser()
   }
+
+  hideSplash()
   runKeepAliveLoop()
 }
 
