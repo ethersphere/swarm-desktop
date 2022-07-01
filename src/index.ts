@@ -70,8 +70,9 @@ async function main() {
     })
   }
 
-  // Auto updater
-  updater({ logger })
+  // Auto updaterg
+  // @ts-ignore: https://github.com/electron/update-electron-app/pull/96
+  updater({ logger: { log: (...args) => logger.info(...args) } })
 
   // check if the assets and the bee binary matches the desktop version
   const desktopFileVersion = getDesktopVersionFromFile()
@@ -102,5 +103,6 @@ async function main() {
 }
 
 main().catch(e => {
+  logger.error(e)
   dialog.showErrorBox('There was an error in Swarm Desktop', e.message)
 })
