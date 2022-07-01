@@ -83,6 +83,7 @@ jobs:
         if: matrix.os == 'macos-latest'
         run: npx electron-forge publish --arch=arm64
         env:
+          DEBUG: *
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
