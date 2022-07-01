@@ -72,9 +72,9 @@ async function main() {
   }
   const hideSplash = await initSplash()
 
-  // Auto updaterg
+  // Auto updater
   // @ts-ignore: https://github.com/electron/update-electron-app/pull/96
-  updater({ logger: { log: (...args) => logger.info(...args) } })
+  updater({ logger: { log: (...args) => logger.info(args.join(' ')) } })
 
   // check if the assets and the bee binary matches the desktop version
   const desktopFileVersion = getDesktopVersionFromFile()
