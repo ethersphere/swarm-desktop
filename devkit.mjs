@@ -5,6 +5,7 @@ import open  from 'open'
 
 import { readFile, rm } from 'node:fs/promises'
 import { join } from 'node:path'
+import cpy from 'cpy'
 
 const paths = envPaths('Swarm Desktop', { suffix: '' })
 const requestedCommand = process.argv[2]
@@ -12,6 +13,9 @@ const requestedCommand = process.argv[2]
 switch (requestedCommand) {
   case 'open:installer':
     await openInstaller()
+    break;
+  case 'copy:installer':
+    await copyInstaller()
     break;
   case 'purge:data':
     await purgeData()
@@ -31,6 +35,10 @@ function purgeData () {
 
 function purgeLogs () {
   return rm(paths.log, {recursive: true, force: true})
+}
+
+function copyInstaller () {
+  return cpy('.', join('..', '..', 'dist', 'installer'), {cwd: join('installer', 'build')})
 }
 
 async function openInstaller () {
