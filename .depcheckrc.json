@@ -7,6 +7,7 @@
     "ts-jest",
     "ts-node",
     "concurrently",
-    "cross-env"
+    "cross-env",
+    "cpy"
   ]
 }
