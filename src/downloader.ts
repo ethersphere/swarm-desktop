@@ -1,7 +1,7 @@
+import axios from 'axios'
 import { execSync } from 'child_process'
 import { unzip } from 'cross-zip'
-import { ensureDir, existsSync, unlinkSync, writeFileSync } from 'fs-extra'
-import fetch from 'node-fetch'
+import { ensureDir, existsSync, unlinkSync, writeFile } from 'fs-extra'
 import { arch, platform } from 'os'
 import { parse } from 'path'
 import { promisify } from 'util'
@@ -86,7 +86,10 @@ async function ensureAsset(url: string, target: string, options: DownloadOptions
 }
 
 async function downloadFile(url: string, target: string): Promise<void> {
-  return fetch(url)
-    .then(async x => x.arrayBuffer())
-    .then(x => writeFileSync(target, Buffer.from(x)))
+  return axios
+    .get(url, {
+      responseType: 'arraybuffer',
+    })
+    .then(x => x.data)
+    .then(async x => writeFile(target, x))
 }

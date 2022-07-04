@@ -98,12 +98,18 @@ function App() {
     async function waitForUltraLightNode() {
       setMessage('Waiting for ultra light mode...')
       for (let i = 0; i < MAX_RETRIES; i++) {
-        const { connections } = await getJson<{ connections: number }>(`${getHost()}/peers`)
+        try {
+          const { connections } = await getJson<{ connections: number }>(`${getHost()}/peers`)
 
-        if (connections > 0) {
-          return
+          if (connections > 0) {
+            return
+          }
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error(error)
+        } finally {
+          await wait(1000)
         }
-        await wait(1000)
       }
       throw Error('Could not start in ultra light mode')
     }
