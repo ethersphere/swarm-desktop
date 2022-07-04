@@ -27,7 +27,6 @@ const config = {
       'gatekeeper-assess': false,
       entitlements: 'assets/entitlements.plist',
       'entitlements-inherit': 'assets/entitlements.plist',
-      'signature-flags': 'library',
     },
   },
   electronInstallerDebian: {
