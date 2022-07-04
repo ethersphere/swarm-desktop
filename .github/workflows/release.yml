@@ -34,6 +34,13 @@ jobs:
           REACT_APP_SENTRY_KEY: ${{ secrets.SENTRY_KEY_DASHBOARD }}
           REACT_APP_SENTRY_ENVIRONMENT: 'desktop'
 
+      - name: Configure secrets
+        uses: jossef/action-set-json-field@v1
+        with:
+          file: src/.sentry.json
+          field: KEY
+          value: ${{ secrets.SENTRY_KEY }}
+
       - name: Set MacOS signing certs
         if: matrix.os == 'macos-latest'
         run: .github/tools/add-macos-cert.sh
@@ -50,12 +57,11 @@ jobs:
           fileName: 'win-certificate.pfx'
           encodedString: ${{ secrets.WINDOWS_CODESIGN_P12 }}
 
-      - name: Configure secrets
-        uses: jossef/action-set-json-field@v1
-        with:
-          file: src/.sentry.json
-          field: KEY
-          value: ${{ secrets.SENTRY_KEY }}
+      - name: Build
+        run: npm run build
+
+      - name: Purge installer src
+        run: npx rimraf ./installer
 
       - name: Publish
         env:
@@ -66,6 +72,15 @@ jobs:
           WINDOWS_CODESIGN_PASSWORD: ${{ secrets.WINDOWS_CODESIGN_PASSWORD }}
         run: npm run publish
 
+      - name: Publish arm64
+        if: matrix.os == 'macos-latest'
+        run: npx electron-forge publish --arch=arm64
+        env:
+          DEBUG: "*"
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create Sentry release
         if: matrix.os == 'ubuntu-latest'
         uses: getsentry/action-release@v1
@@ -74,5 +89,7 @@ jobs:
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
         with:
+          ignore_missing: true
+          ignore_empty: true
           sourcemaps: ./dist/desktop/src
           version: ${{ github.ref }}
