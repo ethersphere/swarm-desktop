@@ -72,9 +72,15 @@ jobs:
           WINDOWS_CODESIGN_PASSWORD: ${{ secrets.WINDOWS_CODESIGN_PASSWORD }}
         run: npm run publish
 
-      - name: Publish arm64
+      - name: Publish Linux arm64
+        if: matrix.os == 'ubuntu-latest'
+        run: npm run publish:linux:arm64
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish MacOS arm64
         if: matrix.os == 'macos-latest'
-        run: npx electron-forge publish --arch=arm64
+        run: npm run publish:mac:arm64
         env:
           DEBUG: "*"
           APPLE_ID: ${{ secrets.APPLE_ID }}
