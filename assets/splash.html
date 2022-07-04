@@ -3,8 +3,79 @@
 <head>
   <meta charset='UTF-8'>
   <title>Splash</title>
+  <style>
+    @font-face {
+      font-family: iA-Writer;
+      src: url("iAWriterQuattroS-Regular.woff");
+    }
+
+    body {
+      margin: 0
+    }
+    img{
+      display: block;
+    }
+
+    .Hello {
+      width: 44px;
+      height: 23px;
+      margin: 0 128px 123px;
+      font-family: iA-Writer, serif;
+      font-size: 18px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      text-align: center;
+      color: #595959;
+    }
+
+    img.logo {
+      width: 300px;
+      height: 60px;
+      margin: 123px 0 124px;
+      object-fit: contain;
+    }
+
+    .Initializing {
+      width: 112px;
+      height: 23px;
+      margin: 124px 94px 0;
+      font-family: iA-Writer, serif;
+      font-size: 18px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      text-align: left;
+      color: #595959;
+    }
+
+    .Rectangle {
+      width: 800px;
+      height: 600px;
+      padding: 124px 250px 123px;
+      background-image: linear-gradient(to bottom, #fff, #f9f9f9);
+    }
+  </style>
 </head>
 <body>
-<img src='./splash.png' style='width: 100%;' alt=''>
+<div class='Rectangle'>
+  <div class='Hello'>Hello</div>
+  <img src='splash-logo.svg' class='logo'>
+  <div class='Initializing'>Initializing<span id='dots'>...</span></div>
+</div>
 </body>
+<script>
+  const dotsElem = document.getElementById('dots')
+  setInterval(() => {
+    if (dotsElem.innerText.length >= 3) {
+      dotsElem.innerText = ''
+    } else {
+      dotsElem.innerText += '.'
+    }
+  }, 500)
+</script>
 </html>
