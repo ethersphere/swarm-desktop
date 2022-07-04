@@ -15,7 +15,7 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "publish:mac:arm64": "electron-forge publish --platform=mac --arch=arm64",
+    "publish:mac:arm64": "electron-forge publish --platform=darwin --arch=arm64",
     "publish:linux:arm64": "electron-forge publish --platform=linux --arch=arm64",
     "build:installer": "cd installer && npm run build && cd ..",
     "build:desktop": "tsc",
