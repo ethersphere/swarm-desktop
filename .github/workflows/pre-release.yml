@@ -44,7 +44,7 @@ jobs:
 
       - name: Custom build Bee Dashboard with Sentry enabled
         if: github.event.inputs.dashboard == ''
-        run: npm install ethersphere/bee-dashboard#${{dashboardVersion}}
+        run: npm install ethersphere/bee-dashboard#${{ steps.dashboardVersion.outputs.value }}
         env:
           REACT_APP_SENTRY_KEY: ${{ secrets.SENTRY_KEY_DASHBOARD }}
           REACT_APP_SENTRY_ENVIRONMENT: 'desktop-prerelease'
