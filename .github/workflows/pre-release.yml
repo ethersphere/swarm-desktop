@@ -60,7 +60,6 @@ jobs:
           value: ${{ secrets.SENTRY_KEY }}
 
       - name: Set MacOS signing certs
-        if: matrix.os == 'macos-latest'
         run: .github/tools/add-macos-cert.sh
         env:
           MACOS_CERT_P12: ${{ secrets.MACOS_CERT_P12 }}
@@ -73,7 +72,6 @@ jobs:
         run: npx rimraf ./installer
 
       - name: Publish MacOS arm64
-        if: matrix.os == 'macos-latest'
         run: npm run publish:mac:arm64
         env:
           DEBUG: "*"
