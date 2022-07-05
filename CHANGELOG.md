@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.15.0](https://github.com/ethersphere/swarm-desktop/compare/v0.14.0...v0.15.0) (2022-07-05)
+
+
+### Features
+
+* add header to onboarding overlay transaction request ([#169](https://github.com/ethersphere/swarm-desktop/issues/169)) ([b1a0179](https://github.com/ethersphere/swarm-desktop/commit/b1a0179f32e772af0fc5716289830eaa1f6ff647))
+* add token price endpoint ([#175](https://github.com/ethersphere/swarm-desktop/issues/175)) ([ea15234](https://github.com/ethersphere/swarm-desktop/commit/ea152343ad280c5c5b662ad633b4ea63cd806079))
+* auto update support ([#146](https://github.com/ethersphere/swarm-desktop/issues/146)) ([9e6f869](https://github.com/ethersphere/swarm-desktop/commit/9e6f86954b0a03c5d8e6096bb82625388e66d1ec))
+* bundle static assets ([#144](https://github.com/ethersphere/swarm-desktop/issues/144)) ([b50438d](https://github.com/ethersphere/swarm-desktop/commit/b50438d02e99cb817ef90259e1ae2dd3a78941a2))
+* code signing ([#137](https://github.com/ethersphere/swarm-desktop/issues/137)) ([7e5feca](https://github.com/ethersphere/swarm-desktop/commit/7e5feca14c824da558785d7784a550313b5dd32b))
+* improved electron-reforger config ([#147](https://github.com/ethersphere/swarm-desktop/issues/147)) ([83bcf36](https://github.com/ethersphere/swarm-desktop/commit/83bcf36c8baece1c34e550e76fa7504171f450d9))
+* splash screen ([#182](https://github.com/ethersphere/swarm-desktop/issues/182)) ([250af98](https://github.com/ethersphere/swarm-desktop/commit/250af9885e923cace51e5bdb1735d55b59924343))
+* top level error catch ([#156](https://github.com/ethersphere/swarm-desktop/issues/156)) ([a7afb4e](https://github.com/ethersphere/swarm-desktop/commit/a7afb4e14eee62e8bdd8a9347bc8ea5fa55f2488))
+* windows installer screen ([#203](https://github.com/ethersphere/swarm-desktop/issues/203)) ([6508cf7](https://github.com/ethersphere/swarm-desktop/commit/6508cf759a870d2e396188a5c147fe27d7c5e0ca))
+
+
+### Bug Fixes
+
+* auto update logger ([#181](https://github.com/ethersphere/swarm-desktop/issues/181)) ([079be52](https://github.com/ethersphere/swarm-desktop/commit/079be5279b6c440d1f16084940e5a0de4c5ae37a))
+* copy installer for windows ([#183](https://github.com/ethersphere/swarm-desktop/issues/183)) ([4900169](https://github.com/ethersphere/swarm-desktop/commit/4900169a54ab81a92f8fe8b506eaa1fbde8e3fe1))
+* dmg release dependency ([#153](https://github.com/ethersphere/swarm-desktop/issues/153)) ([61d4f90](https://github.com/ethersphere/swarm-desktop/commit/61d4f90fbccb62463a00d33fb09848e0cbe0cb4d))
+* **installer:** install estimate fix ([#157](https://github.com/ethersphere/swarm-desktop/issues/157)) ([87fafe6](https://github.com/ethersphere/swarm-desktop/commit/87fafe68e9244ae35bbdef753d2fe9c91735eaf7))
+* remove ellipsis from main text ([#174](https://github.com/ethersphere/swarm-desktop/issues/174)) ([f165358](https://github.com/ethersphere/swarm-desktop/commit/f165358054118b4dbabc5ae999a63e8f5fa7458e))
+* splash overflow hidden ([#202](https://github.com/ethersphere/swarm-desktop/issues/202)) ([7012f88](https://github.com/ethersphere/swarm-desktop/commit/7012f883c9b93c1f0fe2fc8fa9b61f534e8525e8))
+* squirrel startup test ([#178](https://github.com/ethersphere/swarm-desktop/issues/178)) ([df6c5b2](https://github.com/ethersphere/swarm-desktop/commit/df6c5b2051f89d4c79576e7347f491a2b19b733b))
+
 ## [0.14.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.13.0...v0.14.0) (2022-06-21)
 
 
