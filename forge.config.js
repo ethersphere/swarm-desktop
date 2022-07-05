@@ -39,6 +39,7 @@ const config = {
         name: 'swarm-desktop',
         iconUrl: iconPath + '.ico',
         setupIcon: iconPath + '.ico',
+        loadingGif: path.resolve(__dirname, 'assets', 'windows-install.gif'),
         certificateFile: process.env['WINDOWS_CODESIGN_FILE'],
         certificatePassword: process.env['WINDOWS_CODESIGN_PASSWORD'],
       },
