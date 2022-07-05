@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.16.0-pre.20](https://github.com/ethersphere/swarm-desktop/compare/v0.15.0-pre.20...v0.16.0-pre.20) (2022-07-05)
+
+
+### Features
+
+* windows installer screen ([#203](https://github.com/ethersphere/swarm-desktop/issues/203)) ([6508cf7](https://github.com/ethersphere/swarm-desktop/commit/6508cf759a870d2e396188a5c147fe27d7c5e0ca))
+
+
+### Bug Fixes
+
+* splash overflow hidden ([#202](https://github.com/ethersphere/swarm-desktop/issues/202)) ([7012f88](https://github.com/ethersphere/swarm-desktop/commit/7012f883c9b93c1f0fe2fc8fa9b61f534e8525e8))
+
 ## [0.14.0](https://www.github.com/ethersphere/bee-desktop/compare/v0.13.0...v0.14.0) (2022-06-21)
 
 
