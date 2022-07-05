@@ -85,6 +85,15 @@ jobs:
       - name: Purge installer src
         run: npx rimraf ./installer
 
+      - name: Publish MacOS arm64
+        if: matrix.os == 'macos-latest'
+        run: npm run publish:mac:arm64
+        env:
+          DEBUG: "*"
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Publish
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
@@ -98,15 +107,6 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: npm run publish:linux:arm64
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish MacOS arm64
-        if: matrix.os == 'macos-latest'
-        run: npm run publish:mac:arm64
-        env:
-          DEBUG: "*"
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Sentry release
