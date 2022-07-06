@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.15.1](https://github.com/ethersphere/swarm-desktop/compare/v0.15.0...v0.15.1) (2022-07-06)
+
+
+### Bug Fixes
+
+* dashboard update ([#212](https://github.com/ethersphere/swarm-desktop/issues/212)) ([66036af](https://github.com/ethersphere/swarm-desktop/commit/66036afb06553adeec959beb9d8fc159ad20da48))
+
 ## [0.15.0](https://github.com/ethersphere/swarm-desktop/compare/v0.14.0...v0.15.0) (2022-07-05)
 
 
