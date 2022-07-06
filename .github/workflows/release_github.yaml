@@ -17,3 +17,4 @@ jobs:
           token: ${{ secrets.GHA_PAT_BASIC }}
           release-type: node
           package-name: bee-desktop
+          draft: true

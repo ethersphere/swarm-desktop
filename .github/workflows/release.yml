@@ -1,8 +1,7 @@
 name: Release
 on:
   release:
-    types:
-      - created
+    types: [released]
 
 jobs:
   publish-macos-m1:
