@@ -1,6 +1,6 @@
 # On each new commit to master, create/update a PR with release
 # automatically bumps version and creates changelog as per conventional commits
-name: Release Github
+name: Release
 
 on:
   push:
@@ -18,3 +18,10 @@ jobs:
           release-type: node
           package-name: bee-desktop
           draft: true
+      - run: echo "${{ toJSON(steps.release.outputs) }}"
+      - name: Trigger assets builds on release
+        if: steps.release.outputs.release_created == true
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.GHA_PAT_BASIC }}
+          event-type: assets-build
