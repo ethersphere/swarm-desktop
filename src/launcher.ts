@@ -1,13 +1,13 @@
+import axios from 'axios'
 import { spawn } from 'child_process'
+import * as FileStreamRotator from 'file-stream-rotator'
 import { mkdirSync, readFileSync, writeFileSync } from 'fs'
-import fetch from 'node-fetch'
 import { platform } from 'os'
 import { join } from 'path'
 import { rebuildElectronTray } from './electron'
 import { BeeManager } from './lifecycle'
 import { logger } from './logger'
 import { checkPath, getLogPath, getPath } from './path'
-import * as FileStreamRotator from 'file-stream-rotator'
 
 export function runKeepAliveLoop() {
   setInterval(() => {
@@ -77,11 +77,10 @@ export async function runLauncher() {
 }
 
 async function sendTransaction(address: string) {
-  const response = await fetch(`https://onboarding.ethswarm.org/faucet/overlay/${address}`, {
-    method: 'POST',
+  const response = await axios.post(`https://onboarding.ethswarm.org/faucet/overlay/${address}`, {
     headers: { 'app-name': 'swarm-desktop' },
   })
-  const json = await response.json()
+  const json = response.data
 
   return { transaction: json.transactionHash, blockHash: json.nextBlockHashBee }
 }

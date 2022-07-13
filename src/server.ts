@@ -1,12 +1,12 @@
 import Router from '@koa/router'
 import { captureException } from '@sentry/electron'
+import axios from 'axios'
 import Wallet from 'ethereumjs-wallet'
 import { readFile } from 'fs/promises'
 import Koa from 'koa'
 import koaBodyparser from 'koa-bodyparser'
 import mount from 'koa-mount'
 import serve from 'koa-static'
-import fetch from 'node-fetch'
 import * as path from 'path'
 import { URL } from 'url'
 
@@ -63,8 +63,10 @@ export function runServer() {
   })
   router.get('/price', async context => {
     try {
-      const response = await fetch('https://tokenservice.ethswarm.org/token_price')
-      context.body = await response.text()
+      const response = await axios.get('https://tokenservice.ethswarm.org/token_price', {
+        timeout: 10_000,
+      })
+      context.body = await response.data
     } catch (error) {
       logger.error(error)
       context.status = 503
@@ -95,12 +97,11 @@ export function runServer() {
       const dnsUrl = new URL(header.dsn)
       const projectId = dnsUrl.pathname.endsWith('/') ? dnsUrl.pathname.slice(0, -1) : dnsUrl.pathname
       const url = `https://${dnsUrl.host}/api/${projectId}/envelope/`
-      const response = await fetch(url, {
-        method: 'POST',
-        body: envelope,
+      const response = await axios.post(url, {
+        data: envelope,
       })
 
-      context.body = await response.json()
+      context.body = response.data
     } catch (e) {
       logger.error(e)
       captureException(e)
@@ -128,8 +129,10 @@ export function runServer() {
   })
   router.get('/peers', async context => {
     try {
-      const response = await fetch('http://127.0.0.1:1635/peers')
-      const { peers } = await response.json()
+      const response = await axios.get('http://127.0.0.1:1635/peers', {
+        timeout: 3_000,
+      })
+      const { peers } = response.data
 
       context.body = { connections: peers ? peers.length || 0 : 0 }
     } catch (error) {
