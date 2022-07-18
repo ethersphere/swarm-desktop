@@ -10,6 +10,8 @@
 
 > Electron Desktop app that helps you easily spin up and manage Swarm's Bee node
 
+**Warning: Swarm Desktop is in Beta and currently includes the [Sentry](https://sentry.io/welcome/) application monitoring and bug reporting software which automatically collects data in order to help improve the software.**
+
 **Warning: This project is in beta state. There might (and most probably will) be changes in the future to its API and working. Also, no guarantees can be made about its stability, efficiency, and security at this stage.**
 
 Stay up to date by joining the [official Discord](https://discord.gg/GU22h2utj6) and by keeping an eye on the [releases tab](https://github.com/ethersphere/swarm-desktop/releases).
