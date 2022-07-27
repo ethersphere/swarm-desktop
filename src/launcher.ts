@@ -3,6 +3,8 @@ import { mkdirSync, readFileSync, writeFileSync } from 'fs'
 import fetch from 'node-fetch'
 import { platform } from 'os'
 import { join } from 'path'
+import { v4 } from 'uuid'
+import { writeConfigYaml } from './config-yaml'
 import { rebuildElectronTray } from './electron'
 import { BeeManager } from './lifecycle'
 import { logger } from './logger'
@@ -37,7 +39,7 @@ export async function createInitialTransaction() {
     const { address } = JSON.parse(readFileSync(getPath('data-dir/keys/swarm.key')).toString())
     logger.info('Sending transaction to address', address)
     const { transaction, blockHash } = await sendTransaction(address)
-    writeFileSync(getPath('config.yaml'), createConfiguration(transaction, blockHash))
+    createConfiguration(transaction, blockHash)
   }
 }
 
@@ -61,7 +63,7 @@ export async function runLauncher() {
     const { address } = JSON.parse(readFileSync(getPath(join('data-dir', 'keys', 'swarm.key'))).toString())
     logger.info('Sending transaction to address', address)
     const { transaction, blockHash } = await sendTransaction(address)
-    writeFileSync(getPath('config.yaml'), createConfiguration(transaction, blockHash))
+    createConfiguration(transaction, blockHash)
   }
   BeeManager.setUserIntention(true)
   const subprocess = launchBee(abortController).catch(reason => {
@@ -98,23 +100,21 @@ chain-enable: false
 cors-allowed-origins: '*'
 use-postage-snapshot: true
 resolver-options: https://cloudflare-eth.com
-data-dir: ${getPath('data-dir')}`
+data-dir: ${getPath('data-dir')}
+password: ${v4()}`
 }
 
 function createConfiguration(transaction: string, blockHash: string) {
-  return `${createStubConfiguration()}
-transaction: ${transaction}
-block-hash: ${blockHash}`
+  writeConfigYaml({
+    transaction,
+    'block-hash': blockHash,
+  })
 }
 
 async function initializeBee() {
   const configPath = getPath('config.yaml')
 
-  return runProcess(
-    getPath(getBeeExecutable()),
-    ['init', `--config=${configPath}`, `--password=Test`],
-    new AbortController(),
-  )
+  return runProcess(getPath(getBeeExecutable()), ['init', `--config=${configPath}`], new AbortController())
 }
 
 async function launchBee(abortController?: AbortController) {
@@ -123,11 +123,7 @@ async function launchBee(abortController?: AbortController) {
   }
   const configPath = getPath('config.yaml')
 
-  return runProcess(
-    getPath(getBeeExecutable()),
-    ['start', `--config=${configPath}`, '--password=Test'],
-    abortController,
-  )
+  return runProcess(getPath(getBeeExecutable()), ['start', `--config=${configPath}`], abortController)
 }
 
 async function runProcess(command: string, args: string[], abortController: AbortController): Promise<number> {
