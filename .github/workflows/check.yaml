@@ -31,6 +31,8 @@ jobs:
 
       - name: Build assets
         run: npm run build
+        env:
+          REACT_APP_BEE_DESKTOP_ENABLED: true
 
       - name: Commit linting
         uses: wagoid/commitlint-github-action@v2

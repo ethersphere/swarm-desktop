@@ -12,6 +12,9 @@ jobs:
   nodejs:
     runs-on: ubuntu-latest
 
+    env:
+      REACT_APP_BEE_DESKTOP_ENABLED: true
+
     strategy:
       matrix:
         node-version: [18.x]
