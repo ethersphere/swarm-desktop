@@ -126,7 +126,7 @@ async function launchBee(abortController?: AbortController) {
   return runProcess(getPath(getBeeExecutable()), ['start', `--config=${configPath}`], abortController)
 }
 
-async function runProcess(command: string, args: string[], abortController: AbortController): Promise<number> {
+async function runProcess(command: string, args: string[], abortController: AbortController): Promise<void> {
   return new Promise((resolve, reject) => {
     const subprocess = spawn(command, args, { signal: abortController.signal, killSignal: 'SIGINT' })
 
@@ -144,14 +144,16 @@ async function runProcess(command: string, args: string[], abortController: Abor
       create_symlink: true,
       symlink_name: 'bee.current.log',
     })
+    fileStream.on('error', err => logger.error(err))
+
     subprocess.stdout.pipe(fileStream)
     subprocess.stderr.pipe(fileStream)
 
     subprocess.on('close', code => {
       if (code === 0) {
-        resolve(code)
+        resolve()
       } else {
-        reject(code)
+        reject(`process exited with non-zero status code: ${code}`)
       }
     })
     subprocess.on('error', error => {
