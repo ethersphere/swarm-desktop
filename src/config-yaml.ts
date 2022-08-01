@@ -1,6 +1,10 @@
-import { readFileSync, writeFileSync } from 'fs'
+import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { dump, FAILSAFE_SCHEMA, load } from 'js-yaml'
 import { getPath } from './path'
+
+export function configYamlExists(): boolean {
+  return existsSync(getPath('config.yaml'))
+}
 
 export function readConfigYaml(): Record<string, unknown> {
   const raw = readFileSync(getPath('config.yaml'), 'utf-8')

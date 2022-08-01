@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'fs-extra'
+import { existsSync, readFileSync, writeFileSync } from 'fs-extra'
 import * as Sentry from '@sentry/electron'
 import { dialog, app } from 'electron'
 import updater from 'update-electron-app'
@@ -21,12 +21,12 @@ import { ensureApiKey } from './api-key'
 // @ts-ignore
 import squirrelInstallingExecution from 'electron-squirrel-startup'
 import { initSplash } from './splash'
-import { readConfigYaml, writeConfigYaml } from './config-yaml'
+import { configYamlExists, readConfigYaml, writeConfigYaml } from './config-yaml'
 
 // TODO: remove this after 1.0.0 release
 // this is a migration path for pioneers
 // who helped testing the early versions
-if (!readConfigYaml().password) writeConfigYaml({ password: 'Test' })
+if (configYamlExists() && !readConfigYaml().password) writeConfigYaml({ password: 'Test' })
 
 if (squirrelInstallingExecution) {
   app.quit()
