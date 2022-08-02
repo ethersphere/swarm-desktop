@@ -7,6 +7,7 @@ import { Circle } from './Circle'
 import { Container } from './Container'
 import { getJson, postJson } from './net'
 import { SwarmLogo } from './SwarmLogo'
+import './index.css'
 
 const MAX_RETRIES = 100
 
@@ -29,7 +30,7 @@ async function getStatus(): Promise<Status> {
   return await getJson<Status>(`${getHost()}/status`)
 }
 
-function App() {
+function Installer() {
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [error, setError] = useState(false)
@@ -190,4 +191,4 @@ function App() {
   )
 }
 
-export default App
+export default Installer
