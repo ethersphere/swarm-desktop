@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, writeFileSync } from 'fs-extra'
+import { readFileSync, writeFileSync } from 'fs-extra'
 import * as Sentry from '@sentry/electron'
 import { dialog, app } from 'electron'
 import updater from 'update-electron-app'
