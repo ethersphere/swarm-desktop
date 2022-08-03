@@ -7,20 +7,20 @@ body {
     margin: 0;
 }
 
-body,
-button {
+.installer body,
+.installer button {
     font-family: 'iA-Writer', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
         'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-p {
+.installer p {
     margin: 0;
     padding: 0;
 }
 
-#root {
+.installer {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -32,7 +32,7 @@ p {
     text-align: center;
 }
 
-.todo-item {
+.installer .todo-item {
     background: #fff;
     padding: 1rem;
     margin-bottom: 16px;
@@ -41,16 +41,16 @@ p {
     width: 500px;
 }
 
-.todo-body {
+.installer .todo-body {
     display: flex;
     align-items: center;
 }
 
-.todo-item p {
+.installer .todo-item p {
     margin-left: 8px;
 }
 
-.todo-item code {
+.installer .todo-item code {
     display: block;
     margin-top: 8px;
     font-size: 90%;
@@ -60,16 +60,17 @@ p {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
 }
 
-.spinner {
+.installer .spinner {
     animation: spinner 1s infinite linear;
 }
 
-button {
+.installer button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -83,15 +84,15 @@ button {
     height: 42px;
 }
 
-button > svg {
+.installer button>svg {
     margin-right: 8px;
 }
 
-button:hover {
+.installer button:hover {
     cursor: pointer;
 }
 
-.container {
+.installer .container {
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -100,11 +101,11 @@ button:hover {
     max-width: 640px;
 }
 
-.container-item {
+.installer .container-item {
     flex: 1;
 }
 
-.center {
+.installer .center {
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -112,18 +113,26 @@ button:hover {
     align-items: center;
 }
 
-.logo {
+.installer .logo {
     max-width: 100%;
     width: 172px;
     margin-top: 64px;
     margin-bottom: 64px;
 }
 
-.strong {
+.installer .logo svg {
+    max-width: 100%;
+    width: 172px;
+    margin-top: 64px;
+    margin-bottom: 64px;
+    fill: 'black';
+}
+
+.installer .strong {
     font-size: 16px;
 }
 
-.light {
+.installer .light {
     font-style: italic;
     color: #6c6c6c;
 }
