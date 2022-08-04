@@ -1,8 +1,9 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Installer from './installer/Installer'
 import Dashboard from '@ethersphere/bee-dashboard'
 import ReactDOM from 'react-dom'
+
+import Installer from './installer'
 
 const container = document.getElementById('root')
 ReactDOM.render(

@@ -183,11 +183,13 @@ function Installer() {
   }
 
   return (
-    <Container>
-      <SwarmLogo />
-      {content}
-      <div />
-    </Container>
+    <div className="installer">
+      <Container>
+        <SwarmLogo />
+        {content}
+        <div />
+      </Container>
+    </div>
   )
 }
 
