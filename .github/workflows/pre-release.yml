@@ -97,19 +97,15 @@ jobs:
       - name: Install all dependencies
         run: npm ci && cd ./installer && npm ci
 
-      - name: Reconfigure git to use HTTP authentication
-        if: github.event.inputs.dashboard != ''
-        run: git config --global url."https://github.com/".insteadOf ssh://git@github.com/
-
       - name: Install custom Bee Dashboard
-        if: github.event.inputs.dashboard != ''
+        if: github.event.inputs.dashboard != '' && matrix.os != 'windows-latest'
         run: npm install github:ethersphere/bee-dashboard#${{ github.event.inputs.dashboard }}
         env:
           REACT_APP_SENTRY_KEY: ${{ secrets.SENTRY_KEY_DASHBOARD }}
           REACT_APP_SENTRY_ENVIRONMENT: 'desktop-prerelease'
 
       - name: Read Bee Dashboard version
-        if: github.event.inputs.dashboard == ''
+        if: github.event.inputs.dashboard == '' || matrix.os == 'windows-latest'
         id: dashboardVersion
         uses:  ashley-taylor/read-json-property-action@v1.0
         with:
@@ -117,7 +113,7 @@ jobs:
           property: dependencies.@ethersphere/bee-dashboard
 
       - name: Custom build Bee Dashboard with Sentry enabled
-        if: github.event.inputs.dashboard == ''
+        if: github.event.inputs.dashboard == '' || matrix.os == 'windows-latest'
         run: npm install ethersphere/bee-dashboard#${{ steps.dashboardVersion.outputs.value }}
         env:
           REACT_APP_SENTRY_KEY: ${{ secrets.SENTRY_KEY_DASHBOARD }}
