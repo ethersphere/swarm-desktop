@@ -2,6 +2,11 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Available env. variables
+
+ - `REACT_APP_SENTRY_KEY` specifies the Sentry DSN.
+ - `REACT_APP_BEE_DESKTOP_URL` specifies where the Desktop API backend is expected. By default, it is `${window.location.protocol}//${window.location.host}`
+
 ## Available Scripts
 
 In the project directory, you can run:
