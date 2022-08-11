@@ -94,6 +94,8 @@ jobs:
           cache: 'npm'
           node-version: 18
 
+      - run: npm update -g npm
+
       - name: Install all dependencies
         run: npm ci && cd ./installer && npm ci
 
