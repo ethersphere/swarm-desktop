@@ -87,7 +87,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          REACT_APP_SENTRY_KEY: ${{ secrest.SENTRY_KEY_UI }}
+          REACT_APP_SENTRY_KEY: ${{ secrets.SENTRY_KEY_UI }}
 
       - name: Purge ui src
         run: npx rimraf ./ui
