@@ -9,12 +9,19 @@ on:
       dashboard:
         description: 'Bee Dashboard version/tag/commit if required'
         required: false
+      branch:
+        description: 'Branch of this repo to build (default "master")'
+        default: master
+        required: false
 
 jobs:
   publish-macos-m1:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.branch }}
+
       - uses: actions/setup-node@v3
         with:
           cache: 'npm'
@@ -83,6 +90,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.branch }}
+
       - uses: actions/setup-node@v3
         with:
           cache: 'npm'
