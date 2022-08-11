@@ -97,6 +97,10 @@ jobs:
       - name: Install all dependencies
         run: npm ci && cd ./installer && npm ci
 
+      - name: Reconfigure git to use HTTP authentication
+        if: github.event.inputs.dashboard != ''
+        run: git config --global url."https://github.com/".insteadOf ssh://git@github.com/
+
       - name: Install custom Bee Dashboard
         if: github.event.inputs.dashboard != ''
         run: npm install git+https://github.com/ethersphere/bee-dashboard.git#${{ github.event.inputs.dashboard }}
