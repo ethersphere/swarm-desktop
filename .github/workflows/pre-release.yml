@@ -89,7 +89,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3.3.0
         with:
           cache: 'npm'
           node-version: 18
