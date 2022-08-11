@@ -5,17 +5,14 @@ import { Box } from './Box'
 import { Center } from './Center'
 import { Circle } from './Circle'
 import { Container } from './Container'
-import { getJson, postJson } from './net'
+import { getHost, getJson, postJson } from '../utils/net'
 import { SwarmLogo } from './SwarmLogo'
+import './index.css'
 
 const MAX_RETRIES = 100
 
 async function wait<T>(x?: T): Promise<T | undefined> {
   return new Promise(resolve => setTimeout(() => resolve(x), 1000))
-}
-
-function getHost() {
-  return process.env.REACT_APP_BEE_DESKTOP_URL || `${window.location.protocol}//${window.location.host}`
 }
 
 interface Status {
@@ -29,7 +26,7 @@ async function getStatus(): Promise<Status> {
   return await getJson<Status>(`${getHost()}/status`)
 }
 
-function App() {
+export default function Installer() {
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [error, setError] = useState(false)
@@ -182,12 +179,12 @@ function App() {
   }
 
   return (
-    <Container>
-      <SwarmLogo />
-      {content}
-      <div />
-    </Container>
+    <div className="installer">
+      <Container>
+        <SwarmLogo />
+        {content}
+        <div />
+      </Container>
+    </div>
   )
 }
-
-export default App
