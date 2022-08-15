@@ -21,7 +21,7 @@ jobs:
           node-version: 18
 
       - name: Install all dependencies
-        run: npm ci && cd ./installer && npm ci
+        run: npm ci && cd ./ui && npm ci
 
       - name: Install custom Bee Dashboard
         if: github.event.inputs.dashboard != ''
@@ -33,7 +33,7 @@ jobs:
       - name: Read Bee Dashboard version
         if: github.event.inputs.dashboard == ''
         id: dashboardVersion
-        uses:  ashley-taylor/read-json-property-action@v1.0
+        uses: ashley-taylor/read-json-property-action@v1.0
         with:
           path: package.json
           property: dependencies.@ethersphere/bee-dashboard
@@ -68,8 +68,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Purge installer src
-        run: npx rimraf ./installer
+      - name: Purge ui src
+        run: npx rimraf ./ui
 
       - name: Publish MacOS arm64
         run: npm run publish:mac:arm64
@@ -97,7 +97,7 @@ jobs:
       - run: npm update -g npm
 
       - name: Install all dependencies
-        run: npm ci && cd ./installer && npm ci
+        run: npm ci && cd ./ui && npm ci
 
       - name: Reconfigure git to use HTTP authentication
         if: github.event.inputs.dashboard != ''
@@ -113,14 +113,15 @@ jobs:
       - name: Read Bee Dashboard version
         if: github.event.inputs.dashboard == ''
         id: dashboardVersion
-        uses:  ashley-taylor/read-json-property-action@v1.0
+        uses: ashley-taylor/read-json-property-action@v1.0
         with:
           path: package.json
           property: dependencies.@ethersphere/bee-dashboard
 
       - name: Custom build Bee Dashboard with Sentry enabled
         if: github.event.inputs.dashboard == ''
-        run: npm install git+https://github.com/ethersphere/bee-dashboard.git#${{ steps.dashboardVersion.outputs.value }}
+        run:
+          npm install git+https://github.com/ethersphere/bee-dashboard.git#${{ steps.dashboardVersion.outputs.value }}
         env:
           REACT_APP_SENTRY_KEY: ${{ secrets.SENTRY_KEY_DASHBOARD }}
           REACT_APP_SENTRY_ENVIRONMENT: 'desktop-prerelease'
@@ -158,8 +159,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Purge installer src
-        run: npx rimraf ./installer
+      - name: Purge ui src
+        run: npx rimraf ./ui
 
       - name: Publish
         env:

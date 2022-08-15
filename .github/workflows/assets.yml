@@ -17,7 +17,7 @@ jobs:
           node-version: 18
 
       - name: Install all dependencies
-        run: npm ci && cd ./installer && npm ci
+        run: npm ci && cd ./ui && npm ci
 
       - name: Install custom Bee Dashboard
         if: github.event.inputs.dashboard != ''
@@ -29,7 +29,7 @@ jobs:
       - name: Read Bee Dashboard version
         if: github.event.inputs.dashboard == ''
         id: dashboardVersion
-        uses:  ashley-taylor/read-json-property-action@v1.0
+        uses: ashley-taylor/read-json-property-action@v1.0
         with:
           path: package.json
           property: dependencies.@ethersphere/bee-dashboard
@@ -57,8 +57,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Purge installer src
-        run: npx rimraf ./installer
+      - name: Purge ui src
+        run: npx rimraf ./ui
 
       - name: Publish MacOS arm64
         run: npm run publish:mac:arm64
@@ -70,7 +70,7 @@ jobs:
   publish:
     strategy:
       matrix:
-        os: [ ubuntu-latest, macos-latest, windows-latest ]
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -81,11 +81,11 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm ci && cd ./installer && npm ci
+        run: npm ci && cd ./ui && npm ci
 
       - name: Read Bee Dashboard version
         id: dashboardVersion
-        uses:  ashley-taylor/read-json-property-action@v1.0
+        uses: ashley-taylor/read-json-property-action@v1.0
         with:
           path: package.json
           property: dependencies.@ethersphere/bee-dashboard
@@ -122,8 +122,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Purge installer src
-        run: npx rimraf ./installer
+      - name: Purge ui src
+        run: npx rimraf ./ui
 
       - name: Publish
         env:

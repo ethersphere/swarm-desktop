@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 import envPaths from 'env-paths'
-import open  from 'open'
+import open from 'open'
 
+import cpy from 'cpy'
 import { readFile, rm } from 'node:fs/promises'
 import { join } from 'node:path'
-import cpy from 'cpy'
 
 const paths = envPaths('Swarm Desktop', { suffix: '' })
 const requestedCommand = process.argv[2]
@@ -13,36 +13,34 @@ const requestedCommand = process.argv[2]
 switch (requestedCommand) {
   case 'open:installer':
     await openInstaller()
-    break;
+    break
   case 'copy:installer':
     await copyInstaller()
-    break;
+    break
   case 'purge:data':
     await purgeData()
-    break;
+    break
   case 'purge:logs':
     await purgeLogs()
-    break;
+    break
   default:
     throw new Error(`Unknown command "${requestedCommand}"!`)
-
 }
 
-function purgeData () {
-  return rm(paths.data, {recursive: true, force: true})
+function purgeData() {
+  return rm(paths.data, { recursive: true, force: true })
 }
 
-
-function purgeLogs () {
-  return rm(paths.log, {recursive: true, force: true})
+function purgeLogs() {
+  return rm(paths.log, { recursive: true, force: true })
 }
 
-function copyInstaller () {
-  return cpy('.', join('..', '..', 'dist', 'installer'), {cwd: join('installer', 'build')})
+function copyInstaller() {
+  return cpy('.', join('..', '..', 'dist', 'ui'), { cwd: join('ui', 'build') })
 }
 
-async function openInstaller () {
-  const apiKey = await readFile(join(paths.data, 'api-key.txt'), {encoding: 'utf-8'})
+async function openInstaller() {
+  const apiKey = await readFile(join(paths.data, 'api-key.txt'), { encoding: 'utf-8' })
   const url = `http://localhost:3002/?v=${apiKey}#/`
 
   console.log('Opening: ' + url)

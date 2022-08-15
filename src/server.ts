@@ -24,7 +24,7 @@ import { getStatus } from './status'
 import { swap } from './swap'
 import { bufferRequest } from './utility'
 
-const INSTALLER_DIST = path.join(__dirname, '..', '..', 'installer')
+const INSTALLER_DIST = path.join(__dirname, '..', '..', 'ui')
 
 const AUTO_UPDATE_ENABLED_PLATFORMS = ['darwin', 'win32']
 
