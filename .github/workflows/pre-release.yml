@@ -25,7 +25,7 @@ jobs:
 
       - name: Install custom Bee Dashboard
         if: github.event.inputs.dashboard != ''
-        run: npm install github:ethersphere/bee-dashboard#${{ github.event.inputs.dashboard }}
+        run: npm install https://github.com/ethersphere/bee-dashboard/tarball/${{ github.event.inputs.dashboard }}
         env:
           REACT_APP_SENTRY_KEY: ${{ secrets.SENTRY_KEY_DASHBOARD }}
           REACT_APP_SENTRY_ENVIRONMENT: 'desktop-prerelease'
@@ -40,7 +40,8 @@ jobs:
 
       - name: Custom build Bee Dashboard with Sentry enabled
         if: github.event.inputs.dashboard == ''
-        run: npm install ethersphere/bee-dashboard#${{ steps.dashboardVersion.outputs.value }}
+        run:
+          npm install https://github.com/ethersphere/bee-dashboard/tarball/${{ steps.dashboardVersion.outputs.value }}
         env:
           REACT_APP_SENTRY_KEY: ${{ secrets.SENTRY_KEY_DASHBOARD }}
           REACT_APP_SENTRY_ENVIRONMENT: 'desktop-prerelease'
@@ -86,26 +87,15 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
 
-      - uses: actions/setup-node@v3.3.0
-        with:
-          cache: 'npm'
-          node-version: 18
-
-      - run: npm update -g npm
+      - uses: actions/setup-node@v3
 
       - name: Install all dependencies
         run: npm ci && cd ./ui && npm ci
 
-      - name: Reconfigure git to use HTTP authentication
-        if: github.event.inputs.dashboard != ''
-        run: git config --global url."https://github.com/".insteadOf ssh://git@github.com/
-
       - name: Install custom Bee Dashboard
         if: github.event.inputs.dashboard != ''
-        run: npm install git+https://github.com/ethersphere/bee-dashboard.git#${{ github.event.inputs.dashboard }}
+        run: npm install https://github.com/ethersphere/bee-dashboard/tarball/${{ github.event.inputs.dashboard }}
         env:
           REACT_APP_SENTRY_KEY: ${{ secrets.SENTRY_KEY_DASHBOARD }}
           REACT_APP_SENTRY_ENVIRONMENT: 'desktop-prerelease'
@@ -121,7 +111,7 @@ jobs:
       - name: Custom build Bee Dashboard with Sentry enabled
         if: github.event.inputs.dashboard == ''
         run:
-          npm install git+https://github.com/ethersphere/bee-dashboard.git#${{ steps.dashboardVersion.outputs.value }}
+          npm install https://github.com/ethersphere/bee-dashboard/tarball/${{ steps.dashboardVersion.outputs.value }}
         env:
           REACT_APP_SENTRY_KEY: ${{ secrets.SENTRY_KEY_DASHBOARD }}
           REACT_APP_SENTRY_ENVIRONMENT: 'desktop-prerelease'
