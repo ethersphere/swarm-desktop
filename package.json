@@ -11,7 +11,7 @@
   "repository": "https://github.com/ethersphere/swarm-desktop",
   "main": "dist/desktop/src/index.js",
   "scripts": {
-    "start": "concurrently -n \"desktop,installer\" \"cross-env-shell NODE_ENV=development 'npm run clean && npm run build && electron-forge start'\" \"cd ./installer && npm start\"",
+    "start": "concurrently -n \"desktop,installer\" \"cross-env-shell NODE_ENV=development 'npm run clean && npm run build && electron-forge start'\" \"cd ./ui && npm start\"",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
@@ -85,7 +85,7 @@
     "typescript": "~4.5.4"
   },
   "dependencies": {
-    "@ethersphere/bee-dashboard": "0.18.2",
+    "@ethersphere/bee-dashboard": "0.19.2",
     "@koa/router": "^10.1.1",
     "@sentry/electron": "^3.0.7",
     "cross-zip": "^4.0.0",
