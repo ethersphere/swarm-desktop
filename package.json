@@ -18,8 +18,10 @@
     "publish:mac:arm64": "electron-forge publish --platform=darwin --arch=arm64",
     "publish:linux:arm64": "electron-forge publish --platform=linux --arch=arm64",
     "build:installer": "cd ui && npm run build && cd ..",
+    "build:dashboard": "cd dashboard && npm run build && cd ..",
     "build:desktop": "tsc",
-    "build": "npm run build:desktop && npm run build:installer && npm run copy:installer",
+    "build": "npm run build:desktop && npm run build:installer && npm run copy:installer && npm run build:dashboard && npm run copy:dashboard",
+    "copy:dashboard": "node devkit.mjs copy:dashboard",
     "copy:installer": "node devkit.mjs copy:installer",
     "open:installer": "node devkit.mjs open:installer",
     "purge:data": "node devkit.mjs purge:data",
@@ -85,7 +87,6 @@
     "typescript": "~4.5.4"
   },
   "dependencies": {
-    "@ethersphere/bee-dashboard": "0.19.2",
     "@koa/router": "^10.1.1",
     "@sentry/electron": "^3.0.7",
     "cross-zip": "^4.0.0",

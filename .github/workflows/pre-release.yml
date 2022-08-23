@@ -20,8 +20,14 @@ jobs:
           cache: 'npm'
           node-version: 18
 
-      - name: Install all dependencies
-        run: npm ci && cd ./ui && npm ci
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install installer
+        run: cd ./ui && npm ci
+
+      - name: Install dashboard
+        run: cd ./dashboard && npm ci
 
       - name: Install custom Bee Dashboard
         if: github.event.inputs.dashboard != ''
@@ -56,6 +62,9 @@ jobs:
       - name: Purge ui src
         run: npx rimraf ./ui
 
+      - name: Purge dashboard src
+        run: npx rimraf ./dashboard
+
       - name: Publish MacOS arm64
         run: npm run publish:mac:arm64
         env:
@@ -74,8 +83,14 @@ jobs:
 
       - uses: actions/setup-node@v3
 
-      - name: Install all dependencies
-        run: npm ci && cd ./ui && npm ci
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install installer
+        run: cd ./ui && npm ci
+
+      - name: Install dashboard
+        run: cd ./dashboard && npm ci
 
       - name: Install custom Bee Dashboard
         if: github.event.inputs.dashboard != ''
@@ -119,6 +134,9 @@ jobs:
 
       - name: Purge ui src
         run: npx rimraf ./ui
+
+      - name: Purge dashboard src
+        run: npx rimraf ./dashboard
 
       - name: Publish
         env:

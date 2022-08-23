@@ -25,6 +25,7 @@ import { swap } from './swap'
 import { bufferRequest } from './utility'
 
 const INSTALLER_DIST = path.join(__dirname, '..', '..', 'ui')
+const DASHBOARD_DIST = path.join(__dirname, '..', '..', 'dashboard')
 
 const AUTO_UPDATE_ENABLED_PLATFORMS = ['darwin', 'win32']
 
@@ -33,10 +34,8 @@ export function runServer() {
   logger.info(`Serving installer from path: ${INSTALLER_DIST}`)
   app.use(mount('/installer', serve(INSTALLER_DIST)))
 
-  // require.resolve() gives you the `main` entrypoint so for Dashboard `lib/App.js`.
-  const dashboardPath = path.join(path.dirname(require.resolve('@ethersphere/bee-dashboard')), '..', 'build')
-  logger.info(`Serving dashboard from path: ${dashboardPath}`)
-  app.use(mount('/dashboard', serve(dashboardPath)))
+  logger.info(`Serving dashboard from path: ${DASHBOARD_DIST}`)
+  app.use(mount('/dashboard', serve(DASHBOARD_DIST)))
 
   app.use(async (context, next) => {
     const corsOrigin = process.env.NODE_ENV === 'development' ? '*' : `http://localhost:${port.value}`

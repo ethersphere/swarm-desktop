@@ -17,6 +17,9 @@ switch (requestedCommand) {
   case 'copy:installer':
     await copyInstaller()
     break
+  case 'copy:dashboard':
+    await copyDashboard()
+    break
   case 'purge:data':
     await purgeData()
     break
@@ -37,6 +40,10 @@ function purgeLogs() {
 
 function copyInstaller() {
   return cpy('.', join('..', '..', 'dist', 'ui'), { cwd: join('ui', 'build') })
+}
+
+function copyDashboard() {
+  return cpy('.', join('..', '..', 'dist', 'dashboard'), { cwd: join('dashboard', 'build') })
 }
 
 async function openInstaller() {
