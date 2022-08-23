@@ -1,5 +1,6 @@
 {
   "name": "dashboard",
+  "homepage": "http://localhost:3000/dashboard",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
