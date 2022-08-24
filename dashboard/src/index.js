@@ -1,10 +1,10 @@
-import App from '@ethersphere/bee-dashboard'
+import Dashboard from '@ethersphere/bee-dashboard'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Dashboard isBeeDesktop={true} />
   </React.StrictMode>,
   document.getElementById('root'),
 )

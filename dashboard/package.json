@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@ethersphere/bee-dashboard": "0.19.2",
+    "@ethersphere/bee-dashboard": "0.19.3",
     "react": "^17",
     "react-dom": "^17",
     "react-scripts": "5.0.1"
