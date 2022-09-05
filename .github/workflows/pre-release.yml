@@ -124,6 +124,11 @@ jobs:
           fileName: 'win-certificate.pfx'
           encodedString: ${{ secrets.WINDOWS_CODESIGN_P12 }}
 
+      - name: Set path for candle and light for MSI build
+        if: matrix.os == 'windows-latest'
+        run: echo "C:\Program Files (x86)\WiX Toolset v3.11\bin" >> $GITHUB_PATH
+        shell: bash
+
       - name: Build
         run: npm run build
         env:
