@@ -85,6 +85,7 @@
     "typescript": "~4.5.4"
   },
   "dependencies": {
+    "@electron-forge/maker-wix": "^6.0.0-beta.65",
     "@koa/router": "^10.1.1",
     "@sentry/electron": "^3.0.7",
     "cross-zip": "^4.0.0",

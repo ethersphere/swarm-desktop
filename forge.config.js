@@ -34,12 +34,17 @@ const config = {
   },
   makers: [
     {
-      name: '@electron-forge/maker-squirrel',
+      name: '@electron-forge/maker-wix',
       config: {
-        name: 'swarm-desktop',
-        iconUrl: iconPath + '.ico',
-        setupIcon: iconPath + '.ico',
-        loadingGif: path.resolve(__dirname, 'assets', 'windows-install.gif'),
+        name: 'Swarm Desktop',
+        appIconPath: iconPath + '.ico',
+        shortName: 'swarm-desktop',
+        language: 1033, // English, US
+        shortcutFolderName: 'Swarm',
+        upgradeCode: '5682c24f-3ac8-4493-abff-f6b62a36af5c',
+        features: {
+          autoUpdate: true,
+        },
         certificateFile: process.env['WINDOWS_CODESIGN_FILE'],
         certificatePassword: process.env['WINDOWS_CODESIGN_PASSWORD'],
       },
