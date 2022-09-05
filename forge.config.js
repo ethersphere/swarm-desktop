@@ -36,9 +36,7 @@ const config = {
     {
       name: '@electron-forge/maker-wix',
       config: {
-        name: 'Swarm Desktop',
         appIconPath: iconPath + '.ico',
-        shortName: 'swarm-desktop',
         language: 1033, // English, US
         shortcutFolderName: 'Swarm',
         upgradeCode: '5682c24f-3ac8-4493-abff-f6b62a36af5c',

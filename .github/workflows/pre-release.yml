@@ -140,6 +140,7 @@ jobs:
 
       - name: Publish
         env:
+          DEBUG: '*'
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

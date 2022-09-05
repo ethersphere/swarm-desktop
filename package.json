@@ -6,7 +6,7 @@
     "email": "info@ethswarm.org"
   },
   "version": "0.15.1",
-  "description": "Desktop client for running and managing bee",
+  "description": "Desktop client for accessing Swarm network",
   "homepage": "https://desktop.ethswarm.org/",
   "repository": "https://github.com/ethersphere/swarm-desktop",
   "main": "dist/desktop/src/index.js",
