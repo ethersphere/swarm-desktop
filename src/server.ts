@@ -197,7 +197,7 @@ export function runServer() {
 
 async function getPrivateKey(): Promise<string> {
   const v3 = await readFile(getPath(path.join('data-dir', 'keys', 'swarm.key')), 'utf-8')
-  const wallet = await Wallet.fromV3(v3, 'Test')
+  const wallet = await Wallet.fromV3(v3, readConfigYaml().password as string)
   const privateKeyString = wallet.getPrivateKeyString()
 
   return privateKeyString
