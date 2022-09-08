@@ -5,7 +5,7 @@ export const port = {
   value: -1,
 }
 
-const DEFAULT_PORT = 1636
+const DEFAULT_PORT = 3054
 
 export async function findFreePort() {
   logger.info('Finding free port...')
