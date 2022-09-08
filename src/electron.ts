@@ -1,33 +1,14 @@
 import { app, Menu, Tray } from 'electron'
-import { openDashboardInBrowser, openInstallerInBrowser } from './browser'
+import { openDashboardInBrowser } from './browser'
 import { runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
 import { createNotification } from './notify'
 import { getAssetPath } from './path'
-import { getStatus } from './status'
 
 let tray: Tray
 
 export function rebuildElectronTray() {
   if (!tray) {
-    return
-  }
-
-  if (!getStatus().hasInitialTransaction) {
-    const contextMenu = Menu.buildFromTemplate([
-      {
-        label: 'Open Installer',
-        click: openInstallerInBrowser,
-      },
-      {
-        label: 'Quit',
-        click: async () => {
-          app.quit()
-        },
-      },
-    ])
-    tray.setContextMenu(contextMenu)
-
     return
   }
   const contextMenu = Menu.buildFromTemplate([

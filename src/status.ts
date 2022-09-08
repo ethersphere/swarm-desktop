@@ -1,21 +1,17 @@
 import { readFileSync } from 'fs'
 import { join } from 'path'
-import { readConfigYaml } from './config-yaml'
 import { isBeeAssetReady } from './downloader'
 import { checkPath, getPath } from './path'
+import { readConfigYaml } from './config'
 
 interface Status {
-  address: string | null
-  config: Record<string, any>
-  hasInitialTransaction: boolean
+  address?: string
+  config?: Record<string, any>
   assetsReady: boolean
 }
 
 export function getStatus() {
   const status: Status = {
-    address: null,
-    config: null,
-    hasInitialTransaction: false,
     assetsReady: isBeeAssetReady(),
   }
 
@@ -25,10 +21,6 @@ export function getStatus() {
 
   status.config = readConfigYaml()
   status.address = readEthereumAddress()
-
-  if (status.config['block-hash'] && status.config.transaction) {
-    status.hasInitialTransaction = true
-  }
 
   return status
 }

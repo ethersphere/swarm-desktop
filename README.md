@@ -77,7 +77,7 @@ It also stores configuration files, Bee assets and other things in application's
 
 As there are several independent components it bit depends on what you want to develop.
 
-**Be aware!** The UIs (Installer and Dashboard) won't automatically open during development in order not to confuse on which
+**Be aware!** The UI won't automatically open during development in order not to confuse on which
 environment they are running. You have to open them manually.
 
 #### Electron Desktop
@@ -86,21 +86,12 @@ To work on the Electron Desktop back-end you just need to do your work and then 
 Electron app and shows the Tray icon. No UI will be opened automatically. If you need to make more adjustment you have to exit
 the process with `SIGINT (CTRL+C)` and relaunch.
 
-#### Installer
-
-To work on the Installer, run first `npm start` that will spin up the Electron Desktop back-end and also launches the `/installer` development
-server. In order for the UI to be able to access the Desktop API it needs to have injected API token, which you can do by running `npm run open:installer`
-that will open the Installer UI served by the development server with API key be passed in the URL. Changes to the Installer UI are automatically
-hot-reloaded.
-
-The UI served by the Desktop itself is updated only when you restart the `npm start`.
-
-#### Dashboard
+#### UI (Dashboard)
 
 To work on the Dashboard, run first `npm start` that will spin up the Electron Desktop back-end. Then go to your locally cloned `bee-dashboard` repo and
-in it start the development server with `npm start`. Similarly to Installer, the Dashboard also needs to have API key injected in order to use the
-Desktop's API. You can inject it similarly by running `npm run desktop` in the Dashboard repo that will open the Dashboard UI with API key in the URL.
-Changes to the Installer UI are automatically hot-reloaded.
+in it start the development server with `npm start`. Dashboard also needs to have API key injected in order to use the
+Desktop's API. You can inject it by running `npm run desktop` in the Dashboard repo that will open the Dashboard UI with API key in the URL.
+Changes are automatically hot-reloaded.
 
 The UI served by the Desktop itself is updated only when you update the `@ethersphere/bee-dashboard` NPM package in the Desktop repo.
 
@@ -109,7 +100,7 @@ The UI served by the Desktop itself is updated only when you update the `@ethers
 There are several handy scripts:
 
  - `npm run purge:data` that purge's the Desktop's data folder
- - `npm run purge:logs` that purge's the Dekstop's logs folder
+ - `npm run purge:logs` that purge's the Desktop's logs folder
 
 ## Maintainers
 

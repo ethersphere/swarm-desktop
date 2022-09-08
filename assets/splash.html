@@ -40,9 +40,9 @@
     }
 
     .Initializing {
-      width: 112px;
+      width: 220px;
       height: 23px;
-      margin: 124px 94px 0;
+      margin: 124px 0 0 90px;
       font-family: iA-Writer, serif;
       font-size: 18px;
       font-weight: normal;
@@ -67,10 +67,16 @@
 <div class='Rectangle'>
   <div class='Hello'>Hello</div>
   <img src='splash-logo.svg' class='logo'>
-  <div class='Initializing'>Initializing<span id='dots'>...</span></div>
+  <div class='Initializing'><span id='message'>Starting</span><span id='dots'>...</span></div>
 </div>
 </body>
 <script>
+  const urlParams = new URLSearchParams(window.location.search)
+
+  if (urlParams.has('msg')) {
+    document.getElementById('message').innerText = decodeURI(urlParams.get('msg'))
+  }
+
   const dotsElem = document.getElementById('dots')
   setInterval(() => {
     if (dotsElem.innerText.length >= 3) {
