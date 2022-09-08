@@ -5,9 +5,11 @@ export const port = {
   value: -1,
 }
 
+const DEFAULT_PORT = 1636
+
 export async function findFreePort() {
   logger.info('Finding free port...')
-  for (let i = 3000; i < 5000; i++) {
+  for (let i = DEFAULT_PORT; i < 5000; i++) {
     const free = await testPort(i)
 
     if (free) {
