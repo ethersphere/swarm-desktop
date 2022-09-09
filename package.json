@@ -29,7 +29,7 @@
     "lint": "eslint --fix \"src/**/*.ts\" && cd ui && npm run lint",
     "lint:check": "eslint \"src/**/*.ts\" && cd ui && npm run lint:check",
     "check:types": "tsc --project tsconfig.test.json && cd ui && tsc --project tsconfig.test.json",
-    "test:unit": "jest --verbose -config=jest.config.ts "
+    "test:unit": "jest --verbose --config=jest.config.js"
   },
   "keywords": [
     "bee",

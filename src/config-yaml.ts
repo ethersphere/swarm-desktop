@@ -22,3 +22,16 @@ export function writeConfigYaml(newValues: Record<string, unknown>) {
   }
   writeFileSync(getPath('config.yaml'), dump(data))
 }
+
+export function readWalletPasswordOrThrow(): string {
+  if (!configYamlExists()) {
+    throw Error('Attempted to read password, but config.yaml is not found')
+  }
+  const config = readConfigYaml()
+
+  if (!config.password) {
+    throw Error('Attempted to read password, but config.yaml does not contain it')
+  }
+
+  return config.password as string
+}
