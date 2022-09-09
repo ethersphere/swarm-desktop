@@ -13,7 +13,7 @@ import { URL } from 'url'
 import PACKAGE_JSON from '../package.json'
 import { getApiKey } from './api-key'
 import { sendBzzTransaction, sendNativeTransaction } from './blockchain'
-import { readConfigYaml, writeConfigYaml } from './config-yaml'
+import { readConfigYaml, readWalletPasswordOrThrow, writeConfigYaml } from './config-yaml'
 import { rebuildElectronTray } from './electron'
 import { createConfigFileAndAddress, createInitialTransaction, runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
@@ -197,7 +197,7 @@ export function runServer() {
 
 async function getPrivateKey(): Promise<string> {
   const v3 = await readFile(getPath(path.join('data-dir', 'keys', 'swarm.key')), 'utf-8')
-  const wallet = await Wallet.fromV3(v3, readConfigYaml().password as string)
+  const wallet = await Wallet.fromV3(v3, readWalletPasswordOrThrow())
   const privateKeyString = wallet.getPrivateKeyString()
 
   return privateKeyString
