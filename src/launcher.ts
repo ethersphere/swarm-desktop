@@ -25,20 +25,15 @@ function getBeeExecutable() {
 }
 
 function createConfiguration() {
-  // TODO: Revert before merging
-  return `
-allow-private-cidrs: true
-bootnode: /dns4/bootnode-bee-0-headless.incentives-test.svc.cluster.local/tcp/1634/p2p/16Uiu2HAm6i4dFaJt584m2jubyvnieEECgqM2YMpQ9nusXfy8XFzL
-network-id: 12345
-postage-stamp-address: 0x2c3de8a0407a8a3e33bc130194ac8bcd532c8e95
-price-oracle-address: 0x4f600964c166786245d7521760d652a543021887
-
-api-addr: 127.0.0.1:1633
+  // TODO: Revert `full-node: false`
+  return `api-addr: 127.0.0.1:1633
 debug-api-addr: 127.0.0.1:1635
 debug-api-enable: true
 swap-enable: false
 swap-initial-deposit: 1000000000000000
 mainnet: false
+bootnode: /dnsaddr/testnet.ethswarm.org
+network-id: 10
 full-node: false
 chain-enable: false
 cors-allowed-origins: '*'
