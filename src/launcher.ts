@@ -25,15 +25,12 @@ function getBeeExecutable() {
 }
 
 function createConfiguration() {
-  // TODO: Revert `full-node: false`
   return `api-addr: 127.0.0.1:1633
 debug-api-addr: 127.0.0.1:1635
 debug-api-enable: true
 swap-enable: false
 swap-initial-deposit: 1000000000000000
-mainnet: false
-bootnode: /dnsaddr/testnet.ethswarm.org
-network-id: 10
+mainnet: true
 full-node: false
 chain-enable: false
 cors-allowed-origins: '*'
