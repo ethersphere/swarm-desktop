@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.16.0-pre.24](https://github.com/ethersphere/swarm-desktop/compare/v0.15.2-pre.24...v0.16.0-pre.24) (2022-09-13)
+
+
+### Features
+
+* bee 1.8 support and installer removal ([#264](https://github.com/ethersphere/swarm-desktop/issues/264)) ([35d0f30](https://github.com/ethersphere/swarm-desktop/commit/35d0f30bb30f289870c460641840726520a75d6c))
+
+
+### Bug Fixes
+
+* mainnet bee config ([#269](https://github.com/ethersphere/swarm-desktop/issues/269)) ([39164fc](https://github.com/ethersphere/swarm-desktop/commit/39164fc08b51b5d96f011abcebfc385b21ce647b))
+
 ## [0.15.1](https://github.com/ethersphere/swarm-desktop/compare/v0.15.0...v0.15.1) (2022-07-06)
 
 
