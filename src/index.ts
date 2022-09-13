@@ -1,27 +1,31 @@
-import { readFileSync, writeFileSync } from 'fs-extra'
 import * as Sentry from '@sentry/electron'
 import { dialog, app } from 'electron'
 import updater from 'update-electron-app'
 
-import { openDashboardInBrowser, openInstallerInBrowser } from './browser'
+import {
+  configYamlExists,
+  getDesktopVersionFromFile,
+  readConfigYaml,
+  writeConfigYaml,
+  writeDesktopVersionFile,
+} from './config'
+import { openDashboardInBrowser } from './browser'
 import { runDownloader } from './downloader'
 import { runElectronTray } from './electron'
-import { runKeepAliveLoop, runLauncher } from './launcher'
+import { initializeBee, runKeepAliveLoop, runLauncher } from './launcher'
 import { findFreePort } from './port'
 import { runServer } from './server'
 import { getStatus } from './status'
 import SENTRY from './.sentry.json'
 import PACKAGE_JSON from '../package.json'
 import { logger } from './logger'
-import { getPath } from './path'
 import { ensureApiKey } from './api-key'
 
 // TODO: Add types definition
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import squirrelInstallingExecution from 'electron-squirrel-startup'
-import { initSplash } from './splash'
-import { configYamlExists, readConfigYaml, writeConfigYaml } from './config-yaml'
+import { initSplash, Splash } from './splash'
 
 // TODO: remove this after 1.0.0 release
 // this is a migration path for pioneers
@@ -32,21 +36,20 @@ if (squirrelInstallingExecution) {
   app.quit()
 }
 
-const DESKTOP_VERSION_FILE = 'desktop.version'
-
-function getDesktopVersionFromFile(): string | undefined {
-  try {
-    const desktopFile = readFileSync(getPath(DESKTOP_VERSION_FILE))
-
-    return desktopFile.toString('utf-8')
-  } catch (e) {
-    return
+function errorHandler(e: Error | string) {
+  if (splash) {
+    splash.hide()
   }
+
+  if (typeof e !== 'string') {
+    e = e.message
+  }
+
+  logger.error(e)
+  dialog.showErrorBox('There was an error in Swarm Desktop', e)
 }
 
-function writeDesktopVersionFile() {
-  writeFileSync(getPath(DESKTOP_VERSION_FILE), PACKAGE_JSON.version)
-}
+let splash: Splash | undefined
 
 async function main() {
   logger.info(`Bee Desktop version: ${PACKAGE_JSON.version} (${process.env.NODE_ENV ?? 'production'})`)
@@ -76,9 +79,9 @@ async function main() {
       // },
     })
   }
-  const hideSplash = await initSplash()
+  splash = await initSplash()
 
-  // Auto updaterg
+  // Auto updater
   // @ts-ignore: https://github.com/electron/update-electron-app/pull/96
   updater({ logger: { log: (...args) => logger.info(...args) } })
 
@@ -91,28 +94,29 @@ async function main() {
   )
 
   if (force) {
-    await runDownloader(force)
+    splash.setMessage('Downloading Bee')
+    await runDownloader(true)
     writeDesktopVersionFile()
   }
 
   ensureApiKey()
   await findFreePort()
   runServer()
-  runElectronTray()
 
-  if (getStatus().hasInitialTransaction) {
-    runLauncher()
-
-    if (process.env.NODE_ENV !== 'development') openDashboardInBrowser()
-  } else {
-    if (process.env.NODE_ENV !== 'development') openInstallerInBrowser()
+  if (!getStatus().config) {
+    logger.info('No Bee config found, initializing Bee')
+    splash.setMessage('Initializing Bee')
+    await initializeBee()
   }
 
-  hideSplash()
+  runLauncher().catch(errorHandler)
+  runElectronTray()
+
+  if (process.env.NODE_ENV !== 'development') openDashboardInBrowser()
+  splash.hide()
+  splash = undefined
+
   runKeepAliveLoop()
 }
 
-main().catch(e => {
-  logger.error(e)
-  dialog.showErrorBox('There was an error in Swarm Desktop', e.message)
-})
+main().catch(errorHandler)

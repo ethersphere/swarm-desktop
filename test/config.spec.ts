@@ -1,5 +1,5 @@
 import { existsSync, unlinkSync, writeFileSync } from 'fs-extra'
-import { configYamlExists, readConfigYaml, readWalletPasswordOrThrow, writeConfigYaml } from '../src/config-yaml'
+import { configYamlExists, readConfigYaml, readWalletPasswordOrThrow, writeConfigYaml } from '../src/config'
 
 jest.mock('env-paths', () =>
   jest.fn().mockImplementation(() => ({

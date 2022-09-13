@@ -13,9 +13,7 @@ import { URL } from 'url'
 import PACKAGE_JSON from '../package.json'
 import { getApiKey } from './api-key'
 import { sendBzzTransaction, sendNativeTransaction } from './blockchain'
-import { readConfigYaml, readWalletPasswordOrThrow, writeConfigYaml } from './config-yaml'
-import { rebuildElectronTray } from './electron'
-import { createConfigFileAndAddress, createInitialTransaction, runLauncher } from './launcher'
+import { runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
 import { logger, readBeeDesktopLogs, readBeeLogs, subscribeLogServerRequests } from './logger'
 import { getPath } from './path'
@@ -23,6 +21,7 @@ import { port } from './port'
 import { getStatus } from './status'
 import { swap } from './swap'
 import { bufferRequest } from './utility'
+import { readConfigYaml, writeConfigYaml, readWalletPasswordOrThrow } from './config'
 
 const UI_DIST = path.join(__dirname, '..', '..', 'ui')
 
@@ -31,7 +30,6 @@ const AUTO_UPDATE_ENABLED_PLATFORMS = ['darwin', 'win32']
 export function runServer() {
   const app = new Koa()
   logger.info(`Serving UI from path: ${UI_DIST}`)
-  app.use(mount('/installer', serve(UI_DIST)))
   app.use(mount('/dashboard', serve(UI_DIST)))
 
   app.use(async (context, next) => {
@@ -132,15 +130,6 @@ export function runServer() {
       logger.error(error)
       context.body = { connections: 0 }
     }
-  })
-  router.post('/setup/address', async context => {
-    await createConfigFileAndAddress()
-    context.body = getStatus()
-  })
-  router.post('/setup/transaction', async context => {
-    await createInitialTransaction()
-    rebuildElectronTray()
-    context.body = getStatus()
   })
   router.post('/config', context => {
     writeConfigYaml(context.request.body)
