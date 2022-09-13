@@ -41,7 +41,6 @@ export async function runDownloader(force = false): Promise<void> {
   }
   await ensureDir(paths.data)
   await ensureAsset(
-    // TODO: Add final release before merge
     `https://github.com/ethersphere/bee/releases/download/v1.8.0/bee-${platformString}-${archString}${suffixString}`,
     `bee${suffixString}`,
     { chmod: process.platform !== 'win32', force },
