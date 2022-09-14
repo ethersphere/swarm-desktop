@@ -10,7 +10,7 @@ if (process.env.REACT_APP_SENTRY_KEY) {
 const container = document.getElementById('root')
 ReactDOM.render(
   <React.StrictMode>
-    <BeeDashboard isBeeDesktop={true} />
+    <BeeDashboard isDesktop={true} />
   </React.StrictMode>,
   container,
 )
