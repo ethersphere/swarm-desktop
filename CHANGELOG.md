@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.16.0](https://github.com/ethersphere/swarm-desktop/compare/v0.15.1...v0.16.0) (2022-09-15)
+
+
+### Features
+
+* bee 1.8 support and installer removal ([#264](https://github.com/ethersphere/swarm-desktop/issues/264)) ([35d0f30](https://github.com/ethersphere/swarm-desktop/commit/35d0f30bb30f289870c460641840726520a75d6c))
+* change default server port number ([#265](https://github.com/ethersphere/swarm-desktop/issues/265)) ([9d42b8b](https://github.com/ethersphere/swarm-desktop/commit/9d42b8b7d2d327ab994c578792a9f8d9fbfa49cf))
+* dashboard component integration ([#240](https://github.com/ethersphere/swarm-desktop/issues/240)) ([86d3859](https://github.com/ethersphere/swarm-desktop/commit/86d3859576d90dc535f0b764ff9194ee0d208250))
+
+
+### Bug Fixes
+
+* add beta password migration path ([#239](https://github.com/ethersphere/swarm-desktop/issues/239)) ([58d1a6a](https://github.com/ethersphere/swarm-desktop/commit/58d1a6a5d7cda368365037578161c8ea6cb8beff))
+* catch logs writing errors ([#237](https://github.com/ethersphere/swarm-desktop/issues/237)) ([a28f0ab](https://github.com/ethersphere/swarm-desktop/commit/a28f0ab2715d7cfda25c3dab033b4873a6e4b59b))
+* mainnet bee config ([#269](https://github.com/ethersphere/swarm-desktop/issues/269)) ([39164fc](https://github.com/ethersphere/swarm-desktop/commit/39164fc08b51b5d96f011abcebfc385b21ce647b))
+* put password in config.yaml ([#235](https://github.com/ethersphere/swarm-desktop/issues/235)) ([6465fc0](https://github.com/ethersphere/swarm-desktop/commit/6465fc0938f565b3e5715211a615f4d9c2b68384))
+* read current password when constructing v3 wallet ([#261](https://github.com/ethersphere/swarm-desktop/issues/261)) ([81699f4](https://github.com/ethersphere/swarm-desktop/commit/81699f43cd15d931b5e0e24666be07dbf4d816a9))
+
 ## [0.15.1](https://github.com/ethersphere/swarm-desktop/compare/v0.15.0...v0.15.1) (2022-07-06)
 
 
