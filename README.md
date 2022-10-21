@@ -53,13 +53,12 @@ There are some ways you can make this module better:
 
 ### Architecture
 
-Swarm Desktop consists of 3 components:
+Swarm Desktop consists of two components:
 
  1. Electron back-end that provides orchestration API that retrieve, spins, stops and manage the Bee node
- 2. Installer front-end that provides UI that walk user through installation of all the components
- 3. Bundled [Bee Dashboard](https://github.com/ethersphere/bee-dashboard) that provides UI to manage Bee node and provides access to Swarm network
+ 2. Bundled [Bee Dashboard](https://github.com/ethersphere/bee-dashboard) that provides UI to manage Bee node and provides access to Swarm network
 
-The Electron back-end is placed in `src` folder and the Installer is placed in `installer` folder.
+The Electron back-end is placed in `src` folder.
 
 The Bee Desktop stores logs of both itself and Bee in the application's logs folder:
 
