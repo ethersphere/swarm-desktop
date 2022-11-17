@@ -1,9 +1,10 @@
 import { app, Menu, Tray } from 'electron'
+import opener from 'opener'
 import { openDashboardInBrowser } from './browser'
 import { runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
 import { createNotification } from './notify'
-import { getAssetPath } from './path'
+import { getAssetPath, paths } from './path'
 
 let tray: Tray
 
@@ -28,6 +29,12 @@ export function rebuildElectronTray() {
       },
     },
     { type: 'separator' },
+    {
+      label: 'Logs',
+      click: async () => {
+        opener(paths.log)
+      },
+    },
     {
       label: 'Quit',
       click: async () => {
