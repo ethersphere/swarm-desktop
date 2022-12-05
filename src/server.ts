@@ -163,18 +163,18 @@ export function runServer() {
   })
   router.post('/gift-wallet/:address', async context => {
     const config = readConfigYaml()
-    const swapEndpoint = Reflect.get(config, 'swap-endpoint')
+    const blockchainRpcEndpoint = Reflect.get(config, 'blockchain-rpc-endpoint')
     const privateKeyString = await getPrivateKey()
     const { address } = context.params
-    await sendBzzTransaction(privateKeyString, address, '50000000000000000', swapEndpoint)
-    await sendNativeTransaction(privateKeyString, address, '1000000000000000000', swapEndpoint)
+    await sendBzzTransaction(privateKeyString, address, '50000000000000000', blockchainRpcEndpoint)
+    await sendNativeTransaction(privateKeyString, address, '1000000000000000000', blockchainRpcEndpoint)
     context.body = { success: true }
   })
   router.post('/swap', async context => {
     const config = readConfigYaml()
-    const swapEndpoint = Reflect.get(config, 'swap-endpoint')
+    const blockchainRpcEndpoint = Reflect.get(config, 'swap-endpoint')
     const privateKeyString = await getPrivateKey()
-    await swap(privateKeyString, context.request.body.dai, '10000', swapEndpoint)
+    await swap(privateKeyString, context.request.body.dai, '10000', blockchainRpcEndpoint)
     context.body = { success: true }
   })
 
