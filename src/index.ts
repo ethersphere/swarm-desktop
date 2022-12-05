@@ -2,13 +2,7 @@ import * as Sentry from '@sentry/electron'
 import { dialog, app } from 'electron'
 import updater from 'update-electron-app'
 
-import {
-  configYamlExists,
-  getDesktopVersionFromFile,
-  readConfigYaml,
-  writeConfigYaml,
-  writeDesktopVersionFile,
-} from './config'
+import { getDesktopVersionFromFile, writeDesktopVersionFile } from './config'
 import { openDashboardInBrowser } from './browser'
 import { runDownloader } from './downloader'
 import { runElectronTray } from './electron'
@@ -26,11 +20,9 @@ import { ensureApiKey } from './api-key'
 // @ts-ignore
 import squirrelInstallingExecution from 'electron-squirrel-startup'
 import { initSplash, Splash } from './splash'
+import { runMigrations } from './migration'
 
-// TODO: remove this after 1.0.0 release
-// this is a migration path for pioneers
-// who helped testing the early versions
-if (configYamlExists() && !readConfigYaml().password) writeConfigYaml({ password: 'Test' })
+runMigrations()
 
 if (squirrelInstallingExecution) {
   app.quit()
