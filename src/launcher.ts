@@ -29,7 +29,7 @@ function createConfiguration() {
 debug-api-addr: 127.0.0.1:1635
 debug-api-enable: true
 swap-enable: false
-swap-initial-deposit: 1000000000000000
+swap-initial-deposit: 0
 mainnet: true
 full-node: false
 chain-enable: false
