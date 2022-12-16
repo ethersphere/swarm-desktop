@@ -31,6 +31,12 @@ resolver-options: 'https://goerli.infura.io/v3/...'
 bootnode: '/dnsaddr/testnet.ethswarm.org
 ```
 
+## Getting new Bee
+
+Download the Bee binary under test from the [releases page](https://github.com/ethersphere/bee/releases)
+
+Rename it to `bee` and move it to `~/Library/Application Support/Swarm Desktop`
+
 ## Running Desktop
 
 Grab `swarm-desktop` source and run the following:
