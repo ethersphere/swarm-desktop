@@ -29,7 +29,6 @@ function createConfiguration() {
 debug-api-addr: 127.0.0.1:1635
 debug-api-enable: true
 swap-enable: false
-swap-initial-deposit: 1000000000000000
 mainnet: true
 full-node: false
 chain-enable: false
@@ -37,7 +36,8 @@ cors-allowed-origins: '*'
 use-postage-snapshot: true
 resolver-options: https://cloudflare-eth.com
 data-dir: ${getPath('data-dir')}
-password: ${v4()}`
+password: ${v4()}
+storage-incentives-enable: false`
 }
 
 export async function initializeBee() {
