@@ -14,6 +14,10 @@ export function runMigrations() {
     writeConfigYaml({ password: 'Test' })
   }
 
+  if (config['storage-incentives-enable'] === undefined) {
+    writeConfigYaml({ 'storage-incentives-enable': false })
+  }
+
   if (config['swap-endpoint'] && !config['blockchain-rpc-endpoint']) {
     writeConfigYaml({ 'blockchain-rpc-endpoint': config['swap-endpoint'] })
   }
