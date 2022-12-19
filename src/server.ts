@@ -174,8 +174,14 @@ export function runServer() {
     const config = readConfigYaml()
     const swapEndpoint = Reflect.get(config, 'swap-endpoint')
     const privateKeyString = await getPrivateKey()
-    await swap(privateKeyString, context.request.body.dai, '10000', swapEndpoint)
-    context.body = { success: true }
+    try {
+      await swap(privateKeyString, context.request.body.dai, '10000', swapEndpoint)
+      context.body = { success: true }
+    } catch (error) {
+      logger.error(error)
+      context.status = 500
+      context.body = { message: 'Failed to swap', error }
+    }
   })
 
   app.use(router.routes())
