@@ -13,6 +13,7 @@ import { URL } from 'url'
 import PACKAGE_JSON from '../package.json'
 import { getApiKey } from './api-key'
 import { sendBzzTransaction, sendNativeTransaction } from './blockchain'
+import { readConfigYaml, readWalletPasswordOrThrow, writeConfigYaml } from './config'
 import { runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
 import { logger, readBeeDesktopLogs, readBeeLogs, subscribeLogServerRequests } from './logger'
@@ -21,7 +22,6 @@ import { port } from './port'
 import { getStatus } from './status'
 import { swap } from './swap'
 import { bufferRequest } from './utility'
-import { readConfigYaml, writeConfigYaml, readWalletPasswordOrThrow } from './config'
 
 const UI_DIST = path.join(__dirname, '..', '..', 'ui')
 
@@ -163,7 +163,7 @@ export function runServer() {
   })
   router.post('/gift-wallet/:address', async context => {
     const config = readConfigYaml()
-    const blockchainRpcEndpoint = Reflect.get(config, 'blockchain-rpc-endpoint')
+    const blockchainRpcEndpoint = Reflect.get(config, 'blockchain-rpc-endpoint') as string
     const privateKeyString = await getPrivateKey()
     const { address } = context.params
     await sendBzzTransaction(privateKeyString, address, '50000000000000000', blockchainRpcEndpoint)
@@ -172,10 +172,16 @@ export function runServer() {
   })
   router.post('/swap', async context => {
     const config = readConfigYaml()
-    const blockchainRpcEndpoint = Reflect.get(config, 'swap-endpoint')
+    const blockchainRpcEndpoint = Reflect.get(config, 'swap-endpoint') as string
     const privateKeyString = await getPrivateKey()
-    await swap(privateKeyString, context.request.body.dai, '10000', blockchainRpcEndpoint)
-    context.body = { success: true }
+    try {
+      await swap(privateKeyString, context.request.body.dai, '10000', blockchainRpcEndpoint)
+      context.body = { success: true }
+    } catch (error) {
+      logger.error(error)
+      context.status = 500
+      context.body = { message: 'Failed to swap', error }
+    }
   })
 
   app.use(router.routes())
