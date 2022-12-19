@@ -41,9 +41,9 @@ export async function swap(
   privateKey: string,
   xdai: string,
   minimumBzz: string,
-  jsonRpcProvider: string,
+  blockchainRpcEndpoint: string,
 ): Promise<string[]> {
-  const provider = new providers.JsonRpcProvider(jsonRpcProvider, 100)
+  const provider = new providers.JsonRpcProvider(blockchainRpcEndpoint, 100)
   const signer = new ethers.Wallet(privateKey, provider)
   const gasLimit = 1000000
   const contract = new Contract('0x1C232F01118CB8B424793ae03F870aa7D0ac7f77', contractInterface, signer)
