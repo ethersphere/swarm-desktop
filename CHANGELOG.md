@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.0](https://github.com/ethersphere/swarm-desktop/compare/v0.18.0-pre.1...v0.17.0) (2022-12-21)
+
+
+### Miscellaneous Chores
+
+* release 0.17.0 ([cb0ca4d](https://github.com/ethersphere/swarm-desktop/commit/cb0ca4d185a70db84605c755264e290098db867c))
+
 ## [0.18.0-pre.1](https://github.com/ethersphere/swarm-desktop/compare/v0.17.0-pre.1...v0.18.0-pre.1) (2022-12-21)
 
 
