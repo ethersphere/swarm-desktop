@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.1](https://github.com/ethersphere/swarm-desktop/compare/v0.18.0...v0.18.1) (2023-01-20)
+
+
+### Bug Fixes
+
+* upgrade bee to apply hotfix ([#316](https://github.com/ethersphere/swarm-desktop/issues/316)) ([44c6dc3](https://github.com/ethersphere/swarm-desktop/commit/44c6dc38361bf965f0209f8243892c4908161047))
+
 ## [0.18.0](https://github.com/ethersphere/swarm-desktop/compare/v0.17.0...v0.18.0) (2023-01-19)
 
 
