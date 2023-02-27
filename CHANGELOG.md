@@ -5,13 +5,7 @@
 
 ### Features
 
-* upgrade-to-bee-1.12.0 ([#321](https://github.com/ethersphere/swarm-desktop/issues/321)) ([969feeb](https://github.com/ethersphere/swarm-desktop/commit/969feeb42eb8fad30cd47b882d7c75f9ba7b3e83))
-
-
-### Miscellaneous Chores
-
-* release 0.19.0 ([fc473ae](https://github.com/ethersphere/swarm-desktop/commit/fc473aedd978c20effecc81f54880ad76d57e5ed))
-* release 0.19.1 ([c3ad467](https://github.com/ethersphere/swarm-desktop/commit/c3ad4674ea51e0333101e40e019003f7084787b8))
+* upgrade to bee 1.12.0 ([#321](https://github.com/ethersphere/swarm-desktop/issues/321)) ([969feeb](https://github.com/ethersphere/swarm-desktop/commit/969feeb42eb8fad30cd47b882d7c75f9ba7b3e83))
 
 ## [0.19.0](https://github.com/ethersphere/swarm-desktop/compare/v0.19.0...v0.19.0) (2023-02-23)
 
