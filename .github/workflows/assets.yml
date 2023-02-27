@@ -35,6 +35,10 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Copy dashboard lib
+        run: cp ./ui/node_modules/@ethersphere/bee-dashboard/lib/* ./dist/ui/static/js
+        continue-on-error: true
+
       - name: Purge ui src
         run: npx rimraf ./ui
 
@@ -90,7 +94,7 @@ jobs:
           REACT_APP_SENTRY_KEY: ${{ secrets.SENTRY_KEY_UI }}
 
       - name: Copy dashboard lib
-        run: cp ./ui/node_modules/@ethersphere/bee-dashboard/lib/* ./dist/ui/static
+        run: cp ./ui/node_modules/@ethersphere/bee-dashboard/lib/* ./dist/ui/static/js
         continue-on-error: true
 
       - name: Purge ui src
