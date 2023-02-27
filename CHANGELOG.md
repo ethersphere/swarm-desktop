@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.19.2](https://github.com/ethersphere/swarm-desktop/compare/v0.19.1...v0.19.2) (2023-02-27)
+
+* upgrade to bee 1.12.0 ([#321](https://github.com/ethersphere/swarm-desktop/issues/321)) ([969feeb](https://github.com/ethersphere/swarm-desktop/commit/969feeb42eb8fad30cd47b882d7c75f9ba7b3e83))
+
 ## [0.19.1](https://github.com/ethersphere/swarm-desktop/compare/v0.19.0...v0.19.1) (2023-02-27)
 
 
