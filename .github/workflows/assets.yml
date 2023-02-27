@@ -91,6 +91,7 @@ jobs:
 
       - name: Copy dashboard lib
         run: cp ./ui/node_modules/@ethersphere/bee-dashboard/lib/* ./dist/ui/static
+        continue-on-error: true
 
       - name: Purge ui src
         run: npx rimraf ./ui
