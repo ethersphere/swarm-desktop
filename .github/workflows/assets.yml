@@ -48,7 +48,7 @@ jobs:
   publish:
     strategy:
       matrix:
-        os: [ ubuntu-latest, macos-latest, windows-latest ]
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -89,6 +89,9 @@ jobs:
         env:
           REACT_APP_SENTRY_KEY: ${{ secrets.SENTRY_KEY_UI }}
 
+      - name: Copy dashboard lib
+        run: cp ./ui/node_modules/@ethersphere/bee-dashboard/lib/* ./dist/ui/static
+
       - name: Purge ui src
         run: npx rimraf ./ui
 
@@ -119,7 +122,6 @@ jobs:
           ignore_empty: true
           sourcemaps: ./dist/desktop/src
           version: ${{ github.event.client_payload.version }}
-
 # TODO: https://github.com/ethersphere/swarm-desktop/issues/250
 #      - name: Create Sentry release for UI
 #        if: matrix.os == 'ubuntu-latest'
