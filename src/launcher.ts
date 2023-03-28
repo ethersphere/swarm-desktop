@@ -1,4 +1,5 @@
 import { spawn } from 'child_process'
+import * as FileStreamRotator from 'file-stream-rotator'
 import { mkdirSync, writeFileSync } from 'fs'
 import { platform } from 'os'
 import { v4 } from 'uuid'
@@ -6,7 +7,6 @@ import { rebuildElectronTray } from './electron'
 import { BeeManager } from './lifecycle'
 import { logger } from './logger'
 import { checkPath, getLogPath, getPath } from './path'
-import * as FileStreamRotator from 'file-stream-rotator'
 
 export function runKeepAliveLoop() {
   setInterval(() => {
@@ -31,7 +31,6 @@ debug-api-enable: true
 swap-enable: false
 mainnet: true
 full-node: false
-chain-enable: false
 cors-allowed-origins: '*'
 use-postage-snapshot: true
 resolver-options: https://cloudflare-eth.com

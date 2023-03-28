@@ -1,4 +1,4 @@
-import { configYamlExists, readConfigYaml, writeConfigYaml } from './config'
+import { configYamlExists, deleteKeyFromConfigYaml, readConfigYaml, writeConfigYaml } from './config'
 
 export function runMigrations() {
   if (!configYamlExists()) {
@@ -20,5 +20,9 @@ export function runMigrations() {
 
   if (config['swap-endpoint'] && !config['blockchain-rpc-endpoint']) {
     writeConfigYaml({ 'blockchain-rpc-endpoint': config['swap-endpoint'] })
+  }
+
+  if (config['chain-enable'] !== undefined) {
+    deleteKeyFromConfigYaml('chain-enable')
   }
 }
