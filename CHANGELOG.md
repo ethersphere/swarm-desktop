@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.20.0](https://github.com/ethersphere/swarm-desktop/compare/v0.19.2...v0.20.0) (2023-03-28)
+
+
+### Features
+
+* add support for bee 1.13 ([#328](https://github.com/ethersphere/swarm-desktop/issues/328)) ([2ff1b9f](https://github.com/ethersphere/swarm-desktop/commit/2ff1b9f69e1b9dbcfae40b1fb56763be0f01c044))
+
 ## [0.19.2](https://github.com/ethersphere/swarm-desktop/compare/v0.19.1...v0.19.2) (2023-02-27)
 
 * upgrade to bee 1.12.0 ([#321](https://github.com/ethersphere/swarm-desktop/issues/321)) ([969feeb](https://github.com/ethersphere/swarm-desktop/commit/969feeb42eb8fad30cd47b882d7c75f9ba7b3e83))
