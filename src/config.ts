@@ -1,7 +1,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'fs'
-import { getPath } from './path'
 import { dump, FAILSAFE_SCHEMA, load } from 'js-yaml'
 import PACKAGE_JSON from '../package.json'
+import { getPath } from './path'
 
 export const SUPPORTED_LEVELS = ['critical', 'error', 'warn', 'info', 'verbose', 'debug'] as const
 export type SupportedLevels = typeof SUPPORTED_LEVELS[number]
@@ -31,6 +31,12 @@ export function writeConfigYaml(newValues: Record<string, unknown>) {
   for (const [key, value] of Object.entries(newValues)) {
     data[key] = value
   }
+  writeFileSync(getPath('config.yaml'), dump(data))
+}
+
+export function deleteKeyFromConfigYaml(key: string) {
+  const data = readConfigYaml()
+  delete data[key]
   writeFileSync(getPath('config.yaml'), dump(data))
 }
 
