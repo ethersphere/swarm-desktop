@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.0](https://github.com/ethersphere/swarm-desktop/compare/v0.20.0...v0.21.0) (2023-03-29)
+
+
+### Features
+
+* migrate transaction and block-hash properties ([#330](https://github.com/ethersphere/swarm-desktop/issues/330)) ([25f0ba8](https://github.com/ethersphere/swarm-desktop/commit/25f0ba8e3650f090032c6dfec57494adef6be7e3))
+
 ## [0.20.0](https://github.com/ethersphere/swarm-desktop/compare/v0.19.2...v0.20.0) (2023-03-28)
 
 
