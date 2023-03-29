@@ -25,4 +25,12 @@ export function runMigrations() {
   if (config['chain-enable'] !== undefined) {
     deleteKeyFromConfigYaml('chain-enable')
   }
+
+  if (config['block-hash'] !== undefined) {
+    deleteKeyFromConfigYaml('block-hash')
+  }
+
+  if (config.transaction !== undefined) {
+    deleteKeyFromConfigYaml('transaction')
+  }
 }
