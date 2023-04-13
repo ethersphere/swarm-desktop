@@ -1,10 +1,11 @@
 # Changelog
 
-## [0.21.0](https://github.com/ethersphere/swarm-desktop/compare/v0.20.0...v0.21.0) (2023-03-29)
+## [0.21.0](https://github.com/ethersphere/swarm-desktop/compare/v0.21.0...v0.20.0) (2023-04-13)
 
 
 ### Features
 
+* update bee to 1.14.0 ([#334](https://github.com/ethersphere/swarm-desktop/issues/334)) ([512a982](https://github.com/ethersphere/swarm-desktop/commit/512a982acb4b09884e9ea1ce9c831966c497b073))
 * migrate transaction and block-hash properties ([#330](https://github.com/ethersphere/swarm-desktop/issues/330)) ([25f0ba8](https://github.com/ethersphere/swarm-desktop/commit/25f0ba8e3650f090032c6dfec57494adef6be7e3))
 
 ## [0.20.0](https://github.com/ethersphere/swarm-desktop/compare/v0.19.2...v0.20.0) (2023-03-28)
