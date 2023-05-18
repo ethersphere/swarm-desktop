@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.0](https://github.com/ethersphere/swarm-desktop/compare/v0.23.0...v0.24.0) (2023-05-18)
+
+
+### Features
+
+* upgrade bee to v1.16.0 ([#359](https://github.com/ethersphere/swarm-desktop/issues/359)) ([1590365](https://github.com/ethersphere/swarm-desktop/commit/1590365d1c18d301f1827eaabb58e61e184b19cc))
+
 ## [0.23.0](https://github.com/ethersphere/swarm-desktop/compare/v0.22.0...v0.23.0) (2023-05-03)
 
 
