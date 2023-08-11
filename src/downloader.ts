@@ -41,7 +41,7 @@ export async function runDownloader(force = false): Promise<void> {
   }
   await ensureDir(paths.data)
   await ensureAsset(
-    `https://github.com/ethersphere/bee/releases/download/v1.16.1/bee-${platformString}-${archString}${suffixString}`,
+    `https://github.com/ethersphere/bee/releases/download/v1.17.2/bee-${platformString}-${archString}${suffixString}`,
     `bee${suffixString}`,
     { chmod: process.platform !== 'win32', force },
   )
