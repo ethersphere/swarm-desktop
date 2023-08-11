@@ -41,13 +41,6 @@ jobs:
           field: version
           value: ${{ github.event.inputs.version }}
 
-      - name: Configure secrets
-        uses: jossef/action-set-json-field@v1
-        with:
-          file: src/.sentry.json
-          field: KEY
-          value: ${{ secrets.SENTRY_KEY }}
-
       - name: Set MacOS signing certs
         run: .github/tools/add-macos-cert.sh
         env:
@@ -101,13 +94,6 @@ jobs:
           field: version
           value: ${{ github.event.inputs.version }}
 
-      - name: Configure secrets
-        uses: jossef/action-set-json-field@v1
-        with:
-          file: src/.sentry.json
-          field: KEY
-          value: ${{ secrets.SENTRY_KEY }}
-
       - name: Set MacOS signing certs
         if: matrix.os == 'macos-latest'
         run: .github/tools/add-macos-cert.sh
@@ -126,9 +112,6 @@ jobs:
 
       - name: Build
         run: npm run build
-        env:
-          REACT_APP_SENTRY_KEY: ${{ secrets.SENTRY_KEY_UI }}
-          REACT_APP_SENTRY_ENVIRONMENT: 'prerelease'
 
       - name: Purge ui src
         run: npx rimraf ./ui
@@ -147,16 +130,3 @@ jobs:
         run: npm run publish:linux:arm64
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create Sentry release
-        if: matrix.os == 'ubuntu-latest'
-        uses: getsentry/action-release@v1
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-        with:
-          ignore_missing: true
-          ignore_empty: true
-          sourcemaps: ./dist/desktop/src
-          version: ${{ github.event.inputs.version }}

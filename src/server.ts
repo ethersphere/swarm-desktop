@@ -1,5 +1,4 @@
 import Router from '@koa/router'
-import { captureException } from '@sentry/electron'
 import Wallet from 'ethereumjs-wallet'
 import { readFile } from 'fs/promises'
 import Koa from 'koa'
@@ -8,7 +7,6 @@ import mount from 'koa-mount'
 import serve from 'koa-static'
 import fetch from 'node-fetch'
 import * as path from 'path'
-import { URL } from 'url'
 
 import PACKAGE_JSON from '../package.json'
 import { getApiKey } from './api-key'
@@ -21,7 +19,6 @@ import { getPath } from './path'
 import { port } from './port'
 import { getStatus } from './status'
 import { swap } from './swap'
-import { bufferRequest } from './utility'
 
 const UI_DIST = path.join(__dirname, '..', '..', 'ui')
 
@@ -38,7 +35,7 @@ export function runServer() {
     context.set('Access-Control-Allow-Credentials', 'true')
     context.set(
       'Access-Control-Allow-Headers',
-      'Content-Type, Content-Length, Authorization, Accept, X-Requested-With, Referer, Baggage, Sentry-Trace',
+      'Content-Type, Content-Length, Authorization, Accept, X-Requested-With, Referer, Baggage',
     )
     context.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS')
     await next()
@@ -63,44 +60,6 @@ export function runServer() {
       logger.error(error)
       context.status = 503
       context.body = { message: 'Failed to fetch price from token service', error }
-    }
-  })
-
-  /**
-   * This is proxy endpoint for Sentry to circumvent ad-blockers
-   * @see https://docs.sentry.io/platforms/javascript/troubleshooting/#using-the-tunnel-option
-   */
-  router.all('/sentry', async context => {
-    // OPTION request is used to verify that Desktop can proxy the requests
-    if (context.request.method.toLowerCase() === 'options') {
-      context.status = 204
-
-      return
-    }
-
-    try {
-      // We can't use the `context.request.body` as the incoming request is not valid JSON
-      // It is multiline string where each line contain a JSON field and because of that the `koa-bodyparser`
-      // is not able to correctly detect and parse the body and because of that nothing is attached.
-      // So we need to Buffer the body into string ourselves.
-      const envelope = await bufferRequest(context.req)
-      const pieces = envelope.split('\n')
-      const header = JSON.parse(pieces[0])
-      const dnsUrl = new URL(header.dsn)
-      const projectId = dnsUrl.pathname.endsWith('/') ? dnsUrl.pathname.slice(0, -1) : dnsUrl.pathname
-      const url = `https://${dnsUrl.host}/api/${projectId}/envelope/`
-      const response = await fetch(url, {
-        method: 'POST',
-        body: envelope,
-      })
-
-      context.body = await response.json()
-    } catch (e) {
-      logger.error(e)
-      captureException(e)
-
-      context.status = 400
-      context.body = { status: 'invalid request' }
     }
   })
 

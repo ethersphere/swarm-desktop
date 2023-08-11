@@ -19,13 +19,6 @@ jobs:
       - name: Install all dependencies
         run: npm ci && cd ./ui && npm ci
 
-      - name: Configure secrets
-        uses: jossef/action-set-json-field@v1
-        with:
-          file: src/.sentry.json
-          field: KEY
-          value: ${{ secrets.SENTRY_KEY }}
-
       - name: Set MacOS signing certs
         run: .github/tools/add-macos-cert.sh
         env:
@@ -65,13 +58,6 @@ jobs:
       - name: Install dependencies
         run: npm ci && cd ./ui && npm ci
 
-      - name: Configure secrets
-        uses: jossef/action-set-json-field@v1
-        with:
-          file: src/.sentry.json
-          field: KEY
-          value: ${{ secrets.SENTRY_KEY }}
-
       - name: Set MacOS signing certs
         if: matrix.os == 'macos-latest'
         run: .github/tools/add-macos-cert.sh
@@ -90,8 +76,6 @@ jobs:
 
       - name: Build
         run: npm run build
-        env:
-          REACT_APP_SENTRY_KEY: ${{ secrets.SENTRY_KEY_UI }}
 
       - name: Copy dashboard lib
         run: cp ./ui/node_modules/@ethersphere/bee-dashboard/lib/* ./dist/ui/static/js
@@ -114,29 +98,3 @@ jobs:
         run: npm run publish:linux:arm64
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create Sentry release for Desktop
-        if: matrix.os == 'ubuntu-latest'
-        uses: getsentry/action-release@v1
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-        with:
-          ignore_missing: true
-          ignore_empty: true
-          sourcemaps: ./dist/desktop/src
-          version: ${{ github.event.client_payload.version }}
-# TODO: https://github.com/ethersphere/swarm-desktop/issues/250
-#      - name: Create Sentry release for UI
-#        if: matrix.os == 'ubuntu-latest'
-#        uses: getsentry/action-release@v1
-#        env:
-#          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-#          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-#          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-#        with:
-#          ignore_missing: true
-#          ignore_empty: true
-#          sourcemaps: ./dist/ui/static/js
-#          version: ${{ github.event.client_payload.version }}
