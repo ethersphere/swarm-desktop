@@ -132,7 +132,7 @@ export function runServer() {
     }
   })
   router.post('/config', context => {
-    writeConfigYaml(context.request.body)
+    writeConfigYaml(context.request.body as Record<string, string>)
     context.body = readConfigYaml()
   })
   router.get('/config', context => {
@@ -175,7 +175,7 @@ export function runServer() {
     const blockchainRpcEndpoint = Reflect.get(config, 'swap-endpoint') as string
     const privateKeyString = await getPrivateKey()
     try {
-      await swap(privateKeyString, context.request.body.dai, '10000', blockchainRpcEndpoint)
+      await swap(privateKeyString, (context.request.body as Record<string, string>).dai, '10000', blockchainRpcEndpoint)
       context.body = { success: true }
     } catch (error) {
       logger.error(error)
