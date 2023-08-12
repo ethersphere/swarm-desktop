@@ -101,6 +101,7 @@ function notarizeMaybe() {
     appleId: process.env.APPLE_ID,
     appleIdPassword: process.env.APPLE_ID_PASSWORD,
     ascProvider: '9J9SPHU9RP',
+    teamId: '9J9SPHU9RP',
   }
 }
 
