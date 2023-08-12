@@ -96,6 +96,7 @@ function notarizeMaybe() {
   }
 
   config.packagerConfig.osxNotarize = {
+    tool: 'notarytool',
     appBundleId: 'org.ethswarm.swarmDesktop',
     appleId: process.env.APPLE_ID,
     appleIdPassword: process.env.APPLE_ID_PASSWORD,
