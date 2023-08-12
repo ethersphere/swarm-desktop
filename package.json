@@ -79,6 +79,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
     "jest": "^27.5.1",
+    "open": "^9.1.0",
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
     "ts-jest": "^27.1.4",
@@ -87,7 +88,6 @@
   },
   "dependencies": {
     "@koa/router": "^10.1.1",
-    "@sentry/electron": "^3.0.7",
     "cross-zip": "^4.0.0",
     "electron-squirrel-startup": "^1.0.0",
     "env-paths": "2",

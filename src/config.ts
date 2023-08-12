@@ -1,17 +1,14 @@
 import { existsSync, readFileSync, writeFileSync } from 'fs'
-import { dump, FAILSAFE_SCHEMA, load } from 'js-yaml'
+import { FAILSAFE_SCHEMA, dump, load } from 'js-yaml'
 import PACKAGE_JSON from '../package.json'
 import { getPath } from './path'
 
-export const SUPPORTED_LEVELS = ['critical', 'error', 'warn', 'info', 'verbose', 'debug'] as const
-export type SupportedLevels = typeof SUPPORTED_LEVELS[number]
+export const SUPPORTED_LEVELS = ['critical', 'error', 'warn', 'info', 'verbose', 'debug']
 export const DEFAULT_LOG_LEVEL = 'info'
 const DESKTOP_VERSION_FILE = 'desktop.version'
 
 export const logLevel =
-  process.env.LOG_LEVEL && SUPPORTED_LEVELS.includes(process.env.LOG_LEVEL as SupportedLevels)
-    ? process.env.LOG_LEVEL
-    : DEFAULT_LOG_LEVEL
+  process.env.LOG_LEVEL && SUPPORTED_LEVELS.includes(process.env.LOG_LEVEL) ? process.env.LOG_LEVEL : DEFAULT_LOG_LEVEL
 
 export function configYamlExists(): boolean {
   return existsSync(getPath('config.yaml'))

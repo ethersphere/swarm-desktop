@@ -1,14 +1,14 @@
-import { readFile } from 'node:fs/promises'
-import { createLogger, format, transports, Logger, Logform } from 'winston'
-import requestStats from 'request-stats'
 import type { Server } from 'http'
+import { readFile } from 'node:fs/promises'
+import requestStats from 'request-stats'
+import { Logform, Logger, createLogger, format, transports } from 'winston'
 
-import { SupportedLevels, SUPPORTED_LEVELS, logLevel } from './config'
+import { SUPPORTED_LEVELS, logLevel } from './config'
 import { getLogPath } from './path'
 
-const supportedLevels: Record<SupportedLevels, number> = SUPPORTED_LEVELS.reduce(
+const supportedLevels: Record<string, number> = SUPPORTED_LEVELS.reduce(
   (acc, cur, idx) => ({ ...acc, [cur]: idx }),
-  {} as Record<SupportedLevels, number>,
+  {} as Record<string, number>,
 )
 
 export const logger: Logger = createLogger({

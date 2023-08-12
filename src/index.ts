@@ -1,26 +1,24 @@
-import * as Sentry from '@sentry/electron'
-import { dialog, app } from 'electron'
+import { app, dialog } from 'electron'
 import updater from 'update-electron-app'
 
-import { getDesktopVersionFromFile, writeDesktopVersionFile } from './config'
+import PACKAGE_JSON from '../package.json'
+import { ensureApiKey } from './api-key'
 import { openDashboardInBrowser } from './browser'
+import { getDesktopVersionFromFile, writeDesktopVersionFile } from './config'
 import { runDownloader } from './downloader'
 import { runElectronTray } from './electron'
 import { initializeBee, runKeepAliveLoop, runLauncher } from './launcher'
+import { logger } from './logger'
 import { findFreePort } from './port'
 import { runServer } from './server'
 import { getStatus } from './status'
-import SENTRY from './.sentry.json'
-import PACKAGE_JSON from '../package.json'
-import { logger } from './logger'
-import { ensureApiKey } from './api-key'
 
 // TODO: Add types definition
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import squirrelInstallingExecution from 'electron-squirrel-startup'
-import { initSplash, Splash } from './splash'
 import { runMigrations } from './migration'
+import { initSplash, Splash } from './splash'
 
 runMigrations()
 
@@ -45,32 +43,7 @@ let splash: Splash | undefined
 
 async function main() {
   logger.info(`Bee Desktop version: ${PACKAGE_JSON.version} (${process.env.NODE_ENV ?? 'production'})`)
-  const sentryKey = SENTRY.KEY || process.env.SENTRY_KEY
 
-  if (sentryKey) {
-    logger.info('Sentry enabled')
-    Sentry.init({
-      dsn: sentryKey,
-      release: PACKAGE_JSON.version,
-      // TODO: Once SDK support attachment https://github.com/getsentry/sentry-electron/issues/496
-      // beforeSend(event, hint) {
-      //   const attachments = []
-      //
-      //   if (existsSync(getLogPath('bee.log'))) {
-      //     attachments.push({ filename: 'bee.log', data: readFileSync(getLogPath('bee.log'), { encoding: 'utf8' }) })
-      //   }
-      //
-      //   if (existsSync(getLogPath('bee-desktop.log'))) {
-      //     attachments.push({
-      //       filename: 'bee-desktop.log',
-      //       data: readFileSync(getLogPath('bee-desktop.log'), { encoding: 'utf8' }),
-      //     })
-      //   }
-      //
-      //   return event
-      // },
-    })
-  }
   splash = await initSplash()
 
   // Auto updater
