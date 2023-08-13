@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.27.1-pre.5](https://github.com/ethersphere/swarm-desktop/compare/v0.27.0-pre.5...v0.27.1-pre.5) (2023-08-13)
+
+
+### Bug Fixes
+
+* set icon for linux builds ([#296](https://github.com/ethersphere/swarm-desktop/issues/296)) ([bd4ea54](https://github.com/ethersphere/swarm-desktop/commit/bd4ea54bd2bc44b8b38e1ec417aa019d64c14791))
+
 ## [0.26.0](https://github.com/ethersphere/swarm-desktop/compare/v0.25.0...v0.26.0) (2023-08-11)
 
 
