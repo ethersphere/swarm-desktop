@@ -1,4 +1,4 @@
-import { app, Menu, Tray } from 'electron'
+import { app, Menu, nativeTheme, Tray } from 'electron'
 import opener from 'opener'
 import { openDashboardInBrowser } from './browser'
 import { runLauncher } from './launcher'
@@ -47,6 +47,21 @@ export function rebuildElectronTray() {
   tray.setContextMenu(contextMenu)
 }
 
+function getTrayIcon() {
+  if (process.platform === 'darwin') {
+    // on macOS the resolution and dark/light is managed automatically
+    return getAssetPath('trayTemplate.png')
+  }
+
+  const isDark = nativeTheme.shouldUseDarkColors
+
+  if (isDark) {
+    return getAssetPath('icon-inv.png')
+  }
+
+  return getAssetPath('icon.png')
+}
+
 export function runElectronTray() {
   const gotTheLock = app.requestSingleInstanceLock()
 
@@ -63,7 +78,7 @@ export function runElectronTray() {
       app.dock.setIcon(getAssetPath('icon.png'))
       app.dock.hide()
     }
-    tray = new Tray(getAssetPath('trayTemplate.png'))
+    tray = new Tray(getTrayIcon())
     rebuildElectronTray()
   })
 }
