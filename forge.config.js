@@ -53,11 +53,19 @@ const config = {
     },
     {
       name: '@electron-forge/maker-deb',
-      config: {},
+      config: {
+        options: {
+          icon: `${iconPath}.png`,
+        },
+      },
     },
     {
       name: '@electron-forge/maker-rpm',
-      config: {},
+      config: {
+        options: {
+          icon: `${iconPath}.png`,
+        },
+      },
     },
     {
       name: '@electron-forge/maker-zip',
