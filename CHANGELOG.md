@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.28.0](https://github.com/ethersphere/swarm-desktop/compare/v0.27.1-pre.5...v0.28.0) (2023-08-15)
+
+
+### Features
+
+* dark mode tray icon support for linux and windows ([#373](https://github.com/ethersphere/swarm-desktop/issues/373)) ([863fedb](https://github.com/ethersphere/swarm-desktop/commit/863fedb67c9d1f404ceb34309bea4085d4d421d6))
+
+
+### Miscellaneous Chores
+
+* release 0.28.0 ([6992c6a](https://github.com/ethersphere/swarm-desktop/commit/6992c6a13e46294edbc50c5f62b99e0bf6540837))
+
 ## [0.27.1-pre.5](https://github.com/ethersphere/swarm-desktop/compare/v0.27.0-pre.5...v0.27.1-pre.5) (2023-08-13)
 
 
