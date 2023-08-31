@@ -32,7 +32,7 @@ swap-enable: false
 mainnet: true
 full-node: false
 cors-allowed-origins: '*'
-use-postage-snapshot: true
+use-postage-snapshot: false
 resolver-options: https://cloudflare-eth.com
 data-dir: ${getPath('data-dir')}
 password: ${v4()}

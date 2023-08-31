@@ -7,13 +7,6 @@ export function runMigrations() {
 
   const config = readConfigYaml()
 
-  // TODO: remove this after 1.0.0 release
-  // this is a migration path for pioneers
-  // who helped testing the early versions
-  if (!config.password) {
-    writeConfigYaml({ password: 'Test' })
-  }
-
   if (config['storage-incentives-enable'] === undefined) {
     writeConfigYaml({ 'storage-incentives-enable': false })
   }
@@ -32,5 +25,9 @@ export function runMigrations() {
 
   if (config.transaction !== undefined) {
     deleteKeyFromConfigYaml('transaction')
+  }
+
+  if (config['use-postage-snapshot'] !== false && config['use-postage-snapshot'] !== 'false') {
+    writeConfigYaml({ 'use-postage-snapshot': false })
   }
 }
