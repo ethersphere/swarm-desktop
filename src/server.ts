@@ -131,7 +131,7 @@ export function runServer() {
   })
   router.post('/swap', async context => {
     const config = readConfigYaml()
-    const blockchainRpcEndpoint = Reflect.get(config, 'swap-endpoint') as string
+    const blockchainRpcEndpoint = Reflect.get(config, 'blockchain-rpc-endpoint') as string
     const privateKeyString = await getPrivateKey()
     try {
       await swap(privateKeyString, (context.request.body as Record<string, string>).dai, '10000', blockchainRpcEndpoint)

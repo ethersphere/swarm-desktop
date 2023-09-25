@@ -27,6 +27,10 @@ export function runMigrations() {
     deleteKeyFromConfigYaml('transaction')
   }
 
+  if (config['swap-endpoint'] !== undefined) {
+    deleteKeyFromConfigYaml('swap-endpoint')
+  }
+
   if (config['use-postage-snapshot'] !== false && config['use-postage-snapshot'] !== 'false') {
     writeConfigYaml({ 'use-postage-snapshot': false })
   }
