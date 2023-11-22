@@ -1,0 +1,108 @@
+{
+  "name": "@ethersphere/bee-dashboard",
+  "version": "0.24.1",
+  "description": "An app which helps users to setup their Bee node and do actions like cash out cheques",
+  "keywords": [
+    "bee",
+    "swarm",
+    "decentralised",
+    "storage",
+    "ethereum",
+    "typescript",
+    "p2p"
+  ],
+  "homepage": ".",
+  "bin": {
+    "bee-dashboard": "./serve.js"
+  },
+  "main": "lib/App.js",
+  "types": "lib/src/App.d.ts",
+  "bugs": {
+    "url": "https://github.com/ethersphere/bee-dashboard/issues/"
+  },
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ethersphere/bee-dashboard.git"
+  },
+  "dependencies": {
+    "@ethersphere/bee-js": "^6.5.1",
+    "@ethersphere/swarm-cid": "^0.1.0",
+    "@material-ui/core": "4.12.3",
+    "@material-ui/icons": "4.11.2",
+    "@material-ui/lab": "4.0.0-alpha.57",
+    "assert": "^2.0.0",
+    "axios": "0.24.0",
+    "bignumber.js": "9.0.1",
+    "buffer": "^6.0.3",
+    "crypto": "npm:crypto-browserify",
+    "crypto-browserify": "^3.12.0",
+    "dotenv": "^16.3.1",
+    "dotted-map": "^2.2.3",
+    "ethers": "^5.6.4",
+    "file-saver": "^2.0.5",
+    "formik": "2.2.9",
+    "formik-material-ui": "3.0.1",
+    "jszip": "^3.7.1",
+    "mantaray-js": "^1.0.3",
+    "material-ui-dropzone": "3.5.0",
+    "notistack": "1.0.10",
+    "opener": "1.5.2",
+    "qrcode.react": "1.0.1",
+    "react": ">= 17.0.2",
+    "react-copy-to-clipboard": "5.0.4",
+    "react-dom": ">= 17.0.2",
+    "react-identicons": "1.2.5",
+    "react-router": "6.2.1",
+    "react-router-dom": "6.2.1",
+    "react-syntax-highlighter": "15.4.4",
+    "remixicon-react": "^1.0.0",
+    "semver": "7.3.5",
+    "serve-handler": "6.1.3",
+    "stream": "npm:stream-browserify",
+    "stream-browserify": "^3.0.0"
+  },
+  "peerDependencies": {
+    "react": ">= 17.0.2",
+    "react-dom": ">= 17.0.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "desktop": "node ./desktop.mjs",
+    "build": "react-scripts build",
+    "build:component": "rimraf ./lib && webpack --mode=production && npm run compile:types",
+    "compile:types": "tsc --project tsconfig.lib.json --emitDeclarationOnly --declaration",
+    "test": "react-scripts test",
+    "test:ui": "node ui-test/index.js",
+    "serve": "node ./serve.js",
+    "depcheck": "depcheck .",
+    "lint": "eslint --fix \"src/**/*.ts\" \"src/**/*.tsx\" && prettier --write \"src/**/*.ts\" \"src/**/*.tsx\"",
+    "lint:check": "eslint \"src/**/*.ts\" \"src/**/*.tsx\" && prettier --check \"src/**/*.ts\" \"src/**/*.tsx\"",
+    "check:types": "tsc --project tsconfig.lib.json",
+    "update-map-data": "node ./utils/update-map-data.js",
+    "bee": "npx bee-factory start"
+  },
+  "files": [
+    "lib",
+    "build",
+    "serve.js"
+  ],
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.9.0",
+    "bee": "1.16.1-8e269c8"
+  },
+  "yalcSig": "09fa9480e52d8f44b77fad73915e064e"
+}

@@ -7,7 +7,8 @@ import mount from 'koa-mount'
 import serve from 'koa-static'
 import fetch from 'node-fetch'
 import * as path from 'path'
-
+import { existsSync, readFileSync, writeFileSync } from 'fs'
+import { FAILSAFE_SCHEMA, dump, load } from 'js-yaml'
 import PACKAGE_JSON from '../package.json'
 import { getApiKey } from './api-key'
 import { sendBzzTransaction, sendNativeTransaction } from './blockchain'
@@ -114,6 +115,14 @@ export function runServer() {
       throw e
     }
   })
+  router.post('/chains/:name', context => {
+    const raw = readFileSync(getPath('config.' + context.params.name + '.yaml'), 'utf-8')
+    const data = load(raw, {
+      schema: FAILSAFE_SCHEMA,
+    })
+    writeConfigYaml(data as Record<string, unknown>)
+    context.body = readConfigYaml()
+  })
   router.post('/restart', async context => {
     BeeManager.stop()
     await BeeManager.waitForSigtermToFinish()
@@ -130,9 +139,11 @@ export function runServer() {
     context.body = { success: true }
   })
   router.post('/swap', async context => {
+    console.log('swap:', console.log(context.request.body))
     const config = readConfigYaml()
     const blockchainRpcEndpoint = Reflect.get(config, 'blockchain-rpc-endpoint') as string
     const privateKeyString = await getPrivateKey()
+    
     try {
       await swap(privateKeyString, (context.request.body as Record<string, string>).dai, '10000', blockchainRpcEndpoint)
       context.body = { success: true }
@@ -146,6 +157,7 @@ export function runServer() {
   app.use(router.routes())
   app.use(router.allowedMethods())
   const server = app.listen(port.value)
+  console.log('SERVER PORT:', port.value)
   subscribeLogServerRequests(server)
 }
 

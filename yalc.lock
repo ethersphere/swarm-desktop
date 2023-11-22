@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "@ethersphere/bee-dashboard": {
+      "signature": "09fa9480e52d8f44b77fad73915e064e",
+      "file": true
+    }
+  }
+}
