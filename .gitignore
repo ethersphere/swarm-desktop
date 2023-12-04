@@ -6,7 +6,8 @@
 node_modules
 
 # electron
-dist
+dist/*
+!dist/etherjot
 build
 out
 
