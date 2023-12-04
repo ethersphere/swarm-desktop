@@ -1,6 +1,6 @@
 import { app, Menu, nativeTheme, Tray } from 'electron'
 import opener from 'opener'
-import { openDashboardInBrowser } from './browser'
+import { openDashboardInBrowser, openEtherjotInBrowser } from './browser'
 import { runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
 import { createNotification } from './notify'
@@ -27,6 +27,17 @@ export function rebuildElectronTray() {
           runLauncher()
         }
       },
+    },
+    { type: 'separator' },
+    {
+      type: 'submenu',
+      label: 'Apps',
+      submenu: [
+        {
+          label: 'Etherjot (demo)',
+          click: openEtherjotInBrowser,
+        },
+      ],
     },
     { type: 'separator' },
     {
