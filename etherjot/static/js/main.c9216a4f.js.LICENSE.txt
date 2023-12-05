@@ -1,0 +1,119 @@
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+/*! MIT License. Copyright 2015-2022 Richard Moore <me@ricmoo.com>. See LICENSE.txt. */
+
+/*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
+
+/*! noble-hashes - MIT License (c) 2022 Paul Miller (paulmillr.com) */
+
+/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
+
+/**
+ * @license React
+ * react-dom.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * react-is.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * react-jsx-runtime.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * react.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * scheduler.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * Function that converts Node's Readable into WHATWG ReadableStream
+ *
+ * Taken over from https://github.com/gwicke/node-web-streams/blob/master/lib/conversions.js
+ * Because it uses forked web-streams-polyfill that are outdated.
+ *
+ * @author https://github.com/gwicke
+ * @licence Apache License 2.0 https://github.com/gwicke/node-web-streams/blob/master/LICENSE
+ * @param nodeStream
+ */
+
+/**
+ * Function that converts WHATWG ReadableStream into Node's Readable
+ *
+ * Taken over from https://github.com/gwicke/node-web-streams/blob/master/lib/conversions.js
+ * Because it uses forked web-streams-polyfill that is outdated.
+ *
+ * **Warning!**
+ * If you want to use this function in browser you have to polyfill `stream` package with your bundler.
+ *
+ * @author https://github.com/gwicke
+ * @licence Apache License 2.0 https://github.com/gwicke/node-web-streams/blob/master/LICENSE
+ * @param webStream
+ * @param options
+ */
+
+/**
+ * Taken over from https://github.com/gwicke/node-web-streams/blob/master/lib/conversions.js
+ * Because it uses forked web-streams-polyfill that are outdated.
+ *
+ * @author https://github.com/gwicke
+ * @licence Apache License 2.0 https://github.com/gwicke/node-web-streams/blob/master/LICENSE
+ */
+
+/**
+ * [js-sha3]{@link https://github.com/emn178/js-sha3}
+ *
+ * @version 0.8.0
+ * @author Chen, Yi-Cyuan [emn178@gmail.com]
+ * @copyright Chen, Yi-Cyuan 2015-2018
+ * @license MIT
+ */
+
+/**! 
+ * @uiw/copy-to-clipboard v1.0.15 
+ * Copy to clipboard. 
+ * 
+ * Copyright (c) 2023 Kenny Wang 
+ * https://github.com/uiwjs/copy-to-clipboard.git 
+ * 
+ * @website: https://uiwjs.github.io/copy-to-clipboard
+ 
+ * Licensed under the MIT license 
+ */
