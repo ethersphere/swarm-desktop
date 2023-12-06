@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/etherjot/static/css/main.d4b9c69a.css",
-    "main.js": "/etherjot/static/js/main.27989ce5.js",
+    "main.js": "/etherjot/static/js/main.4ba59367.js",
     "static/media/index.cjs": "/etherjot/static/media/index.93ef761341cad87ea7f1.cjs",
     "static/media/space-grotesk.woff2": "/etherjot/static/media/space-grotesk.28337638d11938e35866.woff2",
     "index.html": "/etherjot/index.html",
     "main.d4b9c69a.css.map": "/etherjot/static/css/main.d4b9c69a.css.map",
-    "main.27989ce5.js.map": "/etherjot/static/js/main.27989ce5.js.map"
+    "main.4ba59367.js.map": "/etherjot/static/js/main.4ba59367.js.map"
   },
   "entrypoints": [
     "static/css/main.d4b9c69a.css",
-    "static/js/main.27989ce5.js"
+    "static/js/main.4ba59367.js"
   ]
 }
