@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.32.0](https://github.com/ethersphere/swarm-desktop/compare/v0.31.0...v0.32.0) (2023-12-04)
+
+
+### Features
+
+* add etherjot ([#393](https://github.com/ethersphere/swarm-desktop/issues/393)) ([721c51a](https://github.com/ethersphere/swarm-desktop/commit/721c51a34d372a9f9241c771cdc042c429eaea5f))
+* upgrade to bee 1.17.6 ([#394](https://github.com/ethersphere/swarm-desktop/issues/394)) ([ed239ec](https://github.com/ethersphere/swarm-desktop/commit/ed239ec22e4764792d07ea1a880fa509e93fd51c))
+* upgrade to new bee-dashboard for better ux ([#395](https://github.com/ethersphere/swarm-desktop/issues/395)) ([59d46b1](https://github.com/ethersphere/swarm-desktop/commit/59d46b1d0510ac786e8d478dac9ff6196d551a10))
+
 ## [0.31.0](https://github.com/ethersphere/swarm-desktop/compare/v0.30.0...v0.31.0) (2023-10-18)
 
 
