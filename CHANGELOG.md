@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.35.0](https://github.com/ethersphere/swarm-desktop/compare/v0.34.0...v0.35.0) (2023-12-06)
+
+
+### Features
+
+
+* update etherjot welcome page ([#404](https://github.com/ethersphere/swarm-desktop/issues/404)) ([65a779c](https://github.com/ethersphere/swarm-desktop/commit/65a779cd339133446822a0f789bc424b681eb2ab))
+
 ## [0.34.0](https://github.com/ethersphere/swarm-desktop/compare/v0.33.0...v0.34.0) (2023-12-06)
 
 
