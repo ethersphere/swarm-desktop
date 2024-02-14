@@ -37,6 +37,10 @@ export function rebuildElectronTray() {
           label: 'Etherjot (demo)',
           click: openEtherjotInBrowser,
         },
+        {
+          label: 'Pastebee (demo)',
+          click: openEtherjotInBrowser,
+        },
       ],
     },
     { type: 'separator' },
