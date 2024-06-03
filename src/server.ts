@@ -84,7 +84,7 @@ export function runServer() {
   })
   router.get('/peers', async context => {
     try {
-      const response = await fetch('http://127.0.0.1:1635/peers')
+      const response = await fetch('http://127.0.0.1:1633/peers')
       const { peers } = await response.json()
 
       context.body = { connections: peers ? peers.length || 0 : 0 }
