@@ -16,6 +16,7 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "publish:mac:arm64": "electron-forge publish --platform=darwin --arch=arm64",
+    "publish:mac:x64": "electron-forge publish --platform=darwin --arch=x64",
     "publish:linux:arm64": "electron-forge publish --platform=linux --arch=arm64",
     "build:ui": "cd ui && npm run build && cd ..",
     "build:desktop": "tsc",

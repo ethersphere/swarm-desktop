@@ -49,10 +49,52 @@ jobs:
           APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  publish-macos-x64:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          cache: 'npm'
+          node-version: 18
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install setuptools
+        run: python3 -m pip install setuptools
+
+      - name: Install all dependencies
+        run: npm ci && cd ./ui && npm ci
+
+      - name: Set MacOS signing certs
+        run: .github/tools/add-macos-cert.sh
+        env:
+          MACOS_CERT_P12: ${{ secrets.MACOS_CERT_P12 }}
+          MACOS_CERT_PASSWORD: ${{ secrets.MACOS_CERT_PASSWORD }}
+
+      - name: Build
+        run: npm run build
+
+      - name: Copy dashboard lib
+        run: cp ./ui/node_modules/@ethersphere/bee-dashboard/lib/* ./dist/ui/static/js
+        continue-on-error: true
+
+      - name: Purge ui src
+        run: npx rimraf ./ui
+
+      - name: Publish MacOS x64
+        run: npm run publish:mac:x64
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   publish:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest]
 
     runs-on: ${{ matrix.os }}
     steps:
