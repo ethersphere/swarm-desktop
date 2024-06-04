@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.38.0](https://github.com/ethersphere/swarm-desktop/compare/v0.37.0...v0.38.0) (2024-06-03)
+## [0.39.0](https://github.com/ethersphere/swarm-desktop/compare/v0.37.0...v0.39.0) (2024-06-04)
 
 
 ### Features
