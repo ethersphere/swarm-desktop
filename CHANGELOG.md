@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.41.1](https://github.com/ethersphere/swarm-desktop/compare/v0.41.0...v0.41.1) (2024-06-05)
+
+
+### Bug Fixes
+
+* fix dashboard health status check ([#422](https://github.com/ethersphere/swarm-desktop/issues/422)) ([a76182b](https://github.com/ethersphere/swarm-desktop/commit/a76182bdbf60a2cfbe8a142df1efcd257b19c918))
+
 ## [0.41.0](https://github.com/ethersphere/swarm-desktop/compare/v0.40.0...v0.41.0) (2024-06-04)
 
 
