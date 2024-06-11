@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.42.0](https://github.com/ethersphere/swarm-desktop/compare/v0.41.1...v0.42.0) (2024-06-11)
+
+
+### Features
+
+* add redeem shortcut to sidebar ([#425](https://github.com/ethersphere/swarm-desktop/issues/425)) ([919c9fe](https://github.com/ethersphere/swarm-desktop/commit/919c9fe4f0f5b14c6831be133171c42ed90f7ceb))
+
 ## [0.41.1](https://github.com/ethersphere/swarm-desktop/compare/v0.41.0...v0.41.1) (2024-06-05)
 
 
