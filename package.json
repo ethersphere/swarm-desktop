@@ -12,6 +12,7 @@
   "main": "dist/desktop/src/index.js",
   "scripts": {
     "start": "concurrently -n \"desktop,ui\" \"cross-env-shell NODE_ENV=development 'npm run clean && npm run build && electron-forge start'\" \"cd ui && npm start\"",
+    "start:backend": "npm run build:desktop && electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
@@ -54,6 +55,7 @@
     "@electron-forge/publisher-github": "^6.0.0-beta.64",
     "@kayahr/jest-electron-runner": "^4.4.1",
     "@types/cross-zip": "^4.0.0",
+    "@types/electron-prompt": "^1.6.5",
     "@types/fs-extra": "^9.0.13",
     "@types/jest": "^27.4.1",
     "@types/js-yaml": "^4.0.5",
@@ -90,6 +92,7 @@
   "dependencies": {
     "@koa/router": "^10.1.1",
     "cross-zip": "^4.0.0",
+    "electron-prompt": "^1.7.0",
     "electron-squirrel-startup": "^1.0.0",
     "env-paths": "2",
     "ethereumjs-wallet": "^1.0.2",

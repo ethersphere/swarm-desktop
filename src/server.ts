@@ -15,7 +15,7 @@ import { readConfigYaml, readWalletPasswordOrThrow, writeConfigYaml } from './co
 import { runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
 import { logger, readBeeDesktopLogs, readBeeLogs, subscribeLogServerRequests } from './logger'
-import { getPath } from './path'
+import { getPath, paths } from './path'
 import { port } from './port'
 import { getStatus } from './status'
 import { swap } from './swap'
@@ -144,6 +144,15 @@ export function runServer() {
       context.status = 500
       context.body = { message: 'Failed to swap', error }
     }
+  })
+  router.post('/open/logs', async context => {
+    opener(paths.log)
+    context.body = { success: true }
+  })
+  router.post('/open/data-dir', async context => {
+    const config = readConfigYaml()
+    opener(config['data-dir'])
+    context.body = { success: true }
   })
 
   app.use(router.routes())
