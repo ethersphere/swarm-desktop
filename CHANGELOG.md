@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.43.0](https://github.com/ethersphere/swarm-desktop/compare/v0.42.0...v0.43.0) (2024-07-25)
+
+
+### Features
+
+* update to latest etherjot ([#431](https://github.com/ethersphere/swarm-desktop/issues/431)) ([9628d2b](https://github.com/ethersphere/swarm-desktop/commit/9628d2b5b4cbe16dc988870cb80b4b0046880b72))
+
 ## [0.42.0](https://github.com/ethersphere/swarm-desktop/compare/v0.41.1...v0.42.0) (2024-06-11)
 
 
