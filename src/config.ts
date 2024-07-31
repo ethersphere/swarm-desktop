@@ -14,8 +14,8 @@ export function configYamlExists(): boolean {
   return existsSync(getPath('config.yaml'))
 }
 
-export function readConfigYaml(): Record<string, unknown> {
-  const raw = readFileSync(getPath('config.yaml'), 'utf-8')
+export function readConfigYaml(fileName = 'config.yaml'): Record<string, unknown> {
+  const raw = readFileSync(getPath(fileName), 'utf-8')
   const data = load(raw, {
     schema: FAILSAFE_SCHEMA,
   })
@@ -23,18 +23,18 @@ export function readConfigYaml(): Record<string, unknown> {
   return data as Record<string, unknown>
 }
 
-export function writeConfigYaml(newValues: Record<string, unknown>) {
-  const data = readConfigYaml()
+export function writeConfigYaml(newValues: Record<string, unknown>, fileName = 'config.yaml') {
+  const data = readConfigYaml(fileName)
   for (const [key, value] of Object.entries(newValues)) {
     data[key] = value
   }
-  writeFileSync(getPath('config.yaml'), dump(data))
+  writeFileSync(getPath(fileName), dump(data))
 }
 
-export function deleteKeyFromConfigYaml(key: string) {
-  const data = readConfigYaml()
+export function deleteKeyFromConfigYaml(key: string, fileName = 'config.yaml') {
+  const data = readConfigYaml(fileName)
   delete data[key]
-  writeFileSync(getPath('config.yaml'), dump(data))
+  writeFileSync(getPath(fileName), dump(data))
 }
 
 export function getDesktopVersionFromFile(): string | undefined {

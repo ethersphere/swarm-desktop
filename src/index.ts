@@ -18,6 +18,7 @@ import { getStatus } from './status'
 // @ts-ignore
 import squirrelInstallingExecution from 'electron-squirrel-startup'
 import { runMigrations } from './migration'
+import { initializeMultinetConfig } from './network'
 import { initSplash, Splash } from './splash'
 
 runMigrations()
@@ -74,10 +75,15 @@ async function main() {
     await initializeBee()
   }
 
+  await initializeMultinetConfig()
+
   runLauncher().catch(errorHandler)
   runElectronTray()
 
-  if (process.env.NODE_ENV !== 'development') openDashboardInBrowser()
+  if (process.env.NODE_ENV !== 'development') {
+    openDashboardInBrowser()
+  }
+
   splash.hide()
   splash = undefined
 
