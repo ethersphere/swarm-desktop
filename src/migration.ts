@@ -34,4 +34,16 @@ export function runMigrations() {
   if (config['use-postage-snapshot'] !== false && config['use-postage-snapshot'] !== 'false') {
     writeConfigYaml({ 'use-postage-snapshot': false })
   }
+
+  if (config['admin-password'] !== undefined) {
+    deleteKeyFromConfigYaml('admin-password')
+  }
+
+  if (config['debug-api-addr'] !== undefined) {
+    deleteKeyFromConfigYaml('debug-api-addr')
+  }
+
+  if (config['debug-api-enable'] !== undefined) {
+    deleteKeyFromConfigYaml('debug-api-enable')
+  }
 }
