@@ -26,8 +26,6 @@ function getBeeExecutable() {
 
 function createConfiguration() {
   return `api-addr: 127.0.0.1:1633
-debug-api-addr: 127.0.0.1:1635
-debug-api-enable: true
 swap-enable: false
 mainnet: true
 full-node: false
