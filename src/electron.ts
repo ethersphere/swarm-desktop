@@ -1,8 +1,10 @@
 import { app, Menu, nativeTheme, Tray } from 'electron'
 import opener from 'opener'
 import { openDashboardInBrowser, openEtherjotInBrowser } from './browser'
+import { readConfigYaml } from './config'
 import { runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
+import { getCurrentNetwork, toggleNetwork } from './network'
 import { createNotification } from './notify'
 import { getAssetPath, paths } from './path'
 
@@ -28,6 +30,12 @@ export function rebuildElectronTray() {
         }
       },
     },
+    {
+      label: getCurrentNetwork() === 'main' ? 'Switch to Testnet' : 'Switch to Mainnet',
+      click: () => {
+        toggleNetwork()
+      },
+    },
     { type: 'separator' },
     {
       type: 'submenu',
@@ -44,6 +52,15 @@ export function rebuildElectronTray() {
       label: 'Logs',
       click: async () => {
         opener(paths.log)
+      },
+    },
+    {
+      label: 'Data Directory',
+      click: async () => {
+        const config = readConfigYaml()
+        if (typeof config['data-dir'] === 'string') {
+          opener(config['data-dir'])
+        }
       },
     },
     {
