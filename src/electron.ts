@@ -5,6 +5,7 @@ import { runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
 import { createNotification } from './notify'
 import { getAssetPath, paths } from './path'
+import { takeScreenshot } from './plugins/screenshot'
 
 let tray: Tray
 
@@ -40,6 +41,10 @@ export function rebuildElectronTray() {
       ],
     },
     { type: 'separator' },
+    {
+      label: 'Swarm Screenshot',
+      click: takeScreenshot,
+    },
     {
       label: 'Logs',
       click: async () => {
