@@ -6,6 +6,6 @@ export function openDashboardInBrowser() {
   shell.openExternal(`http://localhost:${port.value}/dashboard/?v=${getApiKey()}`)
 }
 
-export function openEtherjotInBrowser() {
-  shell.openExternal(`http://localhost:${port.value}/etherjot`)
+export function openUrl(url: string) {
+  shell.openExternal(url)
 }

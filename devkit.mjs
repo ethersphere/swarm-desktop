@@ -40,10 +40,6 @@ function copyUi() {
   return cpy('.', join('..', '..', 'dist', 'ui'), { cwd: join('ui', 'build') })
 }
 
-function copyEtherjot() {
-  return cpy('.', join('..', 'dist', 'etherjot'), { cwd: join('.', 'etherjot') })
-}
-
 async function openUi() {
   const apiKey = await readFile(join(paths.data, 'api-key.txt'), { encoding: 'utf-8' })
   const url = `http://localhost:3002/?v=${apiKey}#/`

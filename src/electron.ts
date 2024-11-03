@@ -1,6 +1,6 @@
 import { app, Menu, nativeTheme, Tray } from 'electron'
 import opener from 'opener'
-import { openDashboardInBrowser, openEtherjotInBrowser } from './browser'
+import { openDashboardInBrowser, openUrl } from './browser'
 import { runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
 import { createNotification } from './notify'
@@ -34,8 +34,22 @@ export function rebuildElectronTray() {
       label: 'Apps',
       submenu: [
         {
-          label: 'Etherjot (demo)',
-          click: openEtherjotInBrowser,
+          label: 'Etherjot',
+          click: () => openUrl('https://etherjot.com'),
+        },
+        {
+          label: 'Fairdrive',
+          click: () => openUrl('https://app.fairdrive.fairdatasociety.org/?fdsLogin=true'),
+        },
+        {
+          label: 'Decentralized Wiki',
+          click: () =>
+            openUrl('http://localhost:1633/bzz/f8aa0f764267de0cae814edf58358dcd6ccf38f0a242656be8bf01a14700090c/'),
+        },
+        {
+          label: 'Decentralized OSM',
+          click: () =>
+            openUrl('http://localhost:1633/bzz/ab77201f6541a9ceafb98a46c643273cfa397a87798273dd17feb2aa366ce2e6/'),
         },
       ],
     },
