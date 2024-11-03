@@ -16,7 +16,6 @@ switch (requestedCommand) {
     break
   case 'copy:ui':
     await copyUi()
-    await copyEtherjot()
     break
   case 'purge:data':
     await purgeData()
