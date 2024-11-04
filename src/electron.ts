@@ -34,12 +34,12 @@ export function rebuildElectronTray() {
       label: 'Apps',
       submenu: [
         {
-          label: 'Etherjot',
-          click: () => openUrl('https://etherjot.com'),
+          label: 'Devcon.buzz',
+          click: () => openUrl('https://devcon.buzz'),
         },
         {
-          label: 'Fairdrive',
-          click: () => openUrl('https://app.fairdrive.fairdatasociety.org/?fdsLogin=true'),
+          label: 'Etherjot',
+          click: () => openUrl('https://etherjot.com'),
         },
         {
           label: 'Decentralized Wiki',
