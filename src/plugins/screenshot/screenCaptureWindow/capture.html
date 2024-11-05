@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self';"> -->
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <title>Initiate Screenshot</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+</body>
+
+<script>
+    /**
+     *
+     * @param {*} opts
+     * @returns {HTMLElement}
+     */
+    function createElement(opts) {
+        const elem = document.createElement(opts.tagName);
+
+        if (opts.type) elem.type = opts.type;
+        if (opts.id) elem.id = opts.id;
+        if (opts.textContent) elem.textContent = opts.textContent;
+
+        opts.classes?.forEach((clsName) => elem.classList.add(clsName));
+
+        Object.entries(opts.attributes || {}).forEach(([k, v]) => {
+            elem.setAttribute(k, v);
+        });
+
+        return elem;
+    }
+
+    const TAKE_SCREENSHOT = "Take Screenshot";
+    const bodyElem = document.body;
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const captureDiv = createElement({
+            tagName: "div",
+            id: "captureWindow",
+        });
+
+        const screenshotAudio = createElement({
+            tagName: "audio",
+            id: "screenshotAudio",
+        });
+        screenshotAudio.src = "../audio/camera_shutter.m4a";
+
+        const h1 = createElement({
+            tagName: "h1",
+            id: "h1Btn",
+            textContent: TAKE_SCREENSHOT,
+        });
+
+        let btnClicked = false;
+        let counter = 3;
+        let countdownPromiseInterval;
+
+        bodyElem.addEventListener("click", async () => {
+            // Disable to prevent multiple clicks
+            h1.disabled = true;
+            btnClicked = true;
+
+            const countdownPromise = new Promise((res) => {
+                countdownPromiseInterval = setInterval(() => {
+                    if (counter > 1) {
+                        counter--;
+                        h1.innerText = `⏲ ${counter}`;
+                    } else {
+                        clearInterval(countdownPromiseInterval);
+                        res();
+                    }
+                }, 1000);
+            });
+
+            await countdownPromise;
+
+            // Set the child window to be transparent
+            window.electron.setCaptureWindowOpacity(0);
+
+            try {
+                screenshotAudio.play();
+
+                await window.electron.takeScreenshot();
+            } catch (err) {
+                console.error(err);
+                throw err;
+            }
+        });
+
+        function counterLessThan3() {
+            if (btnClicked && counter < 3) {
+                h1.innerText = "Cancel";
+            }
+        }
+        function counterGreaterThan3() {
+            if (btnClicked && counter > 0) {
+                h1.innerText = `⏲ ${counter}`;
+            }
+        }
+
+        bodyElem.addEventListener("mouseover", counterLessThan3);
+        bodyElem.addEventListener("mouseout", counterGreaterThan3);
+        h1.addEventListener("mouseover", counterLessThan3);
+        h1.addEventListener("mouseout", counterGreaterThan3);
+
+        captureDiv.append(h1, screenshotAudio);
+        bodyElem.insertAdjacentElement("afterbegin", captureDiv);
+    });
+</script>
+
+</html>

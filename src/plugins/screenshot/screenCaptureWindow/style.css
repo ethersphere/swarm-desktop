@@ -1,0 +1,29 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-yellow: #DE7700;
+    --bg-color: #EDEDED;
+    --font-color: #212121;
+}
+
+body {
+    background-color: rgba(0, 0, 0, 0.42);
+    margin: 0;
+    padding: 0;
+}
+
+body:hover {
+    background-color: rgba(19, 19, 19, 0.42);
+    cursor: pointer;
+    color: var(--bg-color);
+}
+
+h1 {
+    color: var(--bg-color);
+    font-size: 16px;
+    font-weight: 200;
+    text-align: center;
+    padding: 8px;
+}
