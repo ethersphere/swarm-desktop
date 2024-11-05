@@ -1,11 +1,11 @@
-import { app, Menu, nativeTheme, Tray } from 'electron'
+import { app, BrowserWindow, Menu, nativeTheme, Tray } from 'electron'
 import opener from 'opener'
 import { openDashboardInBrowser, openEtherjotInBrowser } from './browser'
 import { runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
 import { createNotification } from './notify'
 import { getAssetPath, paths } from './path'
-import { takeScreenshot } from './plugins/screenshot'
+import { screenCaptureWindow } from './plugins/screenshot'
 
 let tray: Tray
 
@@ -43,7 +43,12 @@ export function rebuildElectronTray() {
     { type: 'separator' },
     {
       label: 'Swarm Screenshot',
-      click: takeScreenshot,
+      click: () => {
+        if (BrowserWindow.getAllWindows().length > 1) {
+          return
+        }
+        screenCaptureWindow()
+      },
     },
     {
       label: 'Logs',
@@ -94,6 +99,7 @@ export function runElectronTray() {
       app.dock.setIcon(getAssetPath('icon.png'))
       app.dock.hide()
     }
+
     tray = new Tray(getTrayIcon())
     rebuildElectronTray()
   })
