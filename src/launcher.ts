@@ -56,6 +56,10 @@ export async function runLauncher() {
     mkdirSync(getPath('data-dir'))
   }
 
+  if (!checkPath('data-dir-test')) {
+    mkdirSync(getPath('data-dir-test'))
+  }
+
   BeeManager.setUserIntention(true)
   const subprocess = launchBee(abortController).catch(reason => {
     logger.error(reason)
