@@ -34,6 +34,10 @@ export function rebuildElectronTray() {
       label: 'Apps',
       submenu: [
         {
+          label: 'Datafund App',
+          click: () => openUrl('https://app.datafund.io'),
+        },
+        {
           label: 'Devcon.buzz',
           click: () => openUrl('https://devcon.buzz'),
         },
