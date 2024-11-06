@@ -1,0 +1,313 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-yellow: #DE7700;
+    --bg-color: #EDEDED;
+    --font-color: #212121;
+}
+
+body {
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    color: var(--font-color);
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    margin-top: 24px;
+}
+
+main {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    flex-grow: 1;
+}
+
+footer {
+    margin-top: auto;
+}
+
+input[type=checkbox]:checked {
+    accent-color: var(--primary-yellow);
+}
+
+input[type=radio]:checked {
+    accent-color: var(--primary-yellow);
+}
+
+input[type=radio],
+input[type=checkbox] {
+    width: 10%;
+    min-height: 16px;
+    margin: 8px 0;
+}
+
+label {
+    min-width: 240px;
+}
+
+.modal {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: none;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-main,
+.modal-header {
+    display: flex;
+    padding: 0 24px;
+}
+
+.modal-header {
+    justify-content: space-around;
+    align-content: baseline;
+}
+
+.modal-main {
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-main li {
+    color: #666;
+}
+
+
+.modal-content {
+    padding: 24px;
+    margin: 14px auto;
+    width: 90%;
+    height: 90%;
+    border: 1px solid #141414;
+    background-color: var(--bg-color)
+}
+
+.modal-main .container {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+}
+
+.modal-main h2 {
+    font-size: 20px;
+    font-weight: 500;
+    color: #666;
+}
+
+.modal-main p {
+    margin-top: 60px;
+    font-size: 16px;
+    color: #666;
+}
+
+.close-icon {
+    color: var(--font-color);
+    font-size: 28px;
+    font-weight: bold;
+    flex-grow: 1;
+    text-align: right;
+}
+
+.close-icon:hover,
+.close-icon:focus {
+    color: var(--primary-yellow);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+img {
+    display: block;
+    margin: auto;
+}
+
+button {
+    margin: 8px 0;
+    padding: 12px;
+    width: 150px;
+    border: none;
+    outline: none;
+    color: var(--font-color);
+    background-color: #fff;
+}
+
+button:hover {
+    background-color: var(--primary-yellow);
+    cursor: pointer;
+    color: #fff;
+}
+
+#screenshotImage {
+    max-width: 90%;
+    height: auto;
+}
+
+.btn-container {
+    margin: 24px 0;
+    display: flex;
+    gap: 24px;
+}
+
+/* #cropBtn {
+    display: none;
+} */
+
+.cnx-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: block;
+}
+
+.cnx-div {
+    display: flex;
+    flex-direction: row;
+    gap: 18px;
+    justify-content: center;
+    align-items: center;
+}
+
+.label {
+    display: "none"
+}
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    display: inline-flex;
+    gap: 18px;
+    padding: 14px;
+    background-color: #F3F3F3;
+    align-items: center
+}
+
+.upload-div {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.upload-div .options {
+    display: flex;
+    gap: 10px;
+    align-items: center
+}
+
+.file-basic-info {
+    display: flex;
+    gap: 24px;
+    font-size: 14px;
+}
+
+.error-msg {
+    padding: 8px;
+    border-radius: 4px;
+    background-color: rgb(245, 207, 200);
+    color: tomato;
+}
+
+.ref-cid ul {
+    margin-top: 48px;
+    list-style: none;
+    display: inline-flex;
+    gap: 8px;
+    flex-direction: column;
+}
+
+.ref-cid ul li {
+    display: inline-flex;
+    gap: 48px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F3F3F3;
+    padding: 8px;
+    cursor: pointer;
+    color: #666;
+}
+
+.ref-cid span.copy-icon::before {
+    content: url('./copy.svg');
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip .tooltip-text {
+    visibility: hidden;
+    width: 56px;
+    background-color: rgb(113, 113, 113);
+    color: var(--bg-color);
+    text-align: center;
+    font-size: 12px;
+    padding: 4px 0;
+    border-radius: 4px;
+
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+}
+
+.tooltip .copy-icon:hover .tooltip-text {
+    visibility: visible;
+}
+
+.tooltip .tooltip-hash {
+    display: none;
+}
+
+.spinner {
+    border: 4px solid var(--primary-yellow);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
