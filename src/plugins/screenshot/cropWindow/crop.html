@@ -28,7 +28,50 @@
         <button id="cropBtn">Crop</button>
     </footer>
     <script>
-        
+        /**
+         *
+         * @param {*} opts
+         * @returns {HTMLElement}
+         */
+        function createElement(opts) {
+            const elem = document.createElement(opts.tagName);
+
+            if (opts.type) elem.type = opts.type;
+            if (opts.id) elem.id = opts.id;
+            if (opts.textContent) elem.textContent = opts.textContent;
+
+            opts.classes?.forEach((clsName) => elem.classList.add(clsName));
+
+            Object.entries(opts.attributes || {}).forEach(([k, v]) => {
+                elem.setAttribute(k, v);
+            });
+
+            return elem;
+        }
+
+
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const footer = document.querySelector('footer')
+            const cropBtn = document.querySelector("button");
+            const cropImage = document.querySelector("img");
+            const selectionBox = document.getElementById("selectionBox");
+
+
+            window.electron.onLoadImageForCropping((imgDataURL) => {
+                cropImage.src = imgDataURL;
+                selectionBox.style.visibility = "visible";
+                footer.style.visibility = 'visible';
+
+                // Initialize selection box default dimensions and initial position
+                selectionBox.style.width = "100px";
+                selectionBox.style.height = "100px";
+                selectionBox.style.left = "0";
+                selectionBox.style.top = "0";
+            });
+
+        })
     </script>
 </body>
 
