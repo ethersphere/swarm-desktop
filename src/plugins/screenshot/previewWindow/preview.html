@@ -193,6 +193,44 @@
             }
         }
 
+        function openModalUI() {
+                const cnxStatus = connectionStatusUI(); // Initialize the UI to show the connection status
+
+                const modal = createElement({
+                    tagName: "div",
+                    id: "modal",
+                    classes: ["modal"],
+                });
+
+                const closeIcon = createElement({
+                    tagName: "span",
+                    id: "closeIcon",
+                    classes: ["close-icon"],
+                });
+                closeIcon.innerHTML = "&times;";
+                closeIcon.addEventListener("click", () => {
+                    modal.parentNode.removeChild(modal);
+                });
+
+                const moadalContent = createElement({
+                    tagName: "div",
+                    classes: ["modal-content"],
+                });
+
+                const header = createElement({ tagName: "div", classes: ["modal-header"] });
+                header.append(cnxStatus, closeIcon);
+
+                const modalMain = createElement({
+                    tagName: "div",
+                    classes: ["modal-main"],
+                    id: "modalMain",
+                });
+
+                moadalContent.append(header, modalMain);
+                modal.insertAdjacentElement("beforeend", moadalContent);
+
+                return modal;
+            }
 
     </script>
 </body>
