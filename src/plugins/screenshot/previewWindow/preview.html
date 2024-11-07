@@ -19,8 +19,20 @@
 
     <div id="selectionBox" class="selection-box"></div>
     <script>
+        const ONLINE_COLOR = " #19c10a";
+        const OFFLINE_COLOR = " #FF3A52";
 
-        
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const screenshotImg = document.getElementById("screenshotImage");
+
+            window.electron.onImageDataURL((imgDataURL) => {
+                screenshotImg.src = imgDataURL;
+            });
+
+        });
+
+     
     </script>
 </body>
 
