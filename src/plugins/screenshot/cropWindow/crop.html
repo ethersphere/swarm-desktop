@@ -199,6 +199,44 @@
             });
         }
 
+
+        /**
+        * Function to save dimension of the image's selected portion
+        * @param {HTMLButtonElement} cropBtn
+        * @param {HTMLImageElement} cropImg
+        * @param {HTMLElement} selBox
+        */
+        function cropImgWithSelectedDimension(cropBtn, cropImg, selBox) {
+            cropBtn.addEventListener("click", async () => {
+                const selBoxBounds = selBox.getBoundingClientRect();
+                const imgBounds = cropImg.getBoundingClientRect();
+
+                // scaling factor
+                const scaleX = cropImg.naturalWidth / imgBounds.width;
+                const scaleY = cropImg.naturalHeight / imgBounds.height;
+
+                // calculate coordinates relative to the original image
+                const x = Math.floor((selBoxBounds.left - imgBounds.left) * scaleX);
+                const y = Math.floor((selBoxBounds.top - imgBounds.top) * scaleY);
+
+                const width = Math.floor(selBoxBounds.width * scaleX);
+                const height = Math.floor(selBoxBounds.height * scaleY);
+
+                // Send crop dimensions to the main process for cropping
+                await window.electron.cropImage({
+                    x,
+                    y,
+                    width,
+                    height,
+                    imgDataURL: cropImg.src,
+                });
+
+                // Close the cropping window
+                window.close();
+            });
+        }
+
+
         document.addEventListener("DOMContentLoaded", () => {
             const footer = document.querySelector('footer')
             const cropBtn = document.querySelector("button");
@@ -221,6 +259,8 @@
 
             initSelectionBoxMovement(selectionBox, cropImage);
             updateSelectionBoxHandleRezing(selectionBox, cropImage);
+
+            cropImgWithSelectedDimension(cropBtn, cropImage, selectionBox)
         })
     </script>
 </body>
