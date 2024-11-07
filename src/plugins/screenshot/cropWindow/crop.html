@@ -51,6 +51,74 @@
 
 
 
+        /**
+         * Get dimension of the image
+           * @param {HTMLImageElement} cropImage
+           * @returns {width, height}
+           */
+        function getImageBounds(cropImage) {
+            const imgBounds = cropImage.getBoundingClientRect();
+            return {
+                width: imgBounds.width,
+                height: imgBounds.height,
+            };
+        }
+
+        /**
+         * Draggable logic for the selection box
+         * @param {HTMLElement} selBox
+         * @param {HTMLImageElement} cropImage
+         */
+        function initSelectionBoxMovement(selBox, cropImage) {
+
+            selBox.addEventListener("mousedown", (e) => {
+                e.preventDefault();
+
+                const initialMouseX = e.clientX;
+                const initialMouseY = e.clientY;
+
+                const initialLeft = parseFloat(selBox.style.left) || 0;
+                const initialTop = parseFloat(selBox.style.top) || 0;
+
+                function mouseMoveHandler(mEvent) {
+                    const dx = mEvent.clientX - initialMouseX;
+                    const dy = mEvent.clientY - initialMouseY;
+
+                    let newLeft = initialLeft + dx;
+                    let newTop = initialTop + dy;
+
+                    const imgBounds = getImageBounds(cropImage);
+                    const boxBounds = selBox.getBoundingClientRect();
+
+                    // Constrain the selection box within the image bounds
+                    if (newLeft < 0) {
+                        newLeft = 0; // Prevent moving left out of bounds
+                    }
+                    if (newTop < 0) {
+                        newTop = 0; // Prevent moving up out of bounds
+                    }
+                    if (newLeft + boxBounds.width > imgBounds.width) {
+                        newLeft = imgBounds.width - boxBounds.width; // Prevent moving right out of bounds
+                    }
+                    if (newTop + boxBounds.height > imgBounds.height) {
+                        newTop = imgBounds.height - boxBounds.height; // Prevent moving down out of bounds
+                    }
+
+                    selBox.style.left = `${newLeft}px`;
+                    selBox.style.top = `${newTop}px`;
+                }
+
+                function mouseUpHandler() {
+                    document.removeEventListener("mousemove", mouseMoveHandler);
+                    document.removeEventListener("mouseup", mouseUpHandler);
+                }
+
+                document.addEventListener("mousemove", mouseMoveHandler);
+                document.addEventListener("mouseup", mouseUpHandler);
+            });
+
+
+        }
 
         document.addEventListener("DOMContentLoaded", () => {
             const footer = document.querySelector('footer')
@@ -71,6 +139,8 @@
                 selectionBox.style.top = "0";
             });
 
+
+            initSelectionBoxMovement(selectionBox, cropImage);
         })
     </script>
 </body>
