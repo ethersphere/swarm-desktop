@@ -1,8 +1,11 @@
-import { desktopCapturer, dialog, ipcMain, nativeImage } from 'electron'
+import { BrowserWindow, desktopCapturer, dialog, ipcMain, nativeImage } from 'electron'
 import { logger } from '../../logger'
 import { createCropWindow } from './cropWindow/crop'
+import type { CropImageArgs } from './cropWindow/cropPreload'
 import { createPreviewWindow } from './previewWindow/preview'
 import { getScreenSize } from './utils'
+
+let previewWindow: BrowserWindow
 
 function takeScreenshotImplementation() {
   let imgDataURL: string
@@ -24,8 +27,7 @@ function takeScreenshotImplementation() {
       // evnt.sender.close()
       if (img) {
         imgDataURL = img.toDataURL()
-        // previewWindow =
-        createPreviewWindow(imgDataURL)
+        previewWindow = createPreviewWindow(imgDataURL)
       }
     } catch (err) {
       logger.error('Failed to take Screenshot: ', err.message)
@@ -33,8 +35,23 @@ function takeScreenshotImplementation() {
     }
   })
 
-  ipcMain.on('open-crop-window', (evnt, imgSrc) => {
+  ipcMain.on('open-crop-window', (_, imgSrc) => {
     createCropWindow(imgSrc)
+  })
+
+  ipcMain.on('crop-image', async (_, args: CropImageArgs) => {
+    const img = nativeImage.createFromDataURL(args.imgDataURL)
+
+    const croppedImg = img.crop({
+      x: args.x,
+      y: args.y,
+      width: args.width,
+      height: args.height,
+    })
+
+    if (previewWindow) {
+      previewWindow.webContents.send('update-with-cropped-image', croppedImg.toDataURL())
+    }
   })
 }
 
