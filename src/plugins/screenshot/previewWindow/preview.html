@@ -170,6 +170,28 @@
             }
         }
 
+        /**
+         * @dev Update the UI with the connection status
+         * @param {boolean} connected The result of node active status
+         * @param {string} status The display status 'connected' | 'Not connected'
+         * @param {string} description A description for the node status
+         */
+        function updateConnectionStatusUI(connected, status, description) {
+            const cnxIcon = document.getElementById("cnxIcon");
+            if (cnxIcon) {
+                cnxIcon.style.backgroundColor = connected ? ONLINE_COLOR : OFFLINE_COLOR;
+            }
+
+            const cnxStatus = document.getElementById("cnxStatus");
+            if (cnxStatus) {
+                cnxStatus.innerText = status;
+                if (description) {
+                    document.getElementById(
+                        "modalMain"
+                    ).innerHTML = `<h2>${description}</h2>`;
+                }
+            }
+        }
 
 
     </script>
