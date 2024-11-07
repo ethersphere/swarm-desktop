@@ -152,6 +152,26 @@
 
             return div;
         }
+
+        function checkConnection(connected) {
+            try {
+                if (connected) {
+                    updateConnectionStatusUI(connected, "Connected");
+                } else {
+                    updateConnectionStatusUI(
+                        connected,
+                        "Not Connected",
+                        "Check if your Bee Node running."
+                    );
+                }
+            } catch (err) {
+                console.error("Error checking connection:", err);
+                updateConnectionStatusUI(connected, "Not Connected", err.message);
+            }
+        }
+
+
+
     </script>
 </body>
 
