@@ -29,15 +29,15 @@
             window.electron.onImageDataURL((imgDataURL) => {
                 screenshotImg.src = imgDataURL;
 
+                updateImageInfo();
                 displayActionButtonsUI();
             });
 
             window.electron.onCroppedImage(imgDataURL => {
                 screenshotImg.src = imgDataURL
 
-                
+                updateImageInfo();
             })
-
         });
 
 
@@ -95,6 +95,41 @@
             });
 
             document.querySelector("main").insertAdjacentElement("afterend", footer);
+        }
+
+        function updateImageInfo() {
+            let screenshotImg = document.getElementById("screenshotImage");
+            let infoDiv = document.getElementById("fileBasicInfo");
+
+            const img = new Image();
+            img.src = screenshotImg.src;
+
+            img.onload = () => {
+                const width = img.width;
+                const height = img.height;
+                const fileSize =
+                    ((screenshotImg.src.length * 3) / 4 -
+                        screenshotImg.src.split(",")[1].length) *
+                    0.75;
+
+                const innerHTLM = `<p>Resolution: ${width} x ${height} 
+      </p>
+      <p>File Size: ${(fileSize / 1024).toFixed(2)} KB </p>`;
+
+                if (infoDiv) {
+                    infoDiv.innerHTML = innerHTLM;
+                } else {
+                    infoDiv = createElement({
+                        tagName: "div",
+                        id: "fileBasicInfo",
+                        classes: ["file-basic-info"],
+                    });
+                    infoDiv.innerHTML = innerHTLM;
+                    document
+                        .getElementById("screenshotImage")
+                        .insertAdjacentElement("afterend", infoDiv);
+                }
+            };
         }
 
     </script>
