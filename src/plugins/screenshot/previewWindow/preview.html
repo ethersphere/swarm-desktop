@@ -32,6 +32,12 @@
                 displayActionButtonsUI();
             });
 
+            window.electron.onCroppedImage(imgDataURL => {
+                screenshotImg.src = imgDataURL
+
+                
+            })
+
         });
 
 
