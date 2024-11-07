@@ -63,6 +63,7 @@
         }
 
         function displayActionButtonsUI() {
+            const publishToSwarmBtn = publishToSwarmUI();
 
             const footer = createElement({
                 tagName: "footer",
@@ -90,7 +91,7 @@
                 window.electron.writeImageToDisk(screenshotImg.src);
             };
 
-            [cropBtn, saveToDiskBtn].forEach((elem) => {
+            [cropBtn, publishToSwarmBtn, saveToDiskBtn].forEach((elem) => {
                 footer.insertAdjacentElement("beforeend", elem);
             });
 
@@ -132,6 +133,25 @@
             };
         }
 
+        function connectionStatusUI() {
+            const div = createElement({ tagName: "div", classes: ["cnx-div"] });
+
+            const cnxIcon = createElement({
+                tagName: "span",
+                classes: ["cnx-icon"],
+                id: "cnxIcon",
+            });
+
+            const cnxStatus = createElement({
+                tagName: "p",
+                id: "cnxStatus",
+                class: "cnx-status",
+            });
+            cnxStatus.append(spinnerUI());
+            div.append(cnxIcon, cnxStatus);
+
+            return div;
+        }
     </script>
 </body>
 
