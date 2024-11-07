@@ -28,11 +28,69 @@
 
             window.electron.onImageDataURL((imgDataURL) => {
                 screenshotImg.src = imgDataURL;
+
+                displayActionButtonsUI();
             });
 
         });
 
-     
+
+        /**
+         *
+         * @param {*} opts
+         * @returns {HTMLElement}
+         */
+        function createElement(opts) {
+            const elem = document.createElement(opts.tagName);
+
+            if (opts.type) elem.type = opts.type;
+            if (opts.id) elem.id = opts.id;
+            if (opts.textContent) elem.textContent = opts.textContent;
+
+            opts.classes?.forEach((clsName) => elem.classList.add(clsName));
+
+            Object.entries(opts.attributes || {}).forEach(([k, v]) => {
+                elem.setAttribute(k, v);
+            });
+
+            return elem;
+        }
+
+        function displayActionButtonsUI() {
+
+            const footer = createElement({
+                tagName: "footer",
+                id: "btnContainer",
+                classes: ["btn-container"],
+            });
+
+            const cropBtn = createElement({
+                tagName: "button",
+                id: "cropBtn",
+                textContent: "Crop Image",
+            });
+            cropBtn.onclick = () => {
+                const screenshotImg = document.getElementById("screenshotImage");
+                window.electron.openCropWindow(screenshotImg.src);
+            };
+
+            const saveToDiskBtn = createElement({
+                tagName: "button",
+                id: "saveToDiskBtn",
+                textContent: "Save Image",
+            });
+            saveToDiskBtn.onclick = () => {
+                const screenshotImg = document.getElementById("screenshotImage");
+                window.electron.writeImageToDisk(screenshotImg.src);
+            };
+
+            [cropBtn, saveToDiskBtn].forEach((elem) => {
+                footer.insertAdjacentElement("beforeend", elem);
+            });
+
+            document.querySelector("main").insertAdjacentElement("afterend", footer);
+        }
+
     </script>
 </body>
 
