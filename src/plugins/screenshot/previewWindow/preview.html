@@ -249,10 +249,29 @@
                 const modalContent = openModal.getElementsByClassName("modal-main")[0];
                 document.body.appendChild(openModal);
 
-               
+
             });
 
             return publishToSwarmBtn;
+        }
+
+        function spinnerUI(width = "18px", height = "18px", borderColor) {
+            const div = createElement({
+                tagName: "div",
+                classes: ["spinner-container"],
+            });
+
+            const span = createElement({
+                tagName: "span",
+                classes: ["spinner"],
+            });
+            span.style.width = width;
+            span.style.height = height;
+            span.style.borderColor = borderColor;
+
+            div.appendChild(span);
+
+            return div;
         }
     </script>
 </body>
