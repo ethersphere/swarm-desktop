@@ -62,7 +62,3 @@ export function getScreenSize(resizeBy = 3) {
     defaultScreenSize,
   }
 }
-
-export const removeSlashFromUrl = (url: string) => {
-  return url.endsWith('/') ? url.slice(0, -1) : url
-}
