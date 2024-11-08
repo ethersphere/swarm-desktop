@@ -4,12 +4,14 @@ import { logger } from '../../logger'
 import { createCropWindow } from './cropWindow/crop'
 import type { CropImageArgs } from './cropWindow/cropPreload'
 import { createPreviewWindow } from './previewWindow/preview'
+import { screenCaptureWindow } from './screenCaptureWindow/capture'
 import { getScreenSize } from './utils'
 import { BEE_DASHBOARD_URL, getAllPostageBatch, handleFileUpload, nodeIsConnected } from './utils/beeApi'
 
 let previewWindow: BrowserWindow
 
 function takeScreenshotImplementation() {
+  const captureWindow = screenCaptureWindow()
   let imgDataURL: string
 
   ipcMain.handle('take-screenshot', async evnt => {
@@ -35,6 +37,14 @@ function takeScreenshotImplementation() {
       logger.error('Failed to take Screenshot: ', err.message)
       dialog.showErrorBox('Error', 'Failed to take screenshot.')
     }
+  })
+
+  captureWindow.webContents.on('did-finish-load', () => {
+    ipcMain.on('set-capture-window-opacity', (_, opacity) => {
+      if (captureWindow) {
+        captureWindow.setOpacity(opacity)
+      }
+    })
   })
 
   ipcMain.on('open-crop-window', (_, imgSrc) => {
