@@ -476,7 +476,17 @@
         function trimRef(ref) {
             return ref.slice(0, 12) + "..." + ref.slice(-12);
         }
-        
+
+        function copyRefCidURLToClipboard() {
+            document.querySelectorAll(".copy-icon").forEach((elm) => {
+                elm.addEventListener("click", (e) => {
+                    window.navigator.clipboard.writeText(
+                        elm.parentElement.firstElementChild.textContent.trim()
+                    );
+                });
+            });
+        }
+
         function showErrorMessage(msg) {
             const errMsg = createElement({
                 tagName: "p",
