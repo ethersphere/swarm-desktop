@@ -4,6 +4,7 @@ import { createCropWindow } from './cropWindow/crop'
 import type { CropImageArgs } from './cropWindow/cropPreload'
 import { createPreviewWindow } from './previewWindow/preview'
 import { getScreenSize } from './utils'
+import { nodeIsConnected } from './utils/beeApi'
 
 let previewWindow: BrowserWindow
 
@@ -52,6 +53,10 @@ function takeScreenshotImplementation() {
     if (previewWindow) {
       previewWindow.webContents.send('update-with-cropped-image', croppedImg.toDataURL())
     }
+  })
+
+  ipcMain.handle('node-is-connected', async () => {
+    return await nodeIsConnected()
   })
 }
 
