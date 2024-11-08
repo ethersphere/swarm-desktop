@@ -38,6 +38,11 @@
 
                 updateImageInfo();
             })
+
+            window.electron.onUploadResultWithCid((ref) => {
+                const modalContent = document.querySelector(".modal-main");
+                displayResultRefCid(ref, modalContent);
+            });
         });
 
         window.addEventListener("error", (msg, src, lineno, colno, err) => {
