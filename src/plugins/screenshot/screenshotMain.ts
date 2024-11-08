@@ -4,7 +4,7 @@ import { createCropWindow } from './cropWindow/crop'
 import type { CropImageArgs } from './cropWindow/cropPreload'
 import { createPreviewWindow } from './previewWindow/preview'
 import { getScreenSize } from './utils'
-import { nodeIsConnected } from './utils/beeApi'
+import { getAllPostageBatch, nodeIsConnected } from './utils/beeApi'
 
 let previewWindow: BrowserWindow
 
@@ -57,6 +57,10 @@ function takeScreenshotImplementation() {
 
   ipcMain.handle('node-is-connected', async () => {
     return await nodeIsConnected()
+  })
+
+  ipcMain.handle('get-all-postage-batch', async () => {
+    return await getAllPostageBatch()
   })
 }
 
