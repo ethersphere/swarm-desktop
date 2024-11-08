@@ -411,7 +411,39 @@
             row.insertAdjacentElement("afterbegin", container);
             modalContent.appendChild(row);
 
-            handleSelectPostageStamp();
+            selectPostageStamp();
+        }
+
+        function selectPostageStamp() {
+            const inputs = document.querySelectorAll("input");
+            const obj = { options: {} };
+
+            // Initialize the object with initial values
+            inputs.forEach((input) => {
+                if (!input) return;
+                if (input.type === "checkbox") {
+                    obj.options[input.name] = input.checked;
+                } else {
+                    obj[input.name] = input.value;
+                }
+            });
+
+            // Add change event listeners
+            inputs.forEach((input) => {
+                if (!input) return;
+                input.addEventListener("change", (e) => {
+                    if (input.type === "checkbox") {
+                        obj.options[input.name] = input.checked;
+                    } else {
+                        obj[input.name] = input.value;
+                    }
+                });
+            });
+
+            const screenshotImg = document.getElementById("screenshotImage");
+            obj["imgDataURL"] = screenshotImg.src;
+
+
         }
 
         function showErrorMessage(msg) {
