@@ -1,10 +1,11 @@
+import { PostageBatch } from '@ethersphere/bee-js'
 import { BrowserWindow, desktopCapturer, dialog, ipcMain, nativeImage } from 'electron'
 import { logger } from '../../logger'
 import { createCropWindow } from './cropWindow/crop'
 import type { CropImageArgs } from './cropWindow/cropPreload'
 import { createPreviewWindow } from './previewWindow/preview'
 import { getScreenSize } from './utils'
-import { getAllPostageBatch, nodeIsConnected } from './utils/beeApi'
+import { BEE_DASHBOARD_URL, getAllPostageBatch, nodeIsConnected } from './utils/beeApi'
 
 let previewWindow: BrowserWindow
 
@@ -61,6 +62,43 @@ function takeScreenshotImplementation() {
 
   ipcMain.handle('get-all-postage-batch', async () => {
     return await getAllPostageBatch()
+  })
+
+  ipcMain.on('create-postage-stamp', evnt => {
+    const { height, width, scaleFactor } = getScreenSize()
+
+    const beeDashboarWin = new BrowserWindow({
+      width: (width / 3) * scaleFactor,
+      height: (height / 3) * scaleFactor,
+      webPreferences: {
+        nodeIntegration: false,
+        contextIsolation: true,
+      },
+    })
+
+    beeDashboarWin.webContents.loadURL(BEE_DASHBOARD_URL)
+    beeDashboarWin.webContents.openDevTools() // TODO: remove before building for production
+
+    let ps: PostageBatch[]
+    const getAllPostageBatchIntervalID = setInterval(async () => {
+      try {
+        ps = await getAllPostageBatch()
+
+        if (ps.length) {
+          clearInterval(getAllPostageBatchIntervalID)
+          beeDashboarWin.close()
+        }
+      } catch (err) {
+        clearInterval(getAllPostageBatchIntervalID)
+        logger.error(err.message)
+      }
+    }, 5000)
+
+    // Handle when closed
+    beeDashboarWin.on('closed', () => {
+      clearInterval(getAllPostageBatchIntervalID)
+      evnt.sender.send('update-postage-stamp-state', ps)
+    })
   })
 }
 
