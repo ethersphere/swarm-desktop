@@ -40,6 +40,16 @@
             })
         });
 
+        window.addEventListener("error", (msg, src, lineno, colno, err) => {
+            console.error('msg: ', msg);
+            console.error('source: ', src);
+            console.error('line no.: ', lineno);
+            console.error('column no.: ', colno);
+            console.error('error: ', err);
+
+            showErrorMessage("An unexpected error occurred.", msg);
+            return true; // Prevent default error behavior
+        });
 
         /**
          *
@@ -250,6 +260,7 @@
                 document.body.appendChild(openModal);
 
 
+
             });
 
             return publishToSwarmBtn;
@@ -273,6 +284,23 @@
 
             return div;
         }
+
+
+        function showErrorMessage(msg) {
+            const errMsg = createElement({
+                tagName: "p",
+                classes: ["error-msg"],
+                textContent: msg,
+            });
+
+            document.body.appendChild(errMsg);
+
+            setTimeout(() => {
+                document.body.removeChild(errMsg);
+            }, 5000);
+        }
+
+
     </script>
 </body>
 
