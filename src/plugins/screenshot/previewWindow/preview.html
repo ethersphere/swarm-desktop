@@ -487,6 +487,53 @@
             });
         }
 
+        /**
+     *
+     * @param {string} ref The reference of the uploaded file
+     * @param {HTMLElement} modalContent The element that this compoment will bee appended to
+     */
+        function displayResultRefCid(refCid, modalContent) {
+            const LOCAL_ENDPOINT = 'http://localhost:1633/bzz'
+            const GATEWAY_ENDPOINT = 'https://gateway.ethswarm.org/access'
+
+            refCid = JSON.parse(refCid);
+
+            const uploadResultDiv = createElement({
+                tagName: "div",
+                classes: ["ref-cid"],
+            });
+
+            uploadResultDiv.innerHTML = `
+                    <div>
+                        <h2>File published successfully.</h2>
+                        <p>Use the links before to access it.</p>
+                    </div>
+                    <ul>
+                        <li>
+                            ${LOCAL_ENDPOINT}/${trimRef(refCid.reference)}
+                                <span class='tooltip'>
+                                <span class='tooltip-hash'>${LOCAL_ENDPOINT}/${refCid.reference
+                }/</span>
+                                <span class='copy-icon'></span>
+                                <span class='tooltip-text'>Copy</span>
+                            </span>
+                        </li>
+                        <li>
+                        ${GATEWAY_ENDPOINT}/${trimRef(refCid.reference)}
+                            <span class='tooltip'>
+                                <span class='tooltip-hash'>${GATEWAY_ENDPOINT}/${refCid.reference
+                }/</span>
+                                <span class='copy-icon'></span>
+                                <span class='tooltip-text'>Copy</span>
+                            </span>
+                        </li>
+                    </ul>`;
+
+            modalContent.firstElementChild.firstElementChild.innerHTML = "";
+            modalContent.firstElementChild.firstElementChild.append(uploadResultDiv);
+            copyRefCidURLToClipboard();
+        }
+
         function showErrorMessage(msg) {
             const errMsg = createElement({
                 tagName: "p",
