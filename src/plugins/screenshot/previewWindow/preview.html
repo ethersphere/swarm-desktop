@@ -457,7 +457,20 @@
             const screenshotImg = document.getElementById("screenshotImage");
             obj["imgDataURL"] = screenshotImg.src;
 
+            handlePublishToSwarm(obj);
+        }
 
+        function handlePublishToSwarm(obj) {
+            const publishBtn = document.getElementById("publishBtn");
+
+            publishBtn.addEventListener("click", (e) => {
+                publishBtn.disabled = true;
+                publishBtn.style.cursor = "wait";
+                publishBtn.innerHTML = "";
+                publishBtn.appendChild(spinnerUI("10px", "10px", "#fff"));
+
+                window.electron.uploadToSwarm(obj);
+            });
         }
 
         function showErrorMessage(msg) {
