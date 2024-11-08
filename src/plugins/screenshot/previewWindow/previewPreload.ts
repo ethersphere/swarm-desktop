@@ -9,4 +9,5 @@ contextBridge.exposeInMainWorld('electron', {
   setTitle: (t: string) => ipcRenderer.send('set-title', t),
   nodeIsConnected: async () => ipcRenderer.invoke('node-is-connected'),
   getAllPostageBatch: async () => ipcRenderer.invoke('get-all-postage-batch'),
+  createPostageStamp: () => ipcRenderer.send('create-postage-stamp'),
 })
