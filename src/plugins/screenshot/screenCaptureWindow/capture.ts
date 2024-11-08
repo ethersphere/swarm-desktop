@@ -31,4 +31,6 @@ export function screenCaptureWindow() {
   })
 
   initWindow.webContents.openDevTools()
+
+  return initWindow
 }
