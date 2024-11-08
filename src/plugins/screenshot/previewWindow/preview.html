@@ -260,7 +260,21 @@
                 document.body.appendChild(openModal);
 
 
+                cnxCheckIntervalId = setInterval(async () => {
+                    try {
+                        const isConnected = await window.electron.nodeIsConnected();
+                        await checkConnection(isConnected); // Update UI based on connection status
 
+                        if (isConnected) {
+                            clearInterval(cnxCheckIntervalId); // stop checking once connected
+
+                            await postageStampUI(modalContent);
+                        }
+                    } catch (err) {
+                        clearInterval(cnxCheckIntervalId);
+                        showErrorMessage(err.message);
+                    }
+                }, 2000);
             });
 
             return publishToSwarmBtn;
