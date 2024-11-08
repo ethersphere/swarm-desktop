@@ -5,7 +5,7 @@ import { createCropWindow } from './cropWindow/crop'
 import type { CropImageArgs } from './cropWindow/cropPreload'
 import { createPreviewWindow } from './previewWindow/preview'
 import { getScreenSize } from './utils'
-import { BEE_DASHBOARD_URL, getAllPostageBatch, nodeIsConnected } from './utils/beeApi'
+import { BEE_DASHBOARD_URL, getAllPostageBatch, handleFileUpload, nodeIsConnected } from './utils/beeApi'
 
 let previewWindow: BrowserWindow
 
@@ -99,6 +99,29 @@ function takeScreenshotImplementation() {
       clearInterval(getAllPostageBatchIntervalID)
       evnt.sender.send('update-postage-stamp-state', ps)
     })
+  })
+
+  ipcMain.handle('upload-to-swarm', async (e, args) => {
+    try {
+      const img = nativeImage.createFromDataURL(args.imgDataURL)
+      args.imgBuffer = img.toPNG()
+
+      if (!args.name) {
+        const day = new Date().toDateString().slice(0, 3)
+        const date = new Date().toISOString()
+        args.name = date.replace(/\./i, day) + '.png'
+      }
+      delete args.imgDataURL
+
+      const refCid = await handleFileUpload(args)
+
+      if (refCid.reference) {
+        e.sender.send('upload-result-with-cid', JSON.stringify({ ...refCid, cid: refCid.cid() }))
+      }
+    } catch (err) {
+      logger.error(err.message)
+      throw err
+    }
   })
 }
 
