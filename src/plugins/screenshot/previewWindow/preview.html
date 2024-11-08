@@ -473,6 +473,10 @@
             });
         }
 
+        function trimRef(ref) {
+            return ref.slice(0, 12) + "..." + ref.slice(-12);
+        }
+        
         function showErrorMessage(msg) {
             const errMsg = createElement({
                 tagName: "p",
