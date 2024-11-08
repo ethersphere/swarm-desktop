@@ -96,17 +96,8 @@
                 window.electron.openCropWindow(screenshotImg.src);
             };
 
-            const saveToDiskBtn = createElement({
-                tagName: "button",
-                id: "saveToDiskBtn",
-                textContent: "Save Image",
-            });
-            saveToDiskBtn.onclick = () => {
-                const screenshotImg = document.getElementById("screenshotImage");
-                window.electron.writeImageToDisk(screenshotImg.src);
-            };
 
-            [cropBtn, publishToSwarmBtn, saveToDiskBtn].forEach((elem) => {
+            [cropBtn, publishToSwarmBtn].forEach((elem) => {
                 footer.insertAdjacentElement("beforeend", elem);
             });
 
