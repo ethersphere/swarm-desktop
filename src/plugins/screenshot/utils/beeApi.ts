@@ -13,14 +13,6 @@ export const nodeIsConnected = async () => {
   }
 }
 
-export async function getNodeInfo() {
-  try {
-    return await bee.getNodeInfo()
-  } catch (err) {
-    throw err
-  }
-}
-
 export const getAllPostageBatch = async () => {
   try {
     const psBatch = await bee.getAllPostageBatch()
