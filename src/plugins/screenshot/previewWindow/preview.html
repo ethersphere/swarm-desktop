@@ -355,6 +355,65 @@
             }
         }
 
+        function listAvailableStampUI(h2, psBatches, container, row, modalContent) {
+            h2.textContent = `Select from available stamps (${psBatches?.length})`;
+            container.append(h2);
+
+            const ul = createElement({ tagName: "ul" });
+
+            for (let i = 0; i < psBatches.length; i++) {
+                const input = createElement({ tagName: "input", type: "radio" });
+                input.name = "batchID";
+
+                const li = createElement({ tagName: "li" });
+
+                if (i === 0) {
+                    input.checked = true;
+                }
+                input.value = psBatches[i].batchID.toString();
+                input.id = psBatches[i].batchID.toString();
+
+                const label = createElement({ tagName: "label" });
+                label.setAttribute("for", psBatches[i].batchID.toString());
+                label.innerHTML = `
+    <span>
+    ${psBatches[i].label
+                        ? psBatches[i].label
+                        : psBatches[i].batchID.slice(0, 4) +
+                        "..." +
+                        psBatches[i].batchID.slice(-4)
+                    }
+    </span>
+    <span> (Utilization: ${psBatches[i].utilization})</span>
+            `;
+
+                li.insertAdjacentElement("afterbegin", input);
+                li.insertAdjacentElement("beforeend", label);
+                ul.appendChild(li);
+            }
+
+            const uploadOptionsDiv = createElement({
+                tagName: "div",
+                classes: ["upload-div"],
+                name: "uploadDiv",
+            });
+            uploadOptionsDiv.innerHTML = `
+        <div class='options'>
+        <input type="checkbox" id="encrypt" name="encrypt">
+        <label for="encrypt">Encrypt</label><br>
+        </div>
+        <button id='publishBtn'>Publish</button>
+`;
+
+            container.insertAdjacentElement("beforeend", ul);
+            container.insertAdjacentElement("beforeend", uploadOptionsDiv);
+
+            row.insertAdjacentElement("afterbegin", container);
+            modalContent.appendChild(row);
+
+            handleSelectPostageStamp();
+        }
+
         function showErrorMessage(msg) {
             const errMsg = createElement({
                 tagName: "p",
