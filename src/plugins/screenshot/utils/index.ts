@@ -1,5 +1,4 @@
 import { dialog, screen } from 'electron'
-
 import { logger } from '../../..//logger'
 
 export type CreateElementArg<T extends keyof HTMLElementTagNameMap> = {
@@ -41,7 +40,6 @@ export function errorHandler(e: Error | string) {
   dialog.showErrorBox('There was an error in Swarm Desktop', e)
 }
 
-
 /**
  *
  * @param {number} resizeBy Number to resize window to
@@ -63,4 +61,8 @@ export function getScreenSize(resizeBy = 3) {
     scaleFactor,
     defaultScreenSize,
   }
+}
+
+export const removeSlashFromUrl = (url: string) => {
+  return url.endsWith('/') ? url.slice(0, -1) : url
 }
