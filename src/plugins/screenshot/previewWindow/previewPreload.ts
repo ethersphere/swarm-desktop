@@ -13,4 +13,5 @@ contextBridge.exposeInMainWorld('electron', {
   createPostageStamp: () => ipcRenderer.send('create-postage-stamp'),
   updatePostageStampState: (cb: (ps: PostageBatch[]) => void) =>
     ipcRenderer.on('update-postage-stamp-state', (_, ps) => cb(ps)),
+  uploadToSwarm: async (obj: any) => ipcRenderer.invoke('upload-to-swarm', obj),
 })
