@@ -6,4 +6,5 @@ contextBridge.exposeInMainWorld('electron', {
   openCropWindow: (imgSrc: string) => ipcRenderer.send('open-crop-window', imgSrc),
   onCroppedImage: (cb: (imgDataURL: string) => void) =>
     ipcRenderer.on('update-with-cropped-image', (_evnt, imgDataURL) => cb(imgDataURL)),
+  setTitle: (t: string) => ipcRenderer.send('set-title', t),
 })
