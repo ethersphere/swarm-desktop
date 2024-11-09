@@ -80,8 +80,7 @@
 
             await countdownPromise;
 
-            // Set the child window to be transparent
-            window.electron.setCaptureWindowOpacity(0);
+            window.electron.hideCaptureWindow();
 
             try {
                 screenshotAudio.play();
