@@ -2,8 +2,10 @@ import { app, BrowserWindow } from 'electron'
 import path from 'node:path'
 import { logger } from '../../../logger'
 
-export function screenCaptureWindow() {
-  const initWindow = new BrowserWindow({
+let self: BrowserWindow
+
+function screenCaptureWindow() {
+  self = new BrowserWindow({
     width: 600, // 160
     height: 400, // 60
     modal: true,
@@ -26,11 +28,30 @@ export function screenCaptureWindow() {
     'capture.html',
   )
 
-  initWindow.loadFile(initFilePath).catch(err => {
+  self.loadFile(initFilePath).catch(err => {
     logger.info('Failed to load index.html: ', err)
   })
 
-  initWindow.webContents.openDevTools()
+  self.webContents.openDevTools()
 
-  return initWindow
+  return self
+}
+
+const show = () => {
+  if (self && !self.isVisible()) {
+    self.show()
+  }
+}
+
+const hide = () => {
+  if (self && self.isVisible()) {
+    self.hide()
+  }
+}
+
+export const captureWindow = {
+  hide,
+  show,
+  self,
+  screenCaptureWindow,
 }
