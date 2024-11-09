@@ -4,17 +4,16 @@ import { logger } from '../../logger'
 import { createCropWindow } from './cropWindow/crop'
 import type { CropImageArgs } from './cropWindow/cropPreload'
 import { createPreviewWindow } from './previewWindow/preview'
-import { screenCaptureWindow } from './screenCaptureWindow/capture'
+import { captureWindow } from './screenCaptureWindow/capture'
 import { getScreenSize } from './utils'
 import { BEE_DASHBOARD_URL, getAllPostageBatch, handleFileUpload, nodeIsConnected } from './utils/beeApi'
 
 let previewWindow: BrowserWindow
 
 function takeScreenshotImplementation() {
-  const captureWindow = screenCaptureWindow()
   let imgDataURL: string
 
-  ipcMain.handle('take-screenshot', async evnt => {
+  ipcMain.handle('take-screenshot', async () => {
     try {
       const { height, width, scaleFactor } = getScreenSize()
       const source = await desktopCapturer.getSources({
@@ -27,8 +26,6 @@ function takeScreenshotImplementation() {
 
       const img = nativeImage.createFromBuffer(source[0].thumbnail.toPNG())
 
-      //TODO: check how to close this window
-      // evnt.sender.close()
       if (img) {
         imgDataURL = img.toDataURL()
         previewWindow = createPreviewWindow(imgDataURL)
@@ -39,12 +36,8 @@ function takeScreenshotImplementation() {
     }
   })
 
-  captureWindow.webContents.on('did-finish-load', () => {
-    ipcMain.on('set-capture-window-opacity', (_, opacity) => {
-      if (captureWindow) {
-        captureWindow.setOpacity(opacity)
-      }
-    })
+  ipcMain.on('hide-capture-window', () => {
+    captureWindow.hide()
   })
 
   ipcMain.on('open-crop-window', (_, imgSrc) => {
