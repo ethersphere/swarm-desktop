@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.44.0](https://github.com/ethersphere/swarm-desktop/compare/v0.43.2...v0.44.0) (2024-11-11)
+
+
+### Features
+
+* add notable apps and hashes ([#447](https://github.com/ethersphere/swarm-desktop/issues/447)) ([1d8be48](https://github.com/ethersphere/swarm-desktop/commit/1d8be485277333c595b413e444983ef4c24df779))
+* datafund app added ([#448](https://github.com/ethersphere/swarm-desktop/issues/448)) ([#449](https://github.com/ethersphere/swarm-desktop/issues/449)) ([4d21617](https://github.com/ethersphere/swarm-desktop/commit/4d216176a75c5d11fdd43b77859e9e982c328bff))
+
 ## [0.43.2](https://github.com/ethersphere/swarm-desktop/compare/v0.43.1...v0.43.2) (2024-10-24)
 
 
