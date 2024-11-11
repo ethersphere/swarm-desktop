@@ -2,7 +2,6 @@
 
 ## [0.44.0](https://github.com/ethersphere/swarm-desktop/compare/v0.43.2...v0.44.0) (2024-11-11)
 
-
 ### Features
 
 * add notable apps and hashes ([#447](https://github.com/ethersphere/swarm-desktop/issues/447)) ([1d8be48](https://github.com/ethersphere/swarm-desktop/commit/1d8be485277333c595b413e444983ef4c24df779))
