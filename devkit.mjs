@@ -16,7 +16,6 @@ switch (requestedCommand) {
     break
   case 'copy:ui':
     await copyUi()
-    await copyEtherjot()
     break
   case 'purge:data':
     await purgeData()
@@ -38,10 +37,6 @@ function purgeLogs() {
 
 function copyUi() {
   return cpy('.', join('..', '..', 'dist', 'ui'), { cwd: join('ui', 'build') })
-}
-
-function copyEtherjot() {
-  return cpy('.', join('..', 'dist', 'etherjot'), { cwd: join('.', 'etherjot') })
 }
 
 async function openUi() {
