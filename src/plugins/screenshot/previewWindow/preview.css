@@ -106,6 +106,7 @@ label {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 24px;
 }
 
@@ -155,6 +156,16 @@ button:hover {
     background-color: var(--primary-yellow);
     cursor: pointer;
     color: #fff;
+}
+
+.awaiting-result,
+.awaiting-result:hover {
+    background-color: #999;
+    color: #666;
+}
+
+.awaiting-result:hover {
+    cursor: wait;
 }
 
 #screenshotImage {
