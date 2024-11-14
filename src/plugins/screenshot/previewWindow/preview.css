@@ -126,7 +126,6 @@ label {
     color: var(--font-color);
     font-size: 28px;
     font-weight: bold;
-    flex-grow: 1;
     text-align: right;
 }
 
@@ -194,8 +193,8 @@ button:hover {
     display: flex;
     flex-direction: row;
     gap: 18px;
-    justify-content: center;
     align-items: center;
+    flex-grow: 1;
 }
 
 .label {
