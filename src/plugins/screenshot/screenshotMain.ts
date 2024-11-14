@@ -3,12 +3,10 @@ import { BrowserWindow, desktopCapturer, dialog, ipcMain, nativeImage } from 'el
 import { logger } from '../../logger'
 import { createCropWindow } from './cropWindow/crop'
 import type { CropImageArgs } from './cropWindow/cropPreload'
-import { createPreviewWindow } from './previewWindow/preview'
+import { createPreviewWindow, previewWindow } from './previewWindow/preview'
 import { captureWindow } from './screenCaptureWindow/capture'
 import { getScreenSize } from './utils'
 import { BEE_DASHBOARD_URL, getAllPostageBatch, handleFileUpload, nodeIsConnected } from './utils/beeApi'
-
-let previewWindow: BrowserWindow
 
 function takeScreenshotImplementation() {
   let imgDataURL: string
@@ -28,7 +26,7 @@ function takeScreenshotImplementation() {
 
       if (img) {
         imgDataURL = img.toDataURL()
-        previewWindow = createPreviewWindow(imgDataURL)
+        createPreviewWindow(imgDataURL)
       }
     } catch (err) {
       logger.error('Failed to take Screenshot: ', err.message)
