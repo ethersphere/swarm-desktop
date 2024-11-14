@@ -1,6 +1,7 @@
 import { BrowserWindow, app } from 'electron/main'
 import path from 'node:path'
 import { logger } from '../../..//logger'
+import { captureWindow } from '../screenCaptureWindow/capture'
 import { getScreenSize } from '../utils'
 
 let previewWindow: BrowserWindow
@@ -24,6 +25,10 @@ function createPreviewWindow(imgDataURL: string) {
   previewWindow.webContents.openDevTools()
   previewWindow.webContents.on('did-finish-load', () => {
     previewWindow.webContents.send('image-data-url', imgDataURL)
+  })
+
+  previewWindow.on('close', () => {
+    captureWindow.close()
   })
 
   return previewWindow
