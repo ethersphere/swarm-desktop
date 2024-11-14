@@ -49,9 +49,15 @@ const hide = () => {
   }
 }
 
+const close = () => {
+  if (self) {
+    self.close()
+  }
+}
+
 export const captureWindow = {
   hide,
   show,
-  self,
+  close,
   screenCaptureWindow,
 }
