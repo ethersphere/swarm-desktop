@@ -5,9 +5,10 @@ import { runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
 import { createNotification } from './notify'
 import { getAssetPath, paths } from './path'
-import { screenCaptureWindow } from './plugins/screenshot'
+import * as screenshot from './plugins/screenshot'
 
 let tray: Tray
+let sCaptureWindow: BrowserWindow
 
 export function rebuildElectronTray() {
   if (!tray) {
@@ -44,10 +45,20 @@ export function rebuildElectronTray() {
     {
       label: 'Swarm Screenshot',
       click: () => {
-        if (BrowserWindow.getAllWindows().length > 1) {
+        const { captureWindow, previewWindow } = screenshot
+
+        if (sCaptureWindow && !sCaptureWindow.isDestroyed() && sCaptureWindow.isVisible()) {
           return
         }
-        screenCaptureWindow()
+
+        if (previewWindow && !previewWindow.isDestroyed() && previewWindow.isVisible()) {
+          return
+        }
+
+        if (!sCaptureWindow || sCaptureWindow.isDestroyed()) {
+          sCaptureWindow = captureWindow.screenCaptureWindow()
+        }
+        sCaptureWindow.show()
       },
     },
     {
