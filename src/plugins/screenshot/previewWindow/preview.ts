@@ -3,10 +3,12 @@ import path from 'node:path'
 import { logger } from '../../..//logger'
 import { getScreenSize } from '../utils'
 
-export function createPreviewWindow(imgDataURL: string) {
+let previewWindow: BrowserWindow
+
+function createPreviewWindow(imgDataURL: string) {
   const { defaultScreenSize } = getScreenSize()
 
-  const prvWindow = new BrowserWindow({
+  previewWindow = new BrowserWindow({
     width: defaultScreenSize.width,
     height: defaultScreenSize.height,
     webPreferences: {
@@ -15,14 +17,16 @@ export function createPreviewWindow(imgDataURL: string) {
   })
 
   const previewFilePath = path.join(app.getAppPath(), 'src', 'plugins', 'screenshot', 'previewWindow', 'preview.html')
-  prvWindow.loadFile(previewFilePath).catch(err => {
+  previewWindow.loadFile(previewFilePath).catch(err => {
     logger.error('Failed to load preview.html: ', err.message)
   })
 
-  prvWindow.webContents.openDevTools()
-  prvWindow.webContents.on('did-finish-load', () => {
-    prvWindow.webContents.send('image-data-url', imgDataURL)
+  previewWindow.webContents.openDevTools()
+  previewWindow.webContents.on('did-finish-load', () => {
+    previewWindow.webContents.send('image-data-url', imgDataURL)
   })
 
-  return prvWindow
+  return previewWindow
 }
+
+export { createPreviewWindow, previewWindow }
