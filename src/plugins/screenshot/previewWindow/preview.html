@@ -389,7 +389,7 @@
                 const input = createElement({ tagName: "input", type: "radio" });
                 input.name = "batchID";
 
-                const li = createElement({ tagName: "li" });
+                const li = createElement({ tagName: "li", classes: ['item-bg'] });
 
                 if (i === 0) {
                     input.checked = true;
@@ -422,7 +422,7 @@
                 name: "uploadDiv",
             });
             uploadOptionsDiv.innerHTML = `
-        <div class='options'>
+        <div class='options item-bg'>
         <input type="checkbox" id="encrypt" name="encrypt">
         <label for="encrypt">Encrypt</label><br>
         </div>
