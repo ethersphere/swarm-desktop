@@ -89,7 +89,7 @@ label {
     align-items: center;
 }
 
-.modal-main li {
+.modal-main li, .options {
     color: #666;
 }
 
