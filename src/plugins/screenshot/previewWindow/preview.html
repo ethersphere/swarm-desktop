@@ -153,7 +153,7 @@
                 id: "cnxStatus",
                 class: "cnx-status",
             });
-            cnxStatus.append(spinnerUI());
+            // cnxStatus.append(spinnerUI());
             div.append(cnxIcon, cnxStatus);
 
             return div;
@@ -255,6 +255,10 @@
                 const modalContent = openModal.getElementsByClassName("modal-main")[0];
                 document.body.appendChild(openModal);
 
+
+                const spinner = spinnerUI(width = "24px", height = "24px")
+                spinner.style.marginTop = '120px'
+                modalContent.appendChild(spinner)
 
                 cnxCheckIntervalId = setInterval(async () => {
                     try {
