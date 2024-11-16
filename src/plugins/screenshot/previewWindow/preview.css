@@ -261,6 +261,9 @@ ul li {
     border-radius: 4px;
     background-color: rgb(245, 207, 200);
     color: tomato;
+    
+    position: relative;
+    z-index: 21;
 }
 
 .ref-cid ul {
