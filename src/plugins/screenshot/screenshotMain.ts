@@ -1,12 +1,11 @@
-import { PostageBatch } from '@ethersphere/bee-js'
-import { BrowserWindow, desktopCapturer, dialog, ipcMain, nativeImage } from 'electron'
+import { desktopCapturer, dialog, ipcMain, nativeImage } from 'electron'
 import { logger } from '../../logger'
 import { createCropWindow } from './cropWindow/crop'
 import type { CropImageArgs } from './cropWindow/cropPreload'
 import { createPreviewWindow, previewWindow } from './previewWindow/preview'
 import { captureWindow } from './screenCaptureWindow/capture'
 import { getScreenSize } from './utils'
-import { BEE_DASHBOARD_URL, getAllPostageBatch, handleFileUpload, nodeIsConnected } from './utils/beeApi'
+import { getAllPostageBatch, handleFileUpload, nodeIsConnected } from './utils/beeApi'
 
 function takeScreenshotImplementation() {
   let imgDataURL: string
@@ -66,40 +65,24 @@ function takeScreenshotImplementation() {
   })
 
   ipcMain.on('create-postage-stamp', evnt => {
-    const { height, width, scaleFactor } = getScreenSize()
-
-    const beeDashboarWin = new BrowserWindow({
-      width: (width / 3) * scaleFactor,
-      height: (height / 3) * scaleFactor,
-      webPreferences: {
-        nodeIntegration: false,
-        contextIsolation: true,
-      },
-    })
-
-    beeDashboarWin.webContents.loadURL(BEE_DASHBOARD_URL)
-    beeDashboarWin.webContents.openDevTools() // TODO: remove before building for production
-
-    let ps: PostageBatch[]
     const getAllPostageBatchIntervalID = setInterval(async () => {
       try {
-        ps = await getAllPostageBatch()
+        const ps = await getAllPostageBatch()
 
         if (ps.length) {
           clearInterval(getAllPostageBatchIntervalID)
-          beeDashboarWin.close()
+          evnt.sender.send('update-postage-stamp-state', ps)
         }
       } catch (err) {
         clearInterval(getAllPostageBatchIntervalID)
         logger.error(err.message)
+        evnt.sender.send('update-postage-stamp-state', err.message)
+      } finally {
+        if (getAllPostageBatchIntervalID) {
+          clearInterval(getAllPostageBatchIntervalID)
+        }
       }
     }, 5000)
-
-    // Handle when closed
-    beeDashboarWin.on('closed', () => {
-      clearInterval(getAllPostageBatchIntervalID)
-      evnt.sender.send('update-postage-stamp-state', ps)
-    })
   })
 
   ipcMain.handle('upload-to-swarm', async (e, args) => {
