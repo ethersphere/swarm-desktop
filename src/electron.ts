@@ -48,10 +48,14 @@ export function rebuildElectronTray() {
         const { captureWindow, previewWindow } = screenshot
 
         if (sCaptureWindow && !sCaptureWindow.isDestroyed() && sCaptureWindow.isVisible()) {
+          sCaptureWindow.focus()
+
           return
         }
 
         if (previewWindow && !previewWindow.isDestroyed() && previewWindow.isVisible()) {
+          previewWindow.focus()
+
           return
         }
 
