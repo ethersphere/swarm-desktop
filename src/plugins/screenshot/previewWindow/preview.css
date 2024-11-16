@@ -261,7 +261,7 @@ ul li {
     border-radius: 4px;
     background-color: rgb(245, 207, 200);
     color: tomato;
-    
+
     position: relative;
     z-index: 21;
 }
@@ -281,7 +281,6 @@ ul li {
     align-items: center;
     background-color: #F3F3F3;
     padding: 8px;
-    cursor: pointer;
     color: #666;
 }
 
@@ -322,6 +321,12 @@ ul li {
 
 .tooltip .tooltip-hash {
     display: none;
+}
+
+.publish-btn {
+    display: inline-flex;
+    flex-direction: row;
+    gap: 12px;
 }
 
 .spinner {
