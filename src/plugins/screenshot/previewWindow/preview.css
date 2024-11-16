@@ -166,6 +166,13 @@ button:hover {
     color: #fff;
 }
 
+iframe {
+    margin: 24px 0;
+    width: 100%;
+    height: 90vh;
+    border: none;
+}
+
 .awaiting-result,
 .awaiting-result:hover {
     background-color: #999;
