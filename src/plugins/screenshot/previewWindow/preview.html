@@ -321,43 +321,57 @@
                     listAvailableStampUI(h2, psBatches, container, row, modalContent);
                 } else {
                     h2.textContent = "No Postage stamp available";
+                    const iframe = createElement({
+                        tagName: "iframe",
+                        name: "webframe",
+                    });
+
                     container.insertAdjacentElement("beforeend", h2);
 
                     const openBeeDashboardBtn = createElement({
                         tagName: "button",
                         textContent: "Create Stamp",
-                        classes: ["btn"],
+                        classes: ["btn", 'center'],
                     });
 
                     container.insertAdjacentElement("beforeend", openBeeDashboardBtn);
+                    row.insertAdjacentElement("afterbegin", container);
+                    modalContent.insertAdjacentElement("beforeend", row);
 
                     openBeeDashboardBtn.onclick = function () {
-                        openBeeDashboardBtn.disabled = true;
-                        openBeeDashboardBtn.classList.add("awaiting-result");
+                        // openBeeDashboardBtn.disabled = true;
+                        // openBeeDashboardBtn.classList.add("awaiting-result");
+                        // container.insertAdjacentElement("beforeend", spinnerContainer);
 
-                        container.insertAdjacentElement("beforeend", spinnerContainer);
+                        iframe.src = "http://localhost:3054/dashboard/?#/account/stamps";
                         window.electron.createPostageStamp();
+
+                        if (modalContent.lastChild) {
+                            modalContent.replaceChild(iframe, modalContent.lastChild)
+                        }
 
                         // keep watch for new purchase
                         const updatePostageStampStateIntervalId = setInterval(() => {
                             window.electron.updatePostageStampState((ps) => {
-                                if (ps.length) {
-                                    clearInterval(updatePostageStampStateIntervalId);
-                                    document.body.removeChild(spinnerContainer);
+                                // if (ps.length) {
+                                clearInterval(updatePostageStampStateIntervalId);
+                                // document.body.removeChild(spinnerContainer);
 
-                                    h2.textContent = `Select from available stamps (${ps?.length})`;
+                                h2.textContent = `Select from available stamps (${ps?.length})`;
 
-                                    openBeeDashboardBtn.disabled = false;
-                                    openBeeDashboardBtn.hidden = true;
+                                // openBeeDashboardBtn.disabled = false;
+                                openBeeDashboardBtn.hidden = true;
 
-                                    listAvailableStampUI(h2, ps, container, row, modalContent);
+                                if (modalContent.lastChild) {
+                                    modalContent.replaceChild(row, modalContent.lastChild);
                                 }
+
+                                listAvailableStampUI(h2, ps, container, row, modalContent);
+                                // }
                             });
                         }, 5000);
                     };
 
-                    row.insertAdjacentElement("afterbegin", container);
-                    modalContent.insertAdjacentElement("beforeend", row);
                 }
             } catch (err) {
                 console.error(err);
