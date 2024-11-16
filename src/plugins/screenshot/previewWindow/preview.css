@@ -231,6 +231,9 @@ ul {
 ul li {
     display: inline-flex;
     gap: 18px;
+}
+
+.item-bg {
     padding: 14px;
     background-color: #F3F3F3;
     align-items: center
