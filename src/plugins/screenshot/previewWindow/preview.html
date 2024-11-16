@@ -426,9 +426,12 @@
                 name: "uploadDiv",
             });
             uploadOptionsDiv.innerHTML = `
-        <div class='options item-bg'>
-        <input type="checkbox" id="encrypt" name="encrypt">
-        <label for="encrypt">Encrypt</label><br>
+            <div class='item-bg'>
+            <p>Upload options:</p>
+            <div class='options'>
+                <input type="checkbox" id="encrypt" name="encrypt">
+                <label for="encrypt">Encrypt</label><br>
+            </div>
         </div>
         <button id='publishBtn'>Publish</button>
 `;
