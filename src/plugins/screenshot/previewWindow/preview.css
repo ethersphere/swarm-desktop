@@ -329,6 +329,10 @@ ul li {
     gap: 12px;
 }
 
+.center {
+    margin: 0 auto;
+}
+
 .spinner {
     border: 4px solid var(--primary-yellow);
     border-bottom-color: transparent;
