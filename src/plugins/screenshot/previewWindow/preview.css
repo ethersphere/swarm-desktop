@@ -68,8 +68,6 @@ label {
     display: none;
     overflow: hidden;
     background-color: var(--bg-color)
-        /* background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.8); */
 }
 
 .modal-main,
@@ -89,17 +87,13 @@ label {
     align-items: center;
 }
 
-.modal-main li, .options {
+.modal-main li,
+.options {
     color: #666;
 }
 
 
 .modal-content {
-    padding: 24px;
-    margin: 14px auto;
-    /* width: 90%; */
-    /* height: 90%; */
-    /* border: 1px solid #141414; */
     width: 100%;
     height: 100%;
     background-color: var(--bg-color)
@@ -110,21 +104,17 @@ label {
     display: flex;
     flex-direction: column;
     gap: 18px;
-    /* justify-content: center;
-    align-items: center; */
 }
 
 .modal-main h2 {
     font-size: 20px;
     font-weight: 500;
     color: #333;
-    /* margin-top: 120px; */
 }
 
 .modal-main p {
     font-size: 15px;
     color: #666;
-    /* margin-top: 60px; */
 }
 
 .modal-main .check-cnx {
@@ -143,6 +133,13 @@ label {
     color: var(--primary-yellow);
     text-decoration: none;
     cursor: pointer;
+}
+
+iframe {
+    margin: 24px 0;
+    width: 100%;
+    height: 90vh;
+    border: none;
 }
 
 img {
@@ -211,6 +208,10 @@ iframe {
     gap: 18px;
     align-items: center;
     flex-grow: 1;
+}
+
+.cnx-div p {
+    color: #666;
 }
 
 .label {
