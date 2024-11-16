@@ -66,9 +66,10 @@ label {
     height: 100%;
     width: 100%;
     display: none;
-    overflow: auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+    background-color: var(--bg-color)
+        /* background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.8); */
 }
 
 .modal-main,
@@ -80,6 +81,7 @@ label {
 .modal-header {
     justify-content: space-around;
     align-content: baseline;
+    padding-top: 24px;
 }
 
 .modal-main {
@@ -95,9 +97,11 @@ label {
 .modal-content {
     padding: 24px;
     margin: 14px auto;
-    width: 90%;
-    height: 90%;
-    border: 1px solid #141414;
+    /* width: 90%; */
+    /* height: 90%; */
+    /* border: 1px solid #141414; */
+    width: 100%;
+    height: 100%;
     background-color: var(--bg-color)
 }
 
@@ -105,21 +109,26 @@ label {
     margin-top: 48px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 24px;
+    gap: 18px;
+    /* justify-content: center;
+    align-items: center; */
 }
 
 .modal-main h2 {
     font-size: 20px;
     font-weight: 500;
-    color: #666;
+    color: #333;
+    /* margin-top: 120px; */
 }
 
 .modal-main p {
-    margin-top: 60px;
-    font-size: 16px;
+    font-size: 15px;
     color: #666;
+    /* margin-top: 60px; */
+}
+
+.modal-main .check-cnx {
+    margin-top: 124px;
 }
 
 .close-icon {
