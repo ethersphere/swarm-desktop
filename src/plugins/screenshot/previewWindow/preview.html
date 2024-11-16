@@ -546,7 +546,7 @@
             modalContent.firstElementChild.firstElementChild.innerHTML = "";
             modalContent.firstElementChild.firstElementChild.append(uploadResultDiv);
             copyRefCidURLToClipboard();
-
+            clipboardNotifier();
         }
 
         function showErrorMessage(msg) {
@@ -563,7 +563,21 @@
             }, 5000);
         }
 
+        function clipboardNotifier() {
+            document.querySelectorAll(".tooltip").forEach((elm, i) => {
+                const tooltipTxt = document.querySelectorAll(".tooltip-text");
 
+                elm.addEventListener("click", (e) => {
+                    tooltipTxt[i].textContent = "Copied!";
+
+                    const tooltipTimeoutID = setTimeout(() => {
+                        tooltipTxt[i].textContent = "Copy";
+
+                        clearTimeout(tooltipTimeoutID);
+                    }, 1000);
+                });
+            });
+        }
 
     </script>
 </body>
