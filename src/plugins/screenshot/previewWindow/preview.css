@@ -49,7 +49,6 @@ input[type=radio]:checked {
 
 input[type=radio],
 input[type=checkbox] {
-    width: 10%;
     min-height: 16px;
     margin: 8px 0;
 }
@@ -237,8 +236,8 @@ ul li {
 
 .upload-div {
     display: flex;
-    gap: 10px;
-    align-items: center
+    flex-direction: column;
+    gap: 48px;
 }
 
 .file-basic-info {
