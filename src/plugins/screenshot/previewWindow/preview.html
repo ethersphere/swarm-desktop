@@ -194,7 +194,7 @@
                 if (description) {
                     document.getElementById(
                         "modalMain"
-                    ).innerHTML = `<h2>${description}</h2>`;
+                    ).innerHTML = `<h2 class='check-cnx'>${description}</h2>`;
                 }
             }
         }
@@ -528,6 +528,7 @@
             modalContent.firstElementChild.firstElementChild.innerHTML = "";
             modalContent.firstElementChild.firstElementChild.append(uploadResultDiv);
             copyRefCidURLToClipboard();
+
         }
 
         function showErrorMessage(msg) {
@@ -543,6 +544,7 @@
                 document.body.removeChild(errMsg);
             }, 5000);
         }
+
 
 
     </script>
