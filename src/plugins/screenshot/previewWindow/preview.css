@@ -239,10 +239,9 @@ ul li {
     align-items: center
 }
 
-.upload-div {
+.upload-div .options {
     display: flex;
-    flex-direction: column;
-    gap: 48px;
+    gap: 10px;
 }
 
 .upload-div .options {
