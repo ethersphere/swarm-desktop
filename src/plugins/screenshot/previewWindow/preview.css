@@ -231,7 +231,12 @@ ul li {
 
 .upload-div .options {
     display: flex;
+    align-items: center;
     gap: 10px;
+}
+
+.upload-div p {
+    font-size: 12px;
 }
 
 .upload-div {
