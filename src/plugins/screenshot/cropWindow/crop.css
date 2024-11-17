@@ -29,7 +29,10 @@ main {
 }
 
 footer {
+    display: flex;
     margin-top: auto;
+    visibility: hidden;
+    gap: 24px;
 }
 
 img {
@@ -89,10 +92,6 @@ button:hover {
     cursor: move;
     background-color: transparent;
     z-index: 2;
-    visibility: hidden;
-}
-
-footer {
     visibility: hidden;
 }
 
