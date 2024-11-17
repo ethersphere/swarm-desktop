@@ -6,12 +6,10 @@ let self: BrowserWindow
 
 function screenCaptureWindow() {
   self = new BrowserWindow({
-    width: 600, // 160
-    height: 400, // 60
-    modal: true,
+    width: 160,
+    height: 60,
     frame: false,
     resizable: false,
-    movable: true,
     backgroundColor: '#333',
     opacity: 0.95,
     webPreferences: {
@@ -24,8 +22,6 @@ function screenCaptureWindow() {
   self.loadFile(initFilePath).catch(err => {
     logger.info('Failed to load index.html: ', err)
   })
-
-  self.webContents.openDevTools()
 
   return self
 }
