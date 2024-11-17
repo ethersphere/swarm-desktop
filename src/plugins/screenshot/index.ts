@@ -1,3 +1,3 @@
-export { previewWindow } from './previewWindow/preview'
-export { captureWindow } from './screenCaptureWindow/capture'
-export { runScreenshotImpl } from './screenshotMain'
+export { runScreenshot } from './main'
+export { captureWindow } from './windows/capture/capture'
+export { previewWindow } from './windows/preview/preview'
