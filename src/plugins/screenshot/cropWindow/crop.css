@@ -1,5 +1,7 @@
 * {
     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 
 :root {
@@ -14,7 +16,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 95vh;
     gap: 12px;
 }
 
@@ -24,26 +26,25 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 24px;
-    flex-grow: 1;
 }
 
 footer {
     display: flex;
-    margin-top: auto;
     visibility: hidden;
     gap: 24px;
+    margin: 24px 0;
 }
 
 img {
     display: block;
-    margin: auto;
+    max-width: 100%;
+    max-height: 720px;
+    object-fit: contain;
 }
 
 button {
     background-color: #fff;
     border: none;
-    outline: none;
     color: var(--font-color);
     margin: 8px 0;
     padding: 12px;
@@ -56,12 +57,6 @@ button:hover {
     color: #fff;
 }
 
-.btn-container {
-    margin: 24px 0;
-    display: flex;
-    gap: 24px;
-}
-
 .crop-container {
     position: relative;
 }
@@ -69,6 +64,7 @@ button:hover {
 .image-container {
     position: relative;
     background-color: #212121;
+    max-width: 90%;
 }
 
 .overlay {
@@ -79,11 +75,6 @@ button:hover {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.3);
     z-index: 1;
-}
-
-.crop-image {
-    max-width: 100%;
-    height: auto;
 }
 
 #selectionBox {
@@ -102,7 +93,6 @@ button:hover {
 
     /* Handle color */
     position: absolute;
-
 }
 
 .resize-handle.bottom-right {
