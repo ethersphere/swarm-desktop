@@ -102,6 +102,8 @@
                 isHovering = true;
                 h1.textContent = 'Cancel'
             }
+
+            cancelCapture()
         });
 
         bodyElem.addEventListener("mouseout", () => {
@@ -120,6 +122,19 @@
         captureDiv.append(h1, screenshotAudio);
         bodyElem.insertAdjacentElement("afterbegin", captureDiv);
     });
+
+
+    function cancelCapture() {
+        const h1 = document.querySelector('h1');
+
+        if (h1.textContent === 'Cancel') {
+            bodyElem.onclick = function () {
+                window.close()
+                return
+            }
+        }
+    }
+
 </script>
 
 </html>
