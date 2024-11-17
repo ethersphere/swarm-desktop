@@ -1,5 +1,7 @@
 * {
     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 
 :root {
@@ -16,9 +18,8 @@ body {
     align-items: center;
     gap: 12px;
     color: var(--font-color);
-    min-height: 100vh;
-    padding: 0;
-    margin: 0;
+    min-height: 95vh;
+
 }
 
 header {
@@ -31,12 +32,12 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 24px;
-    flex-grow: 1;
 }
 
 footer {
-    margin-top: auto;
+    margin: 24px 0;
+    display: flex;
+    gap: 24px;
 }
 
 input[type=checkbox]:checked {
@@ -143,15 +144,17 @@ iframe {
 
 img {
     display: block;
-    margin: auto;
+    max-width: 90%;
+    max-height: 720px;
+    object-fit: contain;
 }
 
 button {
-    margin: 8px 0;
+    /* margin: 8px 0; */
+    /* outline: none; */
     padding: 12px;
     width: 150px;
     border: none;
-    outline: none;
     color: var(--font-color);
     background-color: #fff;
 }
@@ -171,18 +174,6 @@ button:hover {
 .awaiting-result:hover {
     cursor: wait;
 }
-
-#screenshotImage {
-    max-width: 90%;
-    height: auto;
-}
-
-.btn-container {
-    margin: 24px 0;
-    display: flex;
-    gap: 24px;
-}
-
 
 .cnx-icon {
     width: 16px;
@@ -249,6 +240,7 @@ ul li {
     display: flex;
     gap: 24px;
     font-size: 14px;
+    margin-top: 12px
 }
 
 .error-msg {
