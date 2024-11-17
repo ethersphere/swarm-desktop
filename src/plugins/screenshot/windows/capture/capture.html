@@ -57,56 +57,65 @@
             textContent: TAKE_SCREENSHOT,
         });
 
-        let btnClicked = false;
-        let counter = 3;
+        let counter = 5;
         let countdownPromiseInterval;
+        let isCounting = false;
+        let isHovering = false;
 
         bodyElem.addEventListener("click", async () => {
-            // Disable to prevent multiple clicks
-            h1.disabled = true;
-            btnClicked = true;
+            // prevent multiple clicks
+            if (isCounting) return;
 
-            const countdownPromise = new Promise((res) => {
-                countdownPromiseInterval = setInterval(() => {
-                    if (counter > 1) {
-                        counter--;
-                        h1.innerText = `⏲ ${counter}`;
-                    } else {
-                        clearInterval(countdownPromiseInterval);
-                        res();
+            isCounting = true;
+            h1.textContent = `⏲ ${counter}s`;
+
+            async function finishCountdown() {
+                try {
+                    window.electron.hideCaptureWindow();
+                    screenshotAudio.play();
+                    await window.electron.takeScreenshot();
+                } catch (err) {
+                    console.error("Error during screenshot capture:", err);
+                } finally {
+                    // Reset state once finished
+                    isCounting = false;
+                }
+            }
+
+            countdownPromiseInterval = setInterval(() => {
+                if (counter > 1) {
+                    counter--;
+
+                    if (!isHovering) {
+                        h1.textContent = `⏲ ${counter}s`;
                     }
-                }, 1000);
-            });
+                } else {
+                    clearInterval(countdownPromiseInterval);
+                    finishCountdown()
 
-            await countdownPromise;
+                }
+            }, 1000);
+        });
 
-            window.electron.hideCaptureWindow();
-
-            try {
-                screenshotAudio.play();
-
-                await window.electron.takeScreenshot();
-            } catch (err) {
-                console.error(err);
-                throw err;
+        bodyElem.addEventListener("mouseover", () => {
+            if (isCounting && !isHovering) {
+                isHovering = true;
+                h1.textContent = 'Cancel'
             }
         });
 
-        function counterLessThan3() {
-            if (btnClicked && counter < 3) {
-                h1.innerText = "Cancel";
+        bodyElem.addEventListener("mouseout", () => {
+            if (isCounting && isHovering) {
+                isHovering = false;
+                h1.textContent = `⏲ ${counter}s`;
             }
-        }
-        function counterGreaterThan3() {
-            if (btnClicked && counter > 0) {
-                h1.innerText = `⏲ ${counter}`;
-            }
-        }
+        });
 
-        bodyElem.addEventListener("mouseover", counterLessThan3);
-        bodyElem.addEventListener("mouseout", counterGreaterThan3);
-        h1.addEventListener("mouseover", counterLessThan3);
-        h1.addEventListener("mouseout", counterGreaterThan3);
+        window.addEventListener('beforeunload', () => {
+            if (countdownPromiseInterval) {
+                clearInterval(countdownPromiseInterval);
+            }
+        })
 
         captureDiv.append(h1, screenshotAudio);
         bodyElem.insertAdjacentElement("afterbegin", captureDiv);
