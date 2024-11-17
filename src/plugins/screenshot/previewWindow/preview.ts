@@ -7,7 +7,7 @@ import { getScreenSize } from '../utils'
 let previewWindow: BrowserWindow
 
 function createPreviewWindow(imgDataURL: string) {
-  const { defaultScreenSize } = getScreenSize()
+  const { defaultScreenSize } = getScreenSize(2.5)
 
   previewWindow = new BrowserWindow({
     width: defaultScreenSize.width,
