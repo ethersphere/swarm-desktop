@@ -19,7 +19,6 @@ body {
     gap: 12px;
     color: var(--font-color);
     min-height: 95vh;
-
 }
 
 header {
@@ -32,6 +31,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    flex: 1;
 }
 
 footer {
