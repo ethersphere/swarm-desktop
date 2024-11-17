@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from 'electron'
 import path from 'node:path'
-import { logger } from '../../../logger'
+import { logger } from '../../../../logger'
 
 let self: BrowserWindow
 
@@ -15,18 +15,11 @@ function screenCaptureWindow() {
     backgroundColor: '#333',
     opacity: 0.95,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, 'capture-preload.js'),
     },
   })
 
-  const initFilePath = path.join(
-    app.getAppPath(),
-    'src',
-    'plugins',
-    'screenshot',
-    'screenCaptureWindow',
-    'capture.html',
-  )
+  const initFilePath = path.join(app.getAppPath(), 'src', 'plugins', 'screenshot', 'windows', 'capture', 'capture.html')
 
   self.loadFile(initFilePath).catch(err => {
     logger.info('Failed to load index.html: ', err)

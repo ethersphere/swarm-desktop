@@ -1,11 +1,11 @@
 import { desktopCapturer, dialog, ipcMain, nativeImage } from 'electron'
 import { logger } from '../../logger'
-import { createCropWindow } from './cropWindow/crop'
-import type { CropImageArgs } from './cropWindow/cropPreload'
-import { createPreviewWindow, previewWindow } from './previewWindow/preview'
-import { captureWindow } from './screenCaptureWindow/capture'
 import { getScreenSize } from './utils'
 import { getAllPostageBatch, handleFileUpload, nodeIsConnected } from './utils/beeApi'
+import { createCropWindow } from './windows/crop/crop'
+import type { CropImageArgs } from './windows/crop/crop-preload'
+import { createPreviewWindow, previewWindow } from './windows/preview/preview'
+import { captureWindow } from './windows/capture/capture'
 
 function takeScreenshotImplementation() {
   let imgDataURL: string
@@ -109,6 +109,6 @@ function takeScreenshotImplementation() {
   })
 }
 
-export function runScreenshotImpl() {
+export function runScreenshot() {
   takeScreenshotImplementation()
 }

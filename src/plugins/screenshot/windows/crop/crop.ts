@@ -1,8 +1,8 @@
 import { BrowserWindow, app } from 'electron'
 import path from 'node:path'
-import { logger } from '../../..//logger'
-import { previewWindow } from '../previewWindow/preview'
-import { getScreenSize } from '../utils'
+import { logger } from '../../../../logger'
+import { getScreenSize } from '../../utils'
+import { previewWindow } from '../preview/preview'
 
 export function createCropWindow(imgSrc: string) {
   const { defaultScreenSize } = getScreenSize(2.5)
@@ -13,11 +13,11 @@ export function createCropWindow(imgSrc: string) {
     parent: previewWindow,
     modal: true,
     webPreferences: {
-      preload: path.join(__dirname, 'cropPreload.js'),
+      preload: path.join(__dirname, 'crop-preload.js'),
     },
   })
 
-  const cropFilePath = path.join(app.getAppPath(), 'src', 'plugins', 'screenshot', 'cropWindow', 'crop.html')
+  const cropFilePath = path.join(app.getAppPath(), 'src', 'plugins', 'screenshot', 'windows', 'crop', 'crop.html')
   cropWindow.loadFile(cropFilePath).catch(err => {
     logger.info('Failed to load crop.html: ', err.message)
   })

@@ -1,8 +1,8 @@
 import { BrowserWindow, app } from 'electron/main'
 import path from 'node:path'
-import { logger } from '../../..//logger'
-import { captureWindow } from '../screenCaptureWindow/capture'
-import { getScreenSize } from '../utils'
+import { logger } from '../../../..//logger'
+import { getScreenSize } from '../../utils'
+import { captureWindow } from '../capture/capture'
 
 let previewWindow: BrowserWindow
 
@@ -13,11 +13,19 @@ function createPreviewWindow(imgDataURL: string) {
     width: defaultScreenSize.width,
     height: defaultScreenSize.height,
     webPreferences: {
-      preload: path.join(__dirname, 'previewPreload.js'),
+      preload: path.join(__dirname, 'preview-preload.js'),
     },
   })
 
-  const previewFilePath = path.join(app.getAppPath(), 'src', 'plugins', 'screenshot', 'previewWindow', 'preview.html')
+  const previewFilePath = path.join(
+    app.getAppPath(),
+    'src',
+    'plugins',
+    'screenshot',
+    'windows',
+    'preview',
+    'preview.html',
+  )
   previewWindow.loadFile(previewFilePath).catch(err => {
     logger.error('Failed to load preview.html: ', err.message)
   })
