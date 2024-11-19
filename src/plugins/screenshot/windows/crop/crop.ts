@@ -22,8 +22,6 @@ export function createCropWindow(imgSrc: string) {
     logger.info('Failed to load crop.html: ', err.message)
   })
 
-  cropWindow.webContents.openDevTools()
-
   cropWindow.once('ready-to-show', () => {
     cropWindow.show()
   })

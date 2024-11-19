@@ -30,7 +30,6 @@ function createPreviewWindow(imgDataURL: string) {
     logger.error('Failed to load preview.html: ', err.message)
   })
 
-  previewWindow.webContents.openDevTools()
   previewWindow.webContents.on('did-finish-load', () => {
     previewWindow.webContents.send('image-data-url', imgDataURL)
   })
