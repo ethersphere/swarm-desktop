@@ -103,7 +103,7 @@ function takeScreenshotImplementation() {
         e.sender.send('upload-result-with-cid', JSON.stringify({ ...refCid, cid: refCid.cid() }))
       }
     } catch (err) {
-      logger.error(err.message)
+      logger.error('handleFileUpload error: ', err.message)
       throw err
     }
   })
