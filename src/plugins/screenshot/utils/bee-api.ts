@@ -49,6 +49,12 @@ type HandleFileUploadArgs = {
 }
 export async function handleFileUpload(args: HandleFileUploadArgs) {
   try {
+    const bee = getBeeInstance()
+
+    if (!bee) {
+      throw new Error('Bee instance is not initialized')
+    }
+
     return await bee.uploadFile(args.batchID, args.imgBuffer, args.name, {
       ...args.options,
       contentType: 'image/png',
