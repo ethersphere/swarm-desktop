@@ -342,9 +342,6 @@
                     modalContent.insertAdjacentElement("beforeend", row);
 
                     openBeeDashboardBtn.onclick = function () {
-                        // openBeeDashboardBtn.disabled = true;
-                        // openBeeDashboardBtn.classList.add("awaiting-result");
-                        // container.insertAdjacentElement("beforeend", spinnerContainer);
 
                         iframe.src = "http://localhost:3054/dashboard/?#/account/stamps";
                         window.electron.createPostageStamp();
@@ -356,13 +353,10 @@
                         // keep watch for new purchase
                         const updatePostageStampStateIntervalId = setInterval(() => {
                             window.electron.updatePostageStampState((ps) => {
-                                // if (ps.length) {
                                 clearInterval(updatePostageStampStateIntervalId);
-                                // document.body.removeChild(spinnerContainer);
+
 
                                 h2.textContent = `Select from available stamps (${ps?.length})`;
-
-                                // openBeeDashboardBtn.disabled = false;
                                 openBeeDashboardBtn.hidden = true;
 
                                 if (modalContent.lastChild) {
@@ -370,7 +364,6 @@
                                 }
 
                                 listAvailableStampUI(h2, ps, container, row, modalContent);
-                                // }
                             });
                         }, 5000);
                     };
