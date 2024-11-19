@@ -1,6 +1,6 @@
 import { Bee } from '@ethersphere/bee-js'
 // eslint-disable-next-line unused-imports/no-unused-imports
-import { BEE_NODE_URL, getAllPostageBatch, getBeeInstance, nodeIsConnected } from '../bee-api'
+import { BEE_NODE_URL, getAllPostageBatch, getBeeInstance, handleFileUpload, nodeIsConnected } from '../bee-api'
 
 jest.mock('@ethersphere/bee-js', () => {
   return {
@@ -8,6 +8,7 @@ jest.mock('@ethersphere/bee-js', () => {
       return {
         isConnected: jest.fn(),
         getAllPostageBatch: jest.fn(),
+        uploadFile: jest.fn(),
       }
     }),
   }
@@ -59,6 +60,56 @@ describe('Bee utility functions', () => {
       mockBeeInstance.getAllPostageBatch.mockRejectedValue(new Error('Failed to fetch batches'))
 
       await expect(getAllPostageBatch()).rejects.toThrow('Failed to fetch batches')
+    })
+  })
+
+  describe('handleFileUpload', () => {
+    it('should successfully upload a file', async () => {
+      const mockResponse = {
+        reference: 'Reference',
+        tagUid: 12,
+        historyAddress: 'string',
+        cid: () => 'string',
+      } as any
+
+      const args = {
+        batchID: 'batch123',
+        imgBuffer: new Uint8Array([1, 2, 3]),
+        name: 'test-img.png',
+      }
+
+      mockBeeInstance.uploadFile.mockResolvedValue(mockResponse)
+      const result = await handleFileUpload(args)
+
+      expect(result).toEqual(mockResponse)
+      expect(mockBeeInstance.uploadFile).toHaveBeenCalledWith(
+        args.batchID,
+        args.imgBuffer,
+        args.name,
+        expect.objectContaining({ contentType: 'image/png' }),
+      )
+    })
+
+    it('should throw an error if uploadFile fails', async () => {
+      const errMsg = 'File upload failed.'
+      mockBeeInstance.uploadFile.mockRejectedValue(new Error(errMsg))
+
+      const args = {
+        batchID: 'batch123',
+        imgBuffer: new Uint8Array([1, 2, 3]),
+        name: 'test-img.png',
+      }
+
+      await expect(handleFileUpload(args)).rejects.toThrow(errMsg)
+
+      expect(mockBeeInstance.uploadFile).toHaveBeenCalledWith(
+        args.batchID,
+        args.imgBuffer,
+        args.name,
+        expect.objectContaining({
+          contentType: 'image/png',
+        }),
+      )
     })
   })
 })
