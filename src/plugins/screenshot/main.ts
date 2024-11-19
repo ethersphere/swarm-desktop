@@ -1,11 +1,11 @@
 import { desktopCapturer, dialog, ipcMain, nativeImage } from 'electron'
 import { logger } from '../../logger'
 import { getScreenSize } from './utils'
-import { getAllPostageBatch, handleFileUpload, nodeIsConnected } from './utils/beeApi'
+import { getAllPostageBatch, handleFileUpload, nodeIsConnected } from './utils/bee-api'
+import { captureWindow } from './windows/capture/capture'
 import { createCropWindow } from './windows/crop/crop'
 import type { CropImageArgs } from './windows/crop/crop-preload'
 import { createPreviewWindow, previewWindow } from './windows/preview/preview'
-import { captureWindow } from './windows/capture/capture'
 
 function takeScreenshotImplementation() {
   let imgDataURL: string
