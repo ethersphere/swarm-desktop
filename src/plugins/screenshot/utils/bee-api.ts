@@ -3,10 +3,20 @@ import { BatchId, Bee, FileUploadOptions, UploadRedundancyOptions } from '@ether
 export const BEE_DASHBOARD_URL = 'http://localhost:3054/dashboard/?#/account/stamps'
 export const BEE_NODE_URL = 'http://127.0.0.1:1633'
 
-const bee = (() => new Bee(BEE_NODE_URL))()
+let bee: Bee | null = null
+
+export const getBeeInstance = (): Bee => {
+  if (!bee) {
+    bee = new Bee(BEE_NODE_URL)
+  }
+
+  return bee
+}
 
 export const nodeIsConnected = async () => {
   try {
+    const bee = getBeeInstance()
+
     return await bee.isConnected()
   } catch (err) {
     throw err
