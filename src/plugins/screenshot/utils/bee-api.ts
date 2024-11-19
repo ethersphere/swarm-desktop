@@ -17,7 +17,9 @@ export const nodeIsConnected = async () => {
   try {
     const bee = getBeeInstance()
 
-    return await bee.isConnected()
+    if (bee) {
+      return await bee.isConnected()
+    }
   } catch (err) {
     throw err
   }
@@ -25,6 +27,12 @@ export const nodeIsConnected = async () => {
 
 export const getAllPostageBatch = async () => {
   try {
+    const bee = getBeeInstance()
+
+    if (!bee) {
+      throw new Error('Bee instance is not initialized')
+    }
+
     const psBatch = await bee.getAllPostageBatch()
 
     return psBatch.filter(ps => ps.usable === true)
