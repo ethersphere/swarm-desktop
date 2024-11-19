@@ -18,7 +18,7 @@ import { getStatus } from './status'
 // @ts-ignore
 import squirrelInstallingExecution from 'electron-squirrel-startup'
 import { runMigrations } from './migration'
-import { runScreenshotImpl } from './plugins/screenshot'
+import { runScreenshot } from './plugins/screenshot'
 import { initSplash, Splash } from './splash'
 
 runMigrations()
@@ -85,7 +85,7 @@ async function main() {
   runKeepAliveLoop()
 
   app.whenReady().then(() => {
-    runScreenshotImpl()
+    runScreenshot()
   })
 }
 
