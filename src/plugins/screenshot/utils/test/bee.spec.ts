@@ -16,9 +16,7 @@ describe('Bee utility functions', () => {
   let mockBeeInstance: jest.Mocked<Bee>
 
   beforeEach(() => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    mockBeeInstance = new (require('@ethersphere/bee-js').Bee as jest.Mock)(BEE_NODE_URL) as jest.Mocked<Bee>
-    // eslint-disable-next-line prettier/prettier
+    mockBeeInstance = new Bee(BEE_NODE_URL) as jest.Mocked<Bee>
     ;(getBeeInstance as jest.Mock) = jest.fn(() => mockBeeInstance)
   })
 
