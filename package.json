@@ -88,6 +88,7 @@
     "typescript": "~4.5.4"
   },
   "dependencies": {
+    "@ethersphere/bee-js": "^8.3.1",
     "@koa/router": "^10.1.1",
     "cross-zip": "^4.0.0",
     "electron-squirrel-startup": "^1.0.0",
