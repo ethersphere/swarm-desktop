@@ -19,6 +19,23 @@ describe('Bee utility functions', () => {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     mockBeeInstance = new (require('@ethersphere/bee-js').Bee as jest.Mock)(BEE_NODE_URL) as jest.Mocked<Bee>
     // eslint-disable-next-line prettier/prettier
-    (getBeeInstance as jest.Mock) = jest.fn(() => mockBeeInstance)
+    ;(getBeeInstance as jest.Mock) = jest.fn(() => mockBeeInstance)
+  })
+
+  describe('nodeIsConnected', () => {
+    it('should return true when node is connected', async () => {
+      mockBeeInstance.isConnected.mockResolvedValue(true)
+
+      const res = await nodeIsConnected()
+
+      expect(res).toBe(true)
+      expect(mockBeeInstance.isConnected).toHaveBeenCalled()
+    })
+
+    it('should throw an error when there is an issue checking connection', async () => {
+      mockBeeInstance.isConnected.mockRejectedValue(new Error('Connection failed'))
+
+      await expect(nodeIsConnected()).rejects.toThrow('Connection failed')
+    })
   })
 })
