@@ -15,6 +15,14 @@
 </body>
 
 <script>
+
+    const bodyElem = document.body;
+
+    let counter = 5;
+    let countdownPromiseInterval;
+    let isCounting = false;
+    let isHovering = false;
+
     /**
      *
      * @param {*} opts
@@ -36,8 +44,6 @@
         return elem;
     }
 
-    const TAKE_SCREENSHOT = "Take Screenshot";
-    const bodyElem = document.body;
 
     document.addEventListener("DOMContentLoaded", () => {
         const captureDiv = createElement({
@@ -53,49 +59,41 @@
 
         const h1 = createElement({
             tagName: "h1",
-            id: "h1Btn",
-            textContent: TAKE_SCREENSHOT,
+            textContent: '',
         });
 
-        let counter = 5;
-        let countdownPromiseInterval;
-        let isCounting = false;
-        let isHovering = false;
+        // prevent multiple clicks
+        if (isCounting) return;
 
-        bodyElem.addEventListener("click", async () => {
-            // prevent multiple clicks
-            if (isCounting) return;
+        isCounting = true;
+        h1.textContent = `⏲ ${counter}s`;
 
-            isCounting = true;
-            h1.textContent = `⏲ ${counter}s`;
-
-            async function finishCountdown() {
-                try {
-                    window.electron.hideCaptureWindow();
-                    screenshotAudio.play();
-                    await window.electron.takeScreenshot();
-                } catch (err) {
-                    console.error("Error during screenshot capture:", err);
-                } finally {
-                    // Reset state once finished
-                    isCounting = false;
-                }
+        async function finishCountdown() {
+            try {
+                window.electron.hideCaptureWindow();
+                screenshotAudio.play();
+                await window.electron.takeScreenshot();
+            } catch (err) {
+                console.error("Error during screenshot capture:", err);
+            } finally {
+                // Reset state once finished
+                isCounting = false;
             }
+        }
 
-            countdownPromiseInterval = setInterval(() => {
-                if (counter > 1) {
-                    counter--;
+        countdownPromiseInterval = setInterval(() => {
+            if (counter > 1) {
+                counter--;
 
-                    if (!isHovering) {
-                        h1.textContent = `⏲ ${counter}s`;
-                    }
-                } else {
-                    clearInterval(countdownPromiseInterval);
-                    finishCountdown()
-
+                if (!isHovering) {
+                    h1.textContent = `⏲ ${counter}s`;
                 }
-            }, 1000);
-        });
+            } else {
+                clearInterval(countdownPromiseInterval);
+                finishCountdown()
+            }
+        }, 1000);
+
 
         bodyElem.addEventListener("mouseover", () => {
             if (isCounting && !isHovering) {
