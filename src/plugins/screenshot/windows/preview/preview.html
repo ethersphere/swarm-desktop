@@ -113,14 +113,17 @@
             img.onload = () => {
                 const width = img.width;
                 const height = img.height;
-                const fileSize =
-                    ((screenshotImg.src.length * 3) / 4 -
-                        screenshotImg.src.split(",")[1].length) *
-                    0.75;
+
+                const base64Data = screenshotImg.src.split(",")[1];
+
+                // calculate approximate file size
+                const fileSize = (base64Data.length * 3) / 4; // in bytes
+                const fileSizeKB = fileSize / 1024;
 
                 const innerHTLM = `<p>Resolution: ${width} x ${height} 
       </p>
-      <p>File Size: ${(fileSize / 1024).toFixed(2)} KB </p>`;
+      <p>File Size: ${(fileSizeKB / 1000).toFixed(2)} MB (approximate)</p>
+      `;
 
                 if (infoDiv) {
                     infoDiv.innerHTML = innerHTLM;
