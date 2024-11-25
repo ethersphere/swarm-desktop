@@ -39,9 +39,9 @@
                 updateImageInfo();
             })
 
-            window.electron.onUploadResultWithCid((ref) => {
+            window.electron.onUploadResult((res) => {
                 const modalContent = document.querySelector(".modal-main");
-                displayResultRefCid(ref, modalContent);
+                displayResultRefCid(res, modalContent);
             });
         });
 
@@ -504,11 +504,11 @@
      * @param {string} ref The reference of the uploaded file
      * @param {HTMLElement} modalContent The element that this compoment will bee appended to
      */
-        function displayResultRefCid(refCid, modalContent) {
+        function displayResultRefCid(res, modalContent) {
             const LOCAL_ENDPOINT = 'http://localhost:1633/bzz'
             const GATEWAY_ENDPOINT = 'https://gateway.ethswarm.org/access'
 
-            refCid = JSON.parse(refCid);
+            res = JSON.parse(res);
 
             const uploadResultDiv = createElement({
                 tagName: "div",
@@ -522,18 +522,18 @@
                     </div>
                     <ul>
                         <li>
-                            ${LOCAL_ENDPOINT}/${trimRef(refCid.reference)}
+                            ${LOCAL_ENDPOINT}/${trimRef(res.reference)}
                                 <span class='tooltip'>
-                                <span class='tooltip-hash'>${LOCAL_ENDPOINT}/${refCid.reference
+                                <span class='tooltip-hash'>${LOCAL_ENDPOINT}/${res.reference
                 }/</span>
                                 <span class='copy-icon'></span>
                                 <span class='tooltip-text'>Copy</span>
                             </span>
                         </li>
                         <li>
-                        ${GATEWAY_ENDPOINT}/${trimRef(refCid.reference)}
+                        ${GATEWAY_ENDPOINT}/${trimRef(res.reference)}
                             <span class='tooltip'>
-                                <span class='tooltip-hash'>${GATEWAY_ENDPOINT}/${refCid.reference
+                                <span class='tooltip-hash'>${GATEWAY_ENDPOINT}/${res.reference
                 }/</span>
                                 <span class='copy-icon'></span>
                                 <span class='tooltip-text'>Copy</span>
