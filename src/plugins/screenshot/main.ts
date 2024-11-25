@@ -97,13 +97,14 @@ function takeScreenshotImplementation() {
       }
       delete args.imgDataURL
 
-      const refCid = await handleFileUpload(args)
+      const result = await handleFileUpload(args)
+      delete result.cid
 
-      if (refCid.reference) {
-        e.sender.send('upload-result-with-cid', JSON.stringify({ ...refCid, cid: refCid.cid() }))
+      if (result.reference) {
+        e.sender.send('upload-result', JSON.stringify({ ...result }))
       }
     } catch (err) {
-      logger.error('handleFileUpload error: ', err.message)
+      logger.error('handleFileUpload: ', err.message)
       throw err
     }
   })
