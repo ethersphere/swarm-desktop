@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.45.0](https://github.com/ethersphere/swarm-desktop/compare/v0.44.0...v0.45.0) (2024-11-25)
+
+
+### Features
+
+* update to bee-dashboard v0.30.0 ([#452](https://github.com/ethersphere/swarm-desktop/issues/452)) ([8ebaa9e](https://github.com/ethersphere/swarm-desktop/commit/8ebaa9e49c7381d11894fa9b0af74015e371d276))
+
 ## [0.44.0](https://github.com/ethersphere/swarm-desktop/compare/v0.43.2...v0.44.0) (2024-11-11)
 
 ### Features
