@@ -91,9 +91,8 @@ function takeScreenshotImplementation() {
       args.imgBuffer = img.toPNG()
 
       if (!args.name) {
-        const day = new Date().toDateString().slice(0, 3)
         const date = new Date().toISOString()
-        args.name = date.replace(/\./i, day) + '.png'
+        args.name = date.replace(/\.|:/gi, '') + '.png'
       }
       delete args.imgDataURL
 
