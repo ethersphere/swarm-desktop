@@ -12,6 +12,7 @@ function createPreviewWindow(imgDataURL: string) {
   previewWindow = new BrowserWindow({
     width: defaultScreenSize.width,
     height: defaultScreenSize.height,
+    resizable: false,
     webPreferences: {
       preload: path.join(__dirname, 'preview-preload.js'),
     },

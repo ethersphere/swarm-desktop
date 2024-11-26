@@ -12,6 +12,7 @@ export function createCropWindow(imgSrc: string) {
     height: defaultScreenSize.height,
     parent: previewWindow,
     modal: true,
+    resizable: false,
     webPreferences: {
       preload: path.join(__dirname, 'crop-preload.js'),
     },
