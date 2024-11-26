@@ -251,6 +251,16 @@ ul li {
     z-index: 21;
 }
 
+.ref-cid div {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ref-cid div p {
+    font-size: 14px;
+}
+
 .ref-cid ul {
     margin-top: 48px;
     list-style: none;
