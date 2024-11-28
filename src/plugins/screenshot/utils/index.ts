@@ -51,8 +51,8 @@ export function getScreenSize(resizeBy = 3) {
   const scaleFactor = primaryDisplay.scaleFactor
 
   const defaultScreenSize = {
-    width: (width / resizeBy) * scaleFactor,
-    height: (height / resizeBy) * scaleFactor,
+    width: Math.floor((width / resizeBy) * scaleFactor),
+    height: Math.floor((height / resizeBy) * scaleFactor),
   }
 
   return {

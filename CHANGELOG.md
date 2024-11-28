@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.46.0](https://github.com/ethersphere/swarm-desktop/compare/v0.45.0...v0.46.0) (2024-11-28)
+
+
+### Features
+
+* add screenshot plugin ([#451](https://github.com/ethersphere/swarm-desktop/issues/451)) ([d0a3906](https://github.com/ethersphere/swarm-desktop/commit/d0a3906df129c94c5dc40c8870d594328381da22))
+
 ## [0.45.0](https://github.com/ethersphere/swarm-desktop/compare/v0.44.0...v0.45.0) (2024-11-25)
 
 
