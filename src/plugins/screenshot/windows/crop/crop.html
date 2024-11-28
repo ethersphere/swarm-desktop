@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <title>Crop Image</title>
+    <link rel="stylesheet" href="./crop.css">
+</head>
+
+<body>
+    <main>
+        <div class="image-container">
+            <img id="cropImage">
+            <div class="overlay"></div>
+            <div id="selectionBox">
+                <div class="resize-handle bottom-right"></div>
+                <div class="resize-handle bottom-left"></div>
+                <div class="resize-handle top-right"></div>
+                <div class="resize-handle top-left"></div>
+            </div>
+        </div>
+
+    </main>
+    <footer>
+        <button id="cropBtn">Crop</button>
+        <button id="cancelBtn" onclick="window.close()">Cancel</button>
+    </footer>
+    <script>
+        /**
+         *
+         * @param {*} opts
+         * @returns {HTMLElement}
+         */
+        function createElement(opts) {
+            const elem = document.createElement(opts.tagName);
+
+            if (opts.type) elem.type = opts.type;
+            if (opts.id) elem.id = opts.id;
+            if (opts.textContent) elem.textContent = opts.textContent;
+
+            opts.classes?.forEach((clsName) => elem.classList.add(clsName));
+
+            Object.entries(opts.attributes || {}).forEach(([k, v]) => {
+                elem.setAttribute(k, v);
+            });
+
+            return elem;
+        }
+
+
+
+        /**
+         * Get dimension of the image
+           * @param {HTMLImageElement} cropImage
+           * @returns {width, height}
+           */
+        function getImageBounds(cropImage) {
+            const imgBounds = cropImage.getBoundingClientRect();
+            return {
+                width: imgBounds.width,
+                height: imgBounds.height,
+            };
+        }
+
+        /**
+         * Draggable logic for the selection box
+         * @param {HTMLElement} selBox
+         * @param {HTMLImageElement} cropImage
+         */
+        function initSelectionBoxMovement(selBox, cropImage) {
+
+            selBox.addEventListener("mousedown", (e) => {
+                e.preventDefault();
+
+                const initialMouseX = e.clientX;
+                const initialMouseY = e.clientY;
+
+                const initialLeft = parseFloat(selBox.style.left) || 0;
+                const initialTop = parseFloat(selBox.style.top) || 0;
+
+                function mouseMoveHandler(mEvent) {
+                    const dx = mEvent.clientX - initialMouseX;
+                    const dy = mEvent.clientY - initialMouseY;
+
+                    let newLeft = initialLeft + dx;
+                    let newTop = initialTop + dy;
+
+                    const imgBounds = getImageBounds(cropImage);
+                    const boxBounds = selBox.getBoundingClientRect();
+
+                    // Constrain the selection box within the image bounds
+                    if (newLeft < 0) {
+                        newLeft = 0; // Prevent moving left out of bounds
+                    }
+                    if (newTop < 0) {
+                        newTop = 0; // Prevent moving up out of bounds
+                    }
+                    if (newLeft + boxBounds.width > imgBounds.width) {
+                        newLeft = imgBounds.width - boxBounds.width; // Prevent moving right out of bounds
+                    }
+                    if (newTop + boxBounds.height > imgBounds.height) {
+                        newTop = imgBounds.height - boxBounds.height; // Prevent moving down out of bounds
+                    }
+
+                    selBox.style.left = `${newLeft}px`;
+                    selBox.style.top = `${newTop}px`;
+                }
+
+                function mouseUpHandler() {
+                    document.removeEventListener("mousemove", mouseMoveHandler);
+                    document.removeEventListener("mouseup", mouseUpHandler);
+                }
+
+                document.addEventListener("mousemove", mouseMoveHandler);
+                document.addEventListener("mouseup", mouseUpHandler);
+            });
+
+
+        }
+
+
+
+        /**
+         * Resize logic for all corners of the Selection Box
+         * @param {HTMLElement} selBox
+         */
+        function updateSelectionBoxHandleRezing(selBox, cropImage) {
+            document.querySelectorAll(".resize-handle").forEach((handle) => {
+                handle.addEventListener("mousedown", (e) => {
+                    e.stopPropagation(); // Prevent triggering the drag event
+
+                    const initialWidth = selBox.offsetWidth;
+                    const initialHeight = selBox.offsetHeight;
+                    const initialMouseX = e.clientX;
+                    const initialMouseY = e.clientY;
+
+                    const imgBounds = getImageBounds(cropImage);
+
+                    // Store the initial position of the selection box
+                    const initialLeft = parseFloat(selBox.style.left) || 0;
+                    const initialTop = parseFloat(selBox.style.top) || 0;
+
+                    function resizeMouseMoveHandler(mEvent) {
+                        const dx = mEvent.clientX - initialMouseX;
+                        const dy = mEvent.clientY - initialMouseY;
+
+                        let newWidth = initialWidth;
+                        let newHeight = initialHeight;
+                        let newLeft = initialLeft;
+                        let newTop = initialTop;
+
+                        // Adjust dimensions based on handle position
+                        if (handle.classList.contains("bottom-right")) {
+                            newWidth = initialWidth + dx;
+                            newHeight = initialHeight + dy;
+                        } else if (handle.classList.contains("bottom-left")) {
+                            newWidth = initialWidth - dx;
+                            newHeight = initialHeight + dy;
+                            newLeft = initialLeft + dx; // Move left to maintain position
+                        } else if (handle.classList.contains("top-right")) {
+                            newWidth = initialWidth + dx;
+                            newHeight = initialHeight - dy;
+                            newTop = initialTop + dy; // Move top to maintain position
+                        } else if (handle.classList.contains("top-left")) {
+                            newWidth = initialWidth - dx;
+                            newHeight = initialHeight - dy;
+                            newLeft = initialLeft + dx; // Move left to maintain position
+                            newTop = initialTop + dy; // Move top to maintain position
+                        }
+
+                        // Constrain the selection box dimensions and position
+                        if (newWidth >= 0 && newLeft >= 0) {
+                            if (newWidth + newLeft > imgBounds.width) {
+                                newWidth = imgBounds.width - newLeft; // Keep within bounds
+                            }
+                            selBox.style.width = `${newWidth}px`;
+                            selBox.style.left = `${newLeft}px`;
+                        }
+
+                        if (newHeight >= 0 && newTop >= 0) {
+                            if (newHeight + newTop > imgBounds.height) {
+                                newHeight = imgBounds.height - newTop; // Keep within bounds
+                            }
+                            selBox.style.height = `${newHeight}px`;
+                            selBox.style.top = `${newTop}px`;
+                        }
+                    }
+
+                    function resizeMouseUpHandler() {
+                        document.removeEventListener("mousemove", resizeMouseMoveHandler);
+                        document.removeEventListener("mouseup", resizeMouseUpHandler);
+                    }
+
+                    document.addEventListener("mousemove", resizeMouseMoveHandler);
+                    document.addEventListener("mouseup", resizeMouseUpHandler);
+                });
+            });
+        }
+
+
+        /**
+        * Function to save dimension of the image's selected portion
+        * @param {HTMLButtonElement} cropBtn
+        * @param {HTMLImageElement} cropImg
+        * @param {HTMLElement} selBox
+        */
+        function cropImgWithSelectedDimension(cropBtn, cropImg, selBox) {
+            cropBtn.addEventListener("click", async () => {
+                const selBoxBounds = selBox.getBoundingClientRect();
+                const imgBounds = cropImg.getBoundingClientRect();
+
+                // scaling factor
+                const scaleX = cropImg.naturalWidth / imgBounds.width;
+                const scaleY = cropImg.naturalHeight / imgBounds.height;
+
+                // calculate coordinates relative to the original image
+                const x = Math.floor((selBoxBounds.left - imgBounds.left) * scaleX);
+                const y = Math.floor((selBoxBounds.top - imgBounds.top) * scaleY);
+
+                const width = Math.floor(selBoxBounds.width * scaleX);
+                const height = Math.floor(selBoxBounds.height * scaleY);
+
+                // Send crop dimensions to the main process for cropping
+                await window.electron.cropImage({
+                    x,
+                    y,
+                    width,
+                    height,
+                    imgDataURL: cropImg.src,
+                });
+
+                // Close the cropping window
+                window.close();
+            });
+        }
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const footer = document.querySelector('footer')
+            const cropBtn = document.querySelector("button");
+            const cropImage = document.querySelector("img");
+            const selectionBox = document.getElementById("selectionBox");
+
+
+            window.electron.onLoadImageForCropping((imgDataURL) => {
+                cropImage.src = imgDataURL;
+                selectionBox.style.visibility = "visible";
+                footer.style.visibility = 'visible';
+
+                // Initialize selection box default dimensions and initial position
+                selectionBox.style.width = "100px";
+                selectionBox.style.height = "100px";
+                selectionBox.style.left = "0";
+                selectionBox.style.top = "0";
+            });
+
+
+            initSelectionBoxMovement(selectionBox, cropImage);
+            updateSelectionBoxHandleRezing(selectionBox, cropImage);
+
+            cropImgWithSelectedDimension(cropBtn, cropImage, selectionBox)
+        })
+    </script>
+</body>
+
+</html>

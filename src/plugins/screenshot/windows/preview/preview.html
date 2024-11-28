@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <title>Screenshot Preview</title>
+
+    <link rel="stylesheet" href="./preview.css">
+</head>
+
+<body>
+    <main>
+        <img id="screenshotImage" />
+    </main>
+
+    <div id="selectionBox" class="selection-box"></div>
+    <script>
+        const ONLINE_COLOR = " #19c10a";
+        const OFFLINE_COLOR = " #FF3A52";
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const screenshotImg = document.getElementById("screenshotImage");
+
+            window.electron.onImageDataURL((imgDataURL) => {
+                screenshotImg.src = imgDataURL;
+
+                updateImageInfo();
+                displayActionButtonsUI();
+            });
+
+            window.electron.onCroppedImage(imgDataURL => {
+                screenshotImg.src = imgDataURL
+
+                updateImageInfo();
+            })
+
+            window.electron.onUploadResult((res) => {
+                const modalContent = document.querySelector(".modal-main");
+                displayResultRefCid(res, modalContent);
+            });
+        });
+
+        window.addEventListener("error", (msg, src, lineno, colno, err) => {
+            console.error('msg: ', msg);
+            console.error('source: ', src);
+            console.error('line no.: ', lineno);
+            console.error('column no.: ', colno);
+            console.error('error: ', err);
+
+            showErrorMessage("An unexpected error occurred.", msg);
+            return true; // Prevent default error behavior
+        });
+
+        /**
+         *
+         * @param {*} opts
+         * @returns {HTMLElement}
+         */
+        function createElement(opts) {
+            const elem = document.createElement(opts.tagName);
+
+            if (opts.type) elem.type = opts.type;
+            if (opts.id) elem.id = opts.id;
+            if (opts.textContent) elem.textContent = opts.textContent;
+
+            opts.classes?.forEach((clsName) => elem.classList.add(clsName));
+
+            Object.entries(opts.attributes || {}).forEach(([k, v]) => {
+                elem.setAttribute(k, v);
+            });
+
+            return elem;
+        }
+
+        function displayActionButtonsUI() {
+            const publishToSwarmBtn = publishToSwarmUI();
+
+            const footer = createElement({
+                tagName: "footer",
+                id: "btnContainer",
+            });
+
+            const cropBtn = createElement({
+                tagName: "button",
+                id: "cropBtn",
+                textContent: "Crop Image",
+            });
+            cropBtn.onclick = () => {
+                const screenshotImg = document.getElementById("screenshotImage");
+                window.electron.openCropWindow(screenshotImg.src);
+            };
+
+
+            [cropBtn, publishToSwarmBtn].forEach((elem) => {
+                footer.insertAdjacentElement("beforeend", elem);
+            });
+
+            document.querySelector("main").insertAdjacentElement("afterend", footer);
+        }
+
+        function updateImageInfo() {
+            let screenshotImg = document.getElementById("screenshotImage");
+            let infoDiv = document.getElementById("fileBasicInfo");
+
+            const img = new Image();
+            img.src = screenshotImg.src;
+
+            img.onload = () => {
+                const width = img.width;
+                const height = img.height;
+
+                const base64Data = screenshotImg.src.split(",")[1];
+
+                // calculate approximate file size
+                const fileSize = (base64Data.length * 3) / 4; // in bytes
+                const fileSizeKB = fileSize / 1024;
+
+                const innerHTLM = `<p>Resolution: ${width} x ${height} 
+      </p>
+      <p>File Size: ${(fileSizeKB / 1000).toFixed(2)} MB (approximate)</p>
+      `;
+
+                if (infoDiv) {
+                    infoDiv.innerHTML = innerHTLM;
+                } else {
+                    infoDiv = createElement({
+                        tagName: "div",
+                        id: "fileBasicInfo",
+                        classes: ["file-basic-info"],
+                    });
+                    infoDiv.innerHTML = innerHTLM;
+                    document
+                        .getElementById("screenshotImage")
+                        .insertAdjacentElement("afterend", infoDiv);
+                }
+            };
+        }
+
+        function connectionStatusUI() {
+            const div = createElement({ tagName: "div", classes: ["cnx-div"] });
+
+            const cnxIcon = createElement({
+                tagName: "span",
+                classes: ["cnx-icon"],
+                id: "cnxIcon",
+            });
+
+            const cnxStatus = createElement({
+                tagName: "p",
+                id: "cnxStatus",
+                class: "cnx-status",
+            });
+            // cnxStatus.append(spinnerUI());
+            div.append(cnxIcon, cnxStatus);
+
+            return div;
+        }
+
+        function checkConnection(connected) {
+            try {
+                if (connected) {
+                    updateConnectionStatusUI(connected, "Connected");
+                } else {
+                    updateConnectionStatusUI(
+                        connected,
+                        "Not Connected",
+                        "Check if your Bee Node running."
+                    );
+                }
+            } catch (err) {
+                console.error("Error checking connection:", err);
+                updateConnectionStatusUI(connected, "Not Connected", err.message);
+            }
+        }
+
+        /**
+         * @dev Update the UI with the connection status
+         * @param {boolean} connected The result of node active status
+         * @param {string} status The display status 'connected' | 'Not connected'
+         * @param {string} description A description for the node status
+         */
+        function updateConnectionStatusUI(connected, status, description) {
+            const cnxIcon = document.getElementById("cnxIcon");
+            if (cnxIcon) {
+                cnxIcon.style.backgroundColor = connected ? ONLINE_COLOR : OFFLINE_COLOR;
+            }
+
+            const cnxStatus = document.getElementById("cnxStatus");
+            if (cnxStatus) {
+                cnxStatus.innerText = status;
+                if (description) {
+                    document.getElementById(
+                        "modalMain"
+                    ).innerHTML = `<h2 class='check-cnx'>${description}</h2>`;
+                }
+            }
+        }
+
+        function openModalUI() {
+            const cnxStatus = connectionStatusUI(); // Initialize the UI to show the connection status
+
+            const modal = createElement({
+                tagName: "div",
+                id: "modal",
+                classes: ["modal"],
+            });
+
+            const closeIcon = createElement({
+                tagName: "span",
+                id: "closeIcon",
+                classes: ["close-icon"],
+            });
+            closeIcon.innerHTML = "&times;";
+            closeIcon.addEventListener("click", () => {
+                modal.parentNode.removeChild(modal);
+            });
+
+            const moadalContent = createElement({
+                tagName: "div",
+                classes: ["modal-content"],
+            });
+
+            const header = createElement({ tagName: "div", classes: ["modal-header"] });
+            header.append(cnxStatus, closeIcon);
+
+            const modalMain = createElement({
+                tagName: "div",
+                classes: ["modal-main"],
+                id: "modalMain",
+            });
+
+            moadalContent.append(header, modalMain);
+            modal.insertAdjacentElement("beforeend", moadalContent);
+
+            return modal;
+        }
+
+        function publishToSwarmUI() {
+            let cnxCheckIntervalId;
+
+            const publishToSwarmBtn = createElement({
+                tagName: "button",
+                textContent: "Publish to Swarm",
+                id: "PublishToSwarm",
+            });
+
+            publishToSwarmBtn.addEventListener("click", async () => {
+                window.electron.setTitle("Publish to Swarm Network");
+
+                const openModal = openModalUI();
+                openModal.style.display = "block";
+                const modalContent = openModal.getElementsByClassName("modal-main")[0];
+                document.body.appendChild(openModal);
+
+
+                const spinner = spinnerUI(width = "24px", height = "24px")
+                spinner.style.marginTop = '120px'
+                modalContent.appendChild(spinner)
+
+                cnxCheckIntervalId = setInterval(async () => {
+                    try {
+                        const isConnected = await window.electron.nodeIsConnected();
+                        await checkConnection(isConnected); // Update UI based on connection status
+
+                        if (isConnected) {
+                            clearInterval(cnxCheckIntervalId); // stop checking once connected
+
+                            await postageStampUI(modalContent);
+                        }
+                    } catch (err) {
+                        clearInterval(cnxCheckIntervalId);
+                        showErrorMessage(err.message);
+                    }
+                }, 2000);
+            });
+
+            return publishToSwarmBtn;
+        }
+
+        function spinnerUI(width = "18px", height = "18px", borderColor) {
+            const div = createElement({
+                tagName: "div",
+                classes: ["spinner-container"],
+            });
+
+            const span = createElement({
+                tagName: "span",
+                classes: ["spinner"],
+            });
+            span.style.width = width;
+            span.style.height = height;
+            span.style.borderColor = borderColor;
+
+            div.appendChild(span);
+
+            return div;
+        }
+
+        /**
+           * This function list the available/ usable postage stamp
+           * @param {Element} modalContent
+           * 
+           */
+        async function postageStampUI(modalContent) {
+            if (modalContent.firstChild) {
+                modalContent.removeChild(modalContent.firstChild);
+            }
+
+            const container = createElement({ tagName: "div", classes: ["container"] });
+            const row = createElement({
+                tagName: "div",
+                classes: ["row"],
+                name: "listPostageStamp",
+            });
+            const h2 = createElement({ tagName: "h2" });
+            const spinnerContainer = spinnerUI((width = "36px"), (height = "36px"));
+
+            try {
+                const psBatches = await window.electron.getAllPostageBatch();
+
+                if (psBatches.length) {
+                    listAvailableStampUI(h2, psBatches, container, row, modalContent);
+                } else {
+                    h2.textContent = "No Postage stamp available";
+                    const iframe = createElement({
+                        tagName: "iframe",
+                        name: "webframe",
+                    });
+
+                    container.insertAdjacentElement("beforeend", h2);
+
+                    const openBeeDashboardBtn = createElement({
+                        tagName: "button",
+                        textContent: "Create Stamp",
+                        classes: ["btn", 'center'],
+                    });
+
+                    container.insertAdjacentElement("beforeend", openBeeDashboardBtn);
+                    row.insertAdjacentElement("afterbegin", container);
+                    modalContent.insertAdjacentElement("beforeend", row);
+
+                    openBeeDashboardBtn.onclick = function () {
+
+                        iframe.src = "http://localhost:3054/dashboard/?#/account/stamps";
+                        window.electron.createPostageStamp();
+
+                        if (modalContent.lastChild) {
+                            modalContent.replaceChild(iframe, modalContent.lastChild)
+                        }
+
+                        // keep watch for new purchase
+                        const updatePostageStampStateIntervalId = setInterval(() => {
+                            window.electron.updatePostageStampState((ps) => {
+                                clearInterval(updatePostageStampStateIntervalId);
+
+
+                                h2.textContent = `Select from available stamps (${ps?.length})`;
+                                openBeeDashboardBtn.hidden = true;
+
+                                if (modalContent.lastChild) {
+                                    modalContent.replaceChild(row, modalContent.lastChild);
+                                }
+
+                                listAvailableStampUI(h2, ps, container, row, modalContent);
+                            });
+                        }, 5000);
+                    };
+
+                }
+            } catch (err) {
+                console.error(err);
+                showErrorMessage(err.message);
+            }
+        }
+
+        function listAvailableStampUI(h2, psBatches, container, row, modalContent) {
+            h2.textContent = `Select from available stamps (${psBatches?.length})`;
+            container.append(h2);
+
+            const ul = createElement({ tagName: "ul" });
+
+            for (let i = 0; i < psBatches.length; i++) {
+                const input = createElement({ tagName: "input", type: "radio" });
+                input.name = "batchID";
+
+                const li = createElement({ tagName: "li", classes: ['item-bg'] });
+
+                if (i === 0) {
+                    input.checked = true;
+                }
+                input.value = psBatches[i].batchID.toString();
+                input.id = psBatches[i].batchID.toString();
+
+                const label = createElement({ tagName: "label" });
+                label.setAttribute("for", psBatches[i].batchID.toString());
+                label.innerHTML = `
+    <span>
+    ${psBatches[i].label
+                        ? psBatches[i].label
+                        : psBatches[i].batchID.slice(0, 4) +
+                        "..." +
+                        psBatches[i].batchID.slice(-4)
+                    }
+    </span>
+    <span> (Utilization: ${psBatches[i].utilization})</span>
+            `;
+
+                li.insertAdjacentElement("afterbegin", input);
+                li.insertAdjacentElement("beforeend", label);
+                ul.appendChild(li);
+            }
+
+            const uploadOptionsDiv = createElement({
+                tagName: "div",
+                classes: ["upload-div"],
+                name: "uploadDiv",
+            });
+            uploadOptionsDiv.innerHTML = `
+            <div class='item-bg'>
+            <p>Upload options:</p>
+            <div class='options'>
+                <input type="checkbox" id="encrypt" name="encrypt">
+                <label for="encrypt">Encrypt</label><br>
+            </div>
+        </div>
+        <button id='publishBtn'>Publish</button>
+`;
+
+            container.insertAdjacentElement("beforeend", ul);
+            container.insertAdjacentElement("beforeend", uploadOptionsDiv);
+
+            row.insertAdjacentElement("afterbegin", container);
+            modalContent.appendChild(row);
+
+            selectPostageStamp();
+        }
+
+        function selectPostageStamp() {
+            const inputs = document.querySelectorAll("input");
+            const obj = { options: {} };
+
+            // Initialize the object with initial values
+            inputs.forEach((input) => {
+                if (!input) return;
+                if (input.type === "checkbox") {
+                    obj.options[input.name] = input.checked;
+                } else {
+                    obj[input.name] = input.value;
+                }
+            });
+
+            // Add change event listeners
+            inputs.forEach((input) => {
+                if (!input) return;
+                input.addEventListener("change", (e) => {
+                    if (input.type === "checkbox") {
+                        obj.options[input.name] = input.checked;
+                    } else {
+                        obj[input.name] = input.value;
+                    }
+                });
+            });
+
+            const screenshotImg = document.getElementById("screenshotImage");
+            obj["imgDataURL"] = screenshotImg.src;
+
+            handlePublishToSwarm(obj);
+        }
+
+        function handlePublishToSwarm(obj) {
+            const publishBtn = document.getElementById("publishBtn");
+
+            publishBtn.addEventListener("click", (e) => {
+                publishBtn.disabled = true;
+                publishBtn.style.cursor = "wait";
+                publishBtn.innerHTML = "";
+                publishBtn.appendChild(spinnerUI("10px", "10px", "#fff"));
+
+                window.electron.uploadToSwarm(obj);
+            });
+        }
+
+        function trimRef(ref) {
+            return ref.slice(0, 12) + "..." + ref.slice(-12);
+        }
+
+        function copyRefCidURLToClipboard() {
+            document.querySelectorAll(".copy-icon").forEach((elm) => {
+                elm.addEventListener("click", (e) => {
+                    window.navigator.clipboard.writeText(
+                        elm.parentElement.firstElementChild.textContent.trim()
+                    );
+                });
+            });
+        }
+
+        /**
+     *
+     * @param {string} ref The reference of the uploaded file
+     * @param {HTMLElement} modalContent The element that this compoment will bee appended to
+     */
+        function displayResultRefCid(res, modalContent) {
+            const LOCAL_ENDPOINT = 'http://localhost:1633/bzz'
+            const GATEWAY_ENDPOINT = 'https://gateway.ethswarm.org/access'
+
+            res = JSON.parse(res);
+
+            const uploadResultDiv = createElement({
+                tagName: "div",
+                classes: ["ref-cid"],
+            });
+
+            uploadResultDiv.innerHTML = `
+                    <div>
+                        <h2>File published successfully.</h2>
+                        <p>Use the links below to access it.</p>
+                    </div>
+                    <ul>
+                        <li>
+                            ${LOCAL_ENDPOINT}/${trimRef(res.reference)}
+                                <span class='tooltip'>
+                                <span class='tooltip-hash'>${LOCAL_ENDPOINT}/${res.reference
+                }/</span>
+                                <span class='copy-icon'></span>
+                                <span class='tooltip-text'>Copy</span>
+                            </span>
+                        </li>
+                        <li>
+                        ${GATEWAY_ENDPOINT}/${trimRef(res.reference)}
+                            <span class='tooltip'>
+                                <span class='tooltip-hash'>${GATEWAY_ENDPOINT}/${res.reference
+                }/</span>
+                                <span class='copy-icon'></span>
+                                <span class='tooltip-text'>Copy</span>
+                            </span>
+                        </li>
+                    </ul>`;
+
+            modalContent.firstElementChild.firstElementChild.innerHTML = "";
+            modalContent.firstElementChild.firstElementChild.append(uploadResultDiv);
+            copyRefCidURLToClipboard();
+            clipboardNotifier();
+        }
+
+        function showErrorMessage(msg) {
+            const errMsg = createElement({
+                tagName: "p",
+                classes: ["error-msg"],
+                textContent: msg,
+            });
+
+            document.body.appendChild(errMsg);
+
+            setTimeout(() => {
+                document.body.removeChild(errMsg);
+            }, 5000);
+        }
+
+        function clipboardNotifier() {
+            document.querySelectorAll(".tooltip").forEach((elm, i) => {
+                const tooltipTxt = document.querySelectorAll(".tooltip-text");
+
+                elm.addEventListener("click", (e) => {
+                    tooltipTxt[i].textContent = "Copied!";
+
+                    const tooltipTimeoutID = setTimeout(() => {
+                        tooltipTxt[i].textContent = "Copy";
+
+                        clearTimeout(tooltipTimeoutID);
+                    }, 1000);
+                });
+            });
+        }
+
+    </script>
+</body>
+
+</html>

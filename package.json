@@ -73,7 +73,7 @@
     "cpy": "^9.0.1",
     "cross-env": "^7.0.3",
     "depcheck": "^1.4.3",
-    "electron": "18.0.1",
+    "electron": "^18.0.1",
     "eslint": "^8.12.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-jest": "^25.7.0",
@@ -88,6 +88,7 @@
     "typescript": "~4.5.4"
   },
   "dependencies": {
+    "@ethersphere/bee-js": "^8.3.1",
     "@koa/router": "^10.1.1",
     "cross-zip": "^4.0.0",
     "electron-squirrel-startup": "^1.0.0",

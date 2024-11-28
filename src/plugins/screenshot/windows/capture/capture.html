@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <title>Initiate Screenshot</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+</body>
+
+<script>
+
+    const bodyElem = document.body;
+
+    let counter = 5;
+    let countdownPromiseInterval;
+    let isCounting = false;
+    let isHovering = false;
+
+    /**
+     *
+     * @param {*} opts
+     * @returns {HTMLElement}
+     */
+    function createElement(opts) {
+        const elem = document.createElement(opts.tagName);
+
+        if (opts.type) elem.type = opts.type;
+        if (opts.id) elem.id = opts.id;
+        if (opts.textContent) elem.textContent = opts.textContent;
+
+        opts.classes?.forEach((clsName) => elem.classList.add(clsName));
+
+        Object.entries(opts.attributes || {}).forEach(([k, v]) => {
+            elem.setAttribute(k, v);
+        });
+
+        return elem;
+    }
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const captureDiv = createElement({
+            tagName: "div",
+            id: "captureWindow",
+        });
+
+        const screenshotAudio = createElement({
+            tagName: "audio",
+            id: "screenshotAudio",
+        });
+        screenshotAudio.src = "../../audio/camera_shutter.m4a";
+
+        const h1 = createElement({
+            tagName: "h1",
+            textContent: '',
+        });
+
+        // prevent multiple clicks
+        if (isCounting) return;
+
+        isCounting = true;
+        h1.textContent = `⏲ ${counter}s`;
+
+        async function finishCountdown() {
+            try {
+                window.electron.hideCaptureWindow();
+                screenshotAudio.play();
+                await window.electron.takeScreenshot();
+            } catch (err) {
+                console.error("Error during screenshot capture:", err);
+            } finally {
+                // Reset state once finished
+                isCounting = false;
+            }
+        }
+
+        countdownPromiseInterval = setInterval(() => {
+            if (counter > 1) {
+                counter--;
+
+                if (!isHovering) {
+                    h1.textContent = `⏲ ${counter}s`;
+                }
+            } else {
+                clearInterval(countdownPromiseInterval);
+                finishCountdown()
+            }
+        }, 1000);
+
+
+        bodyElem.addEventListener("mouseover", () => {
+            if (isCounting && !isHovering) {
+                isHovering = true;
+                h1.textContent = 'Cancel'
+            }
+
+            cancelCapture()
+        });
+
+        bodyElem.addEventListener("mouseout", () => {
+            if (isCounting && isHovering) {
+                isHovering = false;
+                h1.textContent = `⏲ ${counter}s`;
+            }
+        });
+
+        window.addEventListener('beforeunload', () => {
+            if (countdownPromiseInterval) {
+                clearInterval(countdownPromiseInterval);
+            }
+        })
+
+        captureDiv.append(h1, screenshotAudio);
+        bodyElem.insertAdjacentElement("afterbegin", captureDiv);
+    });
+
+
+    function cancelCapture() {
+        const h1 = document.querySelector('h1');
+
+        if (h1.textContent === 'Cancel') {
+            bodyElem.onclick = function () {
+                window.close()
+            }
+        }
+    }
+
+</script>
+
+</html>
