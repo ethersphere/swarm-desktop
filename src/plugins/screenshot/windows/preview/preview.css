@@ -145,7 +145,7 @@ iframe {
 img {
     display: block;
     max-width: 90%;
-    max-height: 720px;
+    max-height: 75vh;
     object-fit: contain;
 }
 
