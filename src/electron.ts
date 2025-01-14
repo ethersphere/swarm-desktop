@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, nativeTheme, Tray } from 'electron'
 import opener from 'opener'
-import { openDashboardInBrowser, openUrl } from './browser'
+import { openDashboardInBrowser, openUrl, openPath } from './browser'
 import { runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
 import { createNotification } from './notify'
@@ -35,6 +35,10 @@ export function rebuildElectronTray() {
       type: 'submenu',
       label: 'Apps',
       submenu: [
+        {
+          label: 'FDP',
+          click: () => openPath('/fdp'),
+        },
         {
           label: 'Datafund App',
           click: () => openUrl('https://app.datafund.io'),
