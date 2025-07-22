@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.50.0](https://github.com/ethersphere/swarm-desktop/compare/v0.49.0...v0.50.0) (2025-07-22)
+
+
+### Features
+
+* update to bee 2.6.0 SPDV-509 ([#469](https://github.com/ethersphere/swarm-desktop/issues/469)) ([4855b4b](https://github.com/ethersphere/swarm-desktop/commit/4855b4b213b696572c5ed3be4bf6aac644bb3136))
+
 ## [0.49.0](https://github.com/ethersphere/swarm-desktop/compare/v0.48.0...v0.49.0) (2025-03-12)
 
 
