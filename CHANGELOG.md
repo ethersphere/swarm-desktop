@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.51.0](https://github.com/ethersphere/swarm-desktop/compare/v0.50.0...v0.51.0) (2025-07-23)
+
+
+### Features
+
+* force skip-postage-snapshot: true bee:2.6.0 vs. ultra light mode SPDV-520 ([#473](https://github.com/ethersphere/swarm-desktop/issues/473)) ([874df91](https://github.com/ethersphere/swarm-desktop/commit/874df91adbe012aa0d0308c9e8bdaebdaab12215))
+
 ## [0.50.0](https://github.com/ethersphere/swarm-desktop/compare/v0.49.0...v0.50.0) (2025-07-22)
 
 
