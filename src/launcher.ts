@@ -31,6 +31,7 @@ mainnet: true
 full-node: false
 cors-allowed-origins: '*'
 use-postage-snapshot: false
+skip-postage-snapshot: true
 resolver-options: https://cloudflare-eth.com
 data-dir: ${getPath('data-dir')}
 password: ${v4()}
