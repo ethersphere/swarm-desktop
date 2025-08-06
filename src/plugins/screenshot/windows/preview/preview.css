@@ -117,6 +117,10 @@ label {
     color: #666;
 }
 
+.modal-main p.danger {
+    color: red;
+}
+
 .modal-main .check-cnx {
     margin-top: 124px;
 }
