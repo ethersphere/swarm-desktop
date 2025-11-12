@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "http://localhost:5000/dashboard",
   "dependencies": {
-    "@ethersphere/bee-dashboard": "^0.32.0",
+    "@ethersphere/bee-dashboard": "^0.33.0",
     "@types/jest": "^28.1.3",
     "@types/node": "^18.0.0",
     "@types/react": "^18.0.14",
