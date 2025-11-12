@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.51.1](https://github.com/ethersphere/swarm-desktop/compare/v0.51.0...v0.51.1) (2025-11-12)
+
+
+### Bug Fixes
+
+* screenshot plugin encrypted link ([#478](https://github.com/ethersphere/swarm-desktop/issues/478)) ([af883ee](https://github.com/ethersphere/swarm-desktop/commit/af883eefdb5cbdc0e8e7d274b3b52db5af4f7c82))
+
 ## [0.51.0](https://github.com/ethersphere/swarm-desktop/compare/v0.50.0...v0.51.0) (2025-07-23)
 
 
