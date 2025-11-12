@@ -79,13 +79,13 @@
     "eslint-plugin-jest": "^25.7.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
-    "jest": "^27.5.1",
+    "jest": "^29.7.0",
     "open": "^9.1.0",
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
-    "ts-jest": "^27.1.4",
+    "ts-jest": "^29.1.0",
     "ts-node": "^10.7.0",
-    "typescript": "~4.5.4"
+    "typescript": "~5.3.3"
   },
   "dependencies": {
     "@ethersphere/bee-js": "^8.3.1",
