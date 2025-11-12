@@ -3,7 +3,8 @@
     ".": {
       "release-type": "node",
       "package-name": "swarm-desktop",
-      "draft": true
+      "draft": true,
+      "include-component-in-tag": false
     }
   }
 }
