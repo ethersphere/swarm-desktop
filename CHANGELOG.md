@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.52.1](https://github.com/ethersphere/swarm-desktop/compare/v0.52.0...v0.52.1) (2025-11-13)
+
+### Bug Fixes
+
+* update @ethersphere/bee-dashbord to version 0.33.1 - put back external wallet balance context
+
 ## [0.52.0](https://github.com/ethersphere/swarm-desktop/compare/v0.51.0...v0.52.0) (2025-11-12)
 
 ### Features
