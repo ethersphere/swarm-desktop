@@ -4,7 +4,14 @@
       "release-type": "node",
       "package-name": "swarm-desktop",
       "draft": true,
-      "include-component-in-tag": false
+      "include-component-in-tag": false,
+      "changelog-sections": [
+        {"type": "feat", "section": "Features"},
+        {"type": "fix", "section": "Bug Fixes"},
+        {"type": "perf", "section": "Performance Improvements"},
+        {"type": "docs", "section": "Documentation"},
+        {"type": "chore", "section": "Miscellaneous", "hidden": false}
+      ]
     }
   }
 }
