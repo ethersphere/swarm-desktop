@@ -34,6 +34,9 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          REACT_APP_FORMBRICKS_ENV_ID: ${{ secrets.REACT_APP_FORMBRICKS_ENV_ID }}
+          REACT_APP_FORMBRICKS_APP_URL: ${{ secrets.REACT_APP_FORMBRICKS_APP_URL }}
 
       - name: Copy dashboard lib
         run: cp ./ui/node_modules/@ethersphere/bee-dashboard/lib/* ./dist/ui/static/js
@@ -76,6 +79,9 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          REACT_APP_FORMBRICKS_ENV_ID: ${{ secrets.REACT_APP_FORMBRICKS_ENV_ID }}
+          REACT_APP_FORMBRICKS_APP_URL: ${{ secrets.REACT_APP_FORMBRICKS_APP_URL }}
 
       - name: Copy dashboard lib
         run: cp ./ui/node_modules/@ethersphere/bee-dashboard/lib/* ./dist/ui/static/js
@@ -134,6 +140,9 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          REACT_APP_FORMBRICKS_ENV_ID: ${{ secrets.REACT_APP_FORMBRICKS_ENV_ID }}
+          REACT_APP_FORMBRICKS_APP_URL: ${{ secrets.REACT_APP_FORMBRICKS_APP_URL }}
 
       - name: Copy dashboard lib
         run: cp ./ui/node_modules/@ethersphere/bee-dashboard/lib/* ./dist/ui/static/js

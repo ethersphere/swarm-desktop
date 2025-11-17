@@ -31,6 +31,9 @@ jobs:
 
       - name: Build assets
         run: npm run build
+        env:
+          REACT_APP_FORMBRICKS_ENV_ID: ${{ secrets.REACT_APP_FORMBRICKS_ENV_ID }}
+          REACT_APP_FORMBRICKS_APP_URL: ${{ secrets.REACT_APP_FORMBRICKS_APP_URL }}
 
       - name: Commit linting
         uses: wagoid/commitlint-github-action@v2
