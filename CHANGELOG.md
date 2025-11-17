@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.52.0](https://github.com/ethersphere/swarm-desktop/compare/v0.51.0...v0.52.0) (2025-11-17)
+## [0.52.3](https://github.com/ethersphere/swarm-desktop/compare/v0.51.0...v0.52.3) (2025-11-17)
 
 ### Features
 
