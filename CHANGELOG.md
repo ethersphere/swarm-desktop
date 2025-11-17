@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.51.1](https://github.com/ethersphere/swarm-desktop/compare/v0.51.0...v0.51.1) (2025-11-17)
+
+
+### Bug Fixes
+
+* bee-dashboard v0.33.2 ([#494](https://github.com/ethersphere/swarm-desktop/issues/494)) ([5f78ccb](https://github.com/ethersphere/swarm-desktop/commit/5f78ccbe0104d19007c5c98b2a9c83904f1b3b8d))
+* screenshot plugin encrypted link ([#478](https://github.com/ethersphere/swarm-desktop/issues/478)) ([af883ee](https://github.com/ethersphere/swarm-desktop/commit/af883eefdb5cbdc0e8e7d274b3b52db5af4f7c82))
+* update release version to 0.52.0 and enhance changelog sections ([#491](https://github.com/ethersphere/swarm-desktop/issues/491)) ([878d777](https://github.com/ethersphere/swarm-desktop/commit/878d7771aa1c1de742cf4839bb0aefc11c989615))
+
+
+### Miscellaneous
+
+* **master:** release 0.52.0 ([#475](https://github.com/ethersphere/swarm-desktop/issues/475)) ([64642a2](https://github.com/ethersphere/swarm-desktop/commit/64642a2132c7ab7560bf14baf5bd924a030cc7f9))
+* **master:** release 0.52.1 ([#492](https://github.com/ethersphere/swarm-desktop/issues/492)) ([00cbfdd](https://github.com/ethersphere/swarm-desktop/commit/00cbfddd383ed8036fe0037bcc21fccc92ab60d1))
+* **master:** release 0.52.2 ([#495](https://github.com/ethersphere/swarm-desktop/issues/495)) ([7c67eea](https://github.com/ethersphere/swarm-desktop/commit/7c67eead3ef2fc9eaf6d2f3ac22fbca61f46c0d4))
+* **master:** release swarm-desktop 0.41.0 ([#489](https://github.com/ethersphere/swarm-desktop/issues/489)) ([f2f1379](https://github.com/ethersphere/swarm-desktop/commit/f2f1379069713eafa61d5467ab1be2236a93ab63))
+* update @ethersphere/bee-dashboard to version 0.33.0 add file m… ([#487](https://github.com/ethersphere/swarm-desktop/issues/487)) ([df9ce8e](https://github.com/ethersphere/swarm-desktop/commit/df9ce8ed56921f7470d4495b29104b774a598383))
+
 ## [0.52.2](https://github.com/ethersphere/swarm-desktop/compare/v0.52.1...v0.52.2) (2025-11-14)
 
 ### Bug Fixes
