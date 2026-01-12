@@ -2,6 +2,7 @@
 # automatically bumps version and creates changelog as per conventional commits
 name: Release
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
