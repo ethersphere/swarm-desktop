@@ -16,6 +16,7 @@ jobs:
         id: release
         with:
           token: ${{ secrets.GHA_PAT_BASIC }}
+          release-type: node
       - name: Trigger assets builds on release
         if: ${{ steps.release.outputs.release_created }}
         uses: peter-evans/repository-dispatch@v2
