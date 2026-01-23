@@ -16,6 +16,7 @@ jobs:
         id: release
         with:
           token: ${{ secrets.GHA_PAT_BASIC }}
+          skip-github-pull-request: ${{ contains(github.event.head_commit.message, 'release-please--branches--master') }}
       - name: Trigger assets builds on release
         if: ${{ steps.release.outputs.release_created }}
         uses: peter-evans/repository-dispatch@v2
