@@ -1,16 +1,12 @@
 # Changelog
 
-## [0.52.3](https://github.com/ethersphere/swarm-desktop/compare/v0.51.0...v0.52.3) (2025-11-17)
+## [0.52.0](https://github.com/ethersphere/swarm-desktop/compare/v0.51.0...v0.52.0) (2026-01-26)
+
 
 ### Features
 
-* add file manager
+* add filemanager ([#506](https://github.com/ethersphere/swarm-desktop/issues/506)) ([d353c97](https://github.com/ethersphere/swarm-desktop/commit/d353c9744c1e78e7b6cc77797f114706a783b31d))
 
-### Bug Fixes
-
-* replace react boilerplate text (meinharrd) ([#482](https://github.com/ethersphere/swarm-desktop/issues/482)) ([f4f3e2b](https://github.com/ethersphere/swarm-desktop/pull/483/commits/eaea1337c5f9396508da23f17951bd64d69a2dbc))
-
-* screenshot plugin encrypted link ([#478](https://github.com/ethersphere/swarm-desktop/issues/478)) ([af883ee](https://github.com/ethersphere/swarm-desktop/commit/af883eefdb5cbdc0e8e7d274b3b52db5af4f7c82))
 
 ## [0.51.0](https://github.com/ethersphere/swarm-desktop/compare/v0.50.0...v0.51.0) (2025-07-23)
 
