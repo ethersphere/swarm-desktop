@@ -7,12 +7,8 @@ export function runMigrations() {
 
   const config = readConfigYaml()
 
-  if (
-    config['skip-postage-snapshot'] === undefined ||
-    config['skip-postage-snapshot'] === false ||
-    config['skip-postage-snapshot'] === 'false'
-  ) {
-    writeConfigYaml({ 'skip-postage-snapshot': true })
+  if (config['skip-postage-snapshot'] !== undefined) {
+    deleteKeyFromConfigYaml('skip-postage-snapshot')
   }
 
   if (config['storage-incentives-enable'] === undefined) {
