@@ -39,10 +39,12 @@ jobs:
           VITE_FORMBRICKS_APP_URL: ${{ secrets.VITE_FORMBRICKS_APP_URL }}
 
       - name: Commit linting
-        uses: wagoid/commitlint-github-action@v2
+        uses: wagoid/commitlint-github-action@v6
+        with:
+          configFile: commitlint.config.cjs
 
       - name: Code linting
-        run: pnpm run lint:check
+        run: pnpm run lint
         env:
           CI: true
 
