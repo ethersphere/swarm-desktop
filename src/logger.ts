@@ -1,10 +1,15 @@
 import type { Server } from 'http'
 import { readFile } from 'node:fs/promises'
 import requestStats from 'request-stats'
-import { Logform, Logger, createLogger, format, transports } from 'winston'
+import { createLogger, format, Logform, Logger, transports } from 'winston'
 
-import { SUPPORTED_LEVELS, logLevel } from './config'
+import { logLevel, SUPPORTED_LEVELS } from './config'
 import { getLogPath } from './path'
+
+export const DesktopLogFile = 'bee-desktop.log'
+export const BeeLogFile = 'bee.log'
+export const MaxLogFileRotateSize = '500K'
+export const MaxLogFileNumber = 10
 
 const supportedLevels: Record<string, number> = SUPPORTED_LEVELS.reduce(
   (acc, cur, idx) => ({ ...acc, [cur]: idx }),
@@ -23,7 +28,7 @@ export const logger: Logger = createLogger({
   transports: [
     new transports.Console({ level: logLevel, format: format.colorize({ all: true }) }),
     new transports.File({
-      filename: getLogPath('bee-desktop.log'),
+      filename: getLogPath(DesktopLogFile),
       maxsize: 1_000_000,
       maxFiles: 10,
       tailable: true,
@@ -71,9 +76,9 @@ export function subscribeLogServerRequests(server: Server): void {
 }
 
 export async function readBeeDesktopLogs(): Promise<string> {
-  return readFile(getLogPath('bee-desktop.log'), { encoding: 'utf8' })
+  return readFile(getLogPath(DesktopLogFile), { encoding: 'utf8' })
 }
 
 export async function readBeeLogs(): Promise<string> {
-  return readFile(getLogPath('bee.current.log'), { encoding: 'utf8' })
+  return readFile(getLogPath(BeeLogFile), { encoding: 'utf8' })
 }

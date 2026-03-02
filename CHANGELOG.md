@@ -1,13 +1,5 @@
 # Changelog
 
-## [0.52.1](https://github.com/ethersphere/swarm-desktop/compare/v0.52.0...v0.52.1) (2026-02-18)
-
-
-### Bug Fixes
-
-* update @ethersphere/bee-dashboard to version 0.33.5 ([#523](https://github.com/ethersphere/swarm-desktop/issues/523)) ([33c82f8](https://github.com/ethersphere/swarm-desktop/commit/33c82f8212aea91338d4efbb006aacd167d6660b))
-* upgrade to bee 2.7.0 ([#520](https://github.com/ethersphere/swarm-desktop/issues/520)) ([e7d1a2d](https://github.com/ethersphere/swarm-desktop/commit/e7d1a2d542cd92eedeef03faa66d6b53bcb34760))
-
 ## [0.52.0](https://github.com/ethersphere/swarm-desktop/compare/v0.51.0...v0.52.0) (2026-01-26)
 
 

@@ -16,6 +16,10 @@ export function getLogPath(logFileName: string): string {
   return join(paths.log, logFileName)
 }
 
+export function getDefaultLogPath(): string {
+  return getLogPath('')
+}
+
 export function getAssetPath(path: string): string {
   // This file is built into /dist/desktop/src/path.js
   return join(__dirname, '..', '..', '..', 'assets', path)

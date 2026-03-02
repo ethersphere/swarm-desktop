@@ -5,10 +5,11 @@
 # js
 node_modules
 
-# electron
-dist
-build
-out
+# electron and vite
+**/dist/
+**/build/
+audit.json
+out/
 
 # bee
 bee

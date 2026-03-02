@@ -1,5 +1,5 @@
+import { Wallet } from '@ethereumjs/wallet'
 import Router from '@koa/router'
-import Wallet from 'ethereumjs-wallet'
 import { readFile } from 'fs/promises'
 import Koa from 'koa'
 import koaBodyparser from 'koa-bodyparser'
@@ -9,9 +9,10 @@ import fetch from 'node-fetch'
 import * as path from 'path'
 
 import PACKAGE_JSON from '../package.json'
+
 import { getApiKey } from './api-key'
 import { sendBzzTransaction, sendNativeTransaction } from './blockchain'
-import { readConfigYaml, readWalletPasswordOrThrow, writeConfigYaml } from './config'
+import { BEE_NODE_URL, dataDirFilePath, readConfigYaml, readWalletPasswordOrThrow, writeConfigYaml } from './config'
 import { runLauncher } from './launcher'
 import { BeeManager } from './lifecycle'
 import { logger, readBeeDesktopLogs, readBeeLogs, subscribeLogServerRequests } from './logger'
@@ -21,8 +22,14 @@ import { getStatus } from './status'
 import { swap } from './swap'
 
 const UI_DIST = path.join(__dirname, '..', '..', 'ui')
-
 const AUTO_UPDATE_ENABLED_PLATFORMS = ['darwin', 'win32']
+const TOKEN_SERVICE_URL = 'https://tokenservice.ethswarm.org/token_price'
+const PEERS_ENDPOINT = '/peers'
+
+interface PeersResponse {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  peers?: any[]
+}
 
 export function runServer() {
   const app = new Koa()
@@ -54,7 +61,7 @@ export function runServer() {
   })
   router.get('/price', async context => {
     try {
-      const response = await fetch('https://tokenservice.ethswarm.org/token_price')
+      const response = await fetch(TOKEN_SERVICE_URL)
       context.body = await response.text()
     } catch (error) {
       logger.error(error)
@@ -79,10 +86,10 @@ export function runServer() {
   router.get('/status', context => {
     context.body = getStatus()
   })
-  router.get('/peers', async context => {
+  router.get(PEERS_ENDPOINT, async context => {
     try {
-      const response = await fetch('http://127.0.0.1:1633/peers')
-      const { peers } = await response.json()
+      const response = await fetch(`${BEE_NODE_URL}${PEERS_ENDPOINT}`)
+      const { peers } = (await response.json()) as PeersResponse
 
       context.body = { connections: peers ? peers.length || 0 : 0 }
     } catch (error) {
@@ -150,7 +157,7 @@ export function runServer() {
 }
 
 async function getPrivateKey(): Promise<string> {
-  const v3 = await readFile(getPath(path.join('data-dir', 'keys', 'swarm.key')), 'utf-8')
+  const v3 = await readFile(getPath(path.join(dataDirFilePath, 'keys', 'swarm.key')), 'utf-8')
   const wallet = await Wallet.fromV3(v3, readWalletPasswordOrThrow())
   const privateKeyString = wallet.getPrivateKeyString()
 

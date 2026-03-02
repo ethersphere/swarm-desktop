@@ -1,7 +1,9 @@
 import { app, dialog } from 'electron'
-import updater from 'update-electron-app'
+import squirrelInstallingExecution from 'electron-squirrel-startup'
 
 import PACKAGE_JSON from '../package.json'
+
+import { runScreenshot } from './plugins/screenshot'
 import { ensureApiKey } from './api-key'
 import { openDashboardInBrowser } from './browser'
 import { getDesktopVersionFromFile, writeDesktopVersionFile } from './config'
@@ -9,17 +11,11 @@ import { runDownloader } from './downloader'
 import { runElectronTray } from './electron'
 import { initializeBee, runKeepAliveLoop, runLauncher } from './launcher'
 import { logger } from './logger'
+import { runMigrations } from './migration'
 import { findFreePort } from './port'
 import { runServer } from './server'
-import { getStatus } from './status'
-
-// TODO: Add types definition
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import squirrelInstallingExecution from 'electron-squirrel-startup'
-import { runMigrations } from './migration'
-import { runScreenshot } from './plugins/screenshot'
 import { initSplash, Splash } from './splash'
+import { getStatus } from './status'
 
 runMigrations()
 
@@ -47,9 +43,28 @@ async function main() {
 
   splash = await initSplash()
 
-  // Auto updater
-  // @ts-ignore: https://github.com/electron/update-electron-app/pull/96
-  updater({ logger: { log: (...args) => logger.info(...args) } })
+  // Auto updater, latest version fails during import
+  try {
+    const updateModule = await import('update-electron-app')
+    const updater = updateModule.default || updateModule
+
+    if (typeof updater === 'function') {
+      updater({
+        logger: {
+          log: (message: string) => logger.info(message),
+          info: (message: string) => logger.info(message),
+          error: (message: string) => logger.error(message),
+          warn: (message: string) => logger.warn(message),
+        },
+      })
+
+      logger.info('Initialized auto-updater.')
+    } else {
+      logger.warn('Cannot initialize auto-updater.')
+    }
+  } catch (error) {
+    logger.error('Failed to initialize auto-updater:', error)
+  }
 
   // check if the assets and the bee binary matches the desktop version
   const desktopFileVersion = getDesktopVersionFromFile()

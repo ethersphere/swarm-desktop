@@ -22,17 +22,21 @@ jobs:
         with:
           fetch-depth: 1
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          cache: 'npm'
+          cache: 'pnpm'
           node-version: ${{ matrix.node-version }}
 
-      - name: Install npm deps
-        run: npm ci && cd ./ui && npm ci
+      - name: Install pnpm deps
+        run: pnpm install --frozen-lockfile && cd ./ui && pnpm install --frozen-lockfile
 
       - name: Run unit and integration tests for node
-        run: npm run test:unit -- --detectOpenHandles
+        run: pnpm run test:unit -- --detectOpenHandles
 
       - name: Debug workflow if failed
         if: failure()

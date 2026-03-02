@@ -1,12 +1,14 @@
 import { spawn } from 'child_process'
-import * as FileStreamRotator from 'file-stream-rotator'
 import { mkdirSync, writeFileSync } from 'fs'
 import { platform } from 'os'
+import * as RotatingFileStream from 'rotating-file-stream'
 import { v4 } from 'uuid'
+
+import { configFile, dataDirFilePath } from './config'
 import { rebuildElectronTray } from './electron'
 import { BeeManager } from './lifecycle'
-import { logger } from './logger'
-import { checkPath, getLogPath, getPath } from './path'
+import { BeeLogFile, logger, MaxLogFileNumber, MaxLogFileRotateSize } from './logger'
+import { checkPath, getDefaultLogPath, getPath } from './path'
 
 export function runKeepAliveLoop() {
   setInterval(() => {
@@ -33,18 +35,18 @@ cors-allowed-origins: '*'
 use-postage-snapshot: false
 skip-postage-snapshot: true
 resolver-options: https://cloudflare-eth.com
-data-dir: ${getPath('data-dir')}
+data-dir: ${getPath(dataDirFilePath)}
 password: ${v4()}
 storage-incentives-enable: false`
 }
 
 export async function initializeBee() {
-  if (!checkPath('config.yaml')) {
-    logger.info('Creating new Bee config.yaml')
-    writeFileSync(getPath('config.yaml'), createConfiguration())
+  if (!checkPath(configFile)) {
+    logger.info(`Creating new Bee ${configFile}`)
+    writeFileSync(getPath(configFile), createConfiguration())
   }
 
-  const configPath = getPath('config.yaml')
+  const configPath = getPath(configFile)
   logger.debug(`Executing process: bee init --config=${configPath}`)
 
   return runProcess(getPath(getBeeExecutable()), ['init', `--config=${configPath}`], new AbortController())
@@ -53,8 +55,8 @@ export async function initializeBee() {
 export async function runLauncher() {
   const abortController = new AbortController()
 
-  if (!checkPath('data-dir')) {
-    mkdirSync(getPath('data-dir'))
+  if (!checkPath(dataDirFilePath)) {
+    mkdirSync(getPath(dataDirFilePath))
   }
 
   BeeManager.setUserIntention(true)
@@ -74,7 +76,7 @@ async function launchBee(abortController?: AbortController) {
   if (!abortController) {
     abortController = new AbortController()
   }
-  const configPath = getPath('config.yaml')
+  const configPath = getPath(configFile)
 
   logger.debug(`Executing process: bee start --config=${configPath}`)
 
@@ -90,14 +92,10 @@ async function runProcess(command: string, args: string[], abortController: Abor
     subprocess.stderr.pipe(process.stderr)
 
     // Also store the logs to log dir
-    const fileStream = FileStreamRotator.getStream({
-      filename: getLogPath('bee'),
-      verbose: false,
-      size: '500k',
-      max_logs: '10',
-      extension: '.log',
-      create_symlink: true,
-      symlink_name: 'bee.current.log',
+    const fileStream = RotatingFileStream.createStream(BeeLogFile, {
+      size: MaxLogFileRotateSize,
+      maxFiles: MaxLogFileNumber,
+      path: getDefaultLogPath(),
     })
     fileStream.on('error', err => logger.error(err))
 

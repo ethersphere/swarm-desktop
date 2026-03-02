@@ -1,4 +1,5 @@
 import { shell } from 'electron'
+
 import { getApiKey } from './api-key'
 import { port } from './port'
 

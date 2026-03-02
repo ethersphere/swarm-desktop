@@ -1,4 +1,5 @@
 import { dialog, screen } from 'electron'
+
 import { logger } from '../../..//logger'
 
 export type CreateElementArg<T extends keyof HTMLElementTagNameMap> = {

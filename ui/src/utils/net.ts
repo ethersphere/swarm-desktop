@@ -9,7 +9,7 @@ export async function postJson(url: string, data?: Record<string, unknown>) {
 type RequestResponseTypes = 'json' | 'string'
 
 export function getHost() {
-  return process.env.REACT_APP_BEE_DESKTOP_URL || `${window.location.protocol}//${window.location.host}`
+  return import.meta.env.VITE_BEE_DESKTOP_URL || `${window.location.protocol}//${window.location.host}`
 }
 
 export async function sendRequest<T = void>(

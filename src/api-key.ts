@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync } from 'fs'
 import { v4 } from 'uuid'
+
 import { checkPath, getPath } from './path'
 
 const API_KEY_FILE = 'api-key.txt'

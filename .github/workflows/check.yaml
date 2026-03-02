@@ -20,31 +20,34 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          cache: npm
+          cache: pnpm
           node-version: ${{ matrix.node-version }}
 
-      - name: Install npm deps
-        run: npm ci && cd ./ui && npm ci
+      - name: Install pnpm deps
+        run: pnpm install --frozen-lockfile && cd ./ui && pnpm install --frozen-lockfile
 
       - name: Build assets
-        run: npm run build
+        run: pnpm run build
         env:
-          REACT_APP_FORMBRICKS_ENV_ID: ${{ secrets.REACT_APP_FORMBRICKS_ENV_ID }}
-          REACT_APP_FORMBRICKS_APP_URL: ${{ secrets.REACT_APP_FORMBRICKS_APP_URL }}
+          VITE_FORMBRICKS_ENV_ID: ${{ secrets.VITE_FORMBRICKS_ENV_ID }}
+          VITE_FORMBRICKS_APP_URL: ${{ secrets.VITE_FORMBRICKS_APP_URL }}
 
       - name: Commit linting
         uses: wagoid/commitlint-github-action@v2
 
       - name: Code linting
-        run: npm run lint:check
+        run: pnpm run lint:check
         env:
           CI: true
 
       - name: Dependency check
-        run: npm run depcheck
+        run: pnpm run depcheck
 
       - name: Check typings
-        run: npm run check:types
+        run: pnpm run check:types

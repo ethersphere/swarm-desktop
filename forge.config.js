@@ -3,12 +3,12 @@ const fs = require('fs')
 
 // Taken over from https://github.com/electron/fiddle/blob/main/forge.config.js
 
-if (process.env['WINDOWS_CODESIGN_FILE']) {
+if (process.env.WINDOWS_CODESIGN_FILE) {
   const certPath = path.join(__dirname, 'win-certificate.pfx')
   const certExists = fs.existsSync(certPath)
 
   if (certExists) {
-    process.env['WINDOWS_CODESIGN_FILE'] = certPath
+    process.env.WINDOWS_CODESIGN_FILE = certPath
   }
 }
 
@@ -40,8 +40,8 @@ const config = {
         iconUrl: iconPath + '.ico',
         setupIcon: iconPath + '.ico',
         loadingGif: path.resolve(__dirname, 'assets', 'windows-install.gif'),
-        certificateFile: process.env['WINDOWS_CODESIGN_FILE'],
-        certificatePassword: process.env['WINDOWS_CODESIGN_PASSWORD'],
+        certificateFile: process.env.WINDOWS_CODESIGN_FILE,
+        certificatePassword: process.env.WINDOWS_CODESIGN_PASSWORD,
       },
     },
     {
@@ -95,11 +95,13 @@ function notarizeMaybe() {
 
   if (!process.env.CI) {
     console.log(`Not in CI, skipping notarization`)
+
     return
   }
 
   if (!process.env.APPLE_ID || !process.env.APPLE_ID_PASSWORD) {
     console.warn('Should be notarizing, but environment variables APPLE_ID or APPLE_ID_PASSWORD are missing!')
+
     return
   }
 
