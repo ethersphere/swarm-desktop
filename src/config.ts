@@ -5,7 +5,7 @@ import PACKAGE_JSON from '../package.json'
 
 import { getPath } from './path'
 
-export const BEE_VERSION = 'v2.7.0'
+export const BEE_VERSION = 'v2.7.1'
 export const DEFAULT_ELECTRON_API_PORT = 3054
 export const MAX_ELECTRON_API_PORT = 5000
 export const BEE_NODE_URL = 'http://127.0.0.1:1633'
