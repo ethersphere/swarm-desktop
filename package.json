@@ -97,7 +97,7 @@
   "dependencies": {
     "@ethereumjs/util": "^10.1.1",
     "@ethereumjs/wallet": "^10.0.0",
-    "@ethersphere/bee-js": "^10.4.0",
+    "@ethersphere/bee-js": "^11.1.1",
     "@koa/router": "^15.3.0",
     "cross-zip": "^4.0.1",
     "electron-squirrel-startup": "^1.0.1",
