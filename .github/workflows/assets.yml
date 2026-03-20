@@ -10,11 +10,14 @@ jobs:
   publish-macos-m1:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
         with:
-          cache: 'npm'
-          node-version: 18
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          cache: 'pnpm'
+          node-version: 24
 
       - uses: actions/setup-python@v4
         with:
@@ -24,7 +27,7 @@ jobs:
         run: python3 -m pip install setuptools
 
       - name: Install all dependencies
-        run: npm ci && cd ./ui && npm ci
+        run: pnpm install --frozen-lockfile && cd ./ui && pnpm install --frozen-lockfile
 
       - name: Set MacOS signing certs
         run: .github/tools/add-macos-cert.sh
@@ -33,10 +36,10 @@ jobs:
           MACOS_CERT_PASSWORD: ${{ secrets.MACOS_CERT_PASSWORD }}
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
         env:
-          REACT_APP_FORMBRICKS_ENV_ID: ${{ secrets.REACT_APP_FORMBRICKS_ENV_ID }}
-          REACT_APP_FORMBRICKS_APP_URL: ${{ secrets.REACT_APP_FORMBRICKS_APP_URL }}
+          VITE_FORMBRICKS_ENV_ID: ${{ secrets.VITE_FORMBRICKS_ENV_ID }}
+          VITE_FORMBRICKS_APP_URL: ${{ secrets.VITE_FORMBRICKS_APP_URL }}
 
       - name: Copy dashboard lib
         run: cp ./ui/node_modules/@ethersphere/bee-dashboard/lib/* ./dist/ui/static/js
@@ -46,7 +49,7 @@ jobs:
         run: npx rimraf ./ui
 
       - name: Publish MacOS arm64
-        run: npm run publish:mac:arm64
+        run: pnpm run publish:mac:arm64
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
@@ -55,11 +58,11 @@ jobs:
   publish-macos-x64:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          cache: 'npm'
-          node-version: 18
+          cache: 'pnpm'
+          node-version: 24
 
       - uses: actions/setup-python@v4
         with:
@@ -69,7 +72,7 @@ jobs:
         run: python3 -m pip install setuptools
 
       - name: Install all dependencies
-        run: npm ci && cd ./ui && npm ci
+        run: pnpm install --frozen-lockfile && cd ./ui && pnpm install --frozen-lockfile
 
       - name: Set MacOS signing certs
         run: .github/tools/add-macos-cert.sh
@@ -78,10 +81,10 @@ jobs:
           MACOS_CERT_PASSWORD: ${{ secrets.MACOS_CERT_PASSWORD }}
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
         env:
-          REACT_APP_FORMBRICKS_ENV_ID: ${{ secrets.REACT_APP_FORMBRICKS_ENV_ID }}
-          REACT_APP_FORMBRICKS_APP_URL: ${{ secrets.REACT_APP_FORMBRICKS_APP_URL }}
+          VITE_FORMBRICKS_ENV_ID: ${{ secrets.VITE_FORMBRICKS_ENV_ID }}
+          VITE_FORMBRICKS_APP_URL: ${{ secrets.VITE_FORMBRICKS_APP_URL }}
 
       - name: Copy dashboard lib
         run: cp ./ui/node_modules/@ethersphere/bee-dashboard/lib/* ./dist/ui/static/js
@@ -91,7 +94,7 @@ jobs:
         run: npx rimraf ./ui
 
       - name: Publish MacOS x64
-        run: npm run publish:mac:x64
+        run: pnpm run publish:mac:x64
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
@@ -104,11 +107,11 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          cache: 'npm'
-          node-version: 18
+          cache: 'pnpm'
+          node-version: 24
 
       - uses: actions/setup-python@v4
         if: matrix.os == 'macos-latest'
@@ -120,7 +123,7 @@ jobs:
         run: python3 -m pip install setuptools
 
       - name: Install dependencies
-        run: npm ci && cd ./ui && npm ci
+        run: pnpm install --frozen-lockfile && cd ./ui && pnpm install --frozen-lockfile
 
       - name: Set MacOS signing certs
         if: matrix.os == 'macos-latest'
@@ -139,10 +142,10 @@ jobs:
           encodedString: ${{ secrets.WINDOWS_CODESIGN_P12 }}
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
         env:
-          REACT_APP_FORMBRICKS_ENV_ID: ${{ secrets.REACT_APP_FORMBRICKS_ENV_ID }}
-          REACT_APP_FORMBRICKS_APP_URL: ${{ secrets.REACT_APP_FORMBRICKS_APP_URL }}
+          VITE_FORMBRICKS_ENV_ID: ${{ secrets.VITE_FORMBRICKS_ENV_ID }}
+          VITE_FORMBRICKS_APP_URL: ${{ secrets.VITE_FORMBRICKS_APP_URL }}
 
       - name: Copy dashboard lib
         run: cp ./ui/node_modules/@ethersphere/bee-dashboard/lib/* ./dist/ui/static/js
@@ -158,10 +161,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WINDOWS_CODESIGN_FILE: ${{ steps.write_file.outputs.filePath }}
           WINDOWS_CODESIGN_PASSWORD: ${{ secrets.WINDOWS_CODESIGN_PASSWORD }}
-        run: npm run publish
+        run: pnpm run publish
 
       - name: Publish Linux arm64
         if: matrix.os == 'ubuntu-latest'
-        run: npm run publish:linux:arm64
+        run: pnpm run publish:linux:arm64
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

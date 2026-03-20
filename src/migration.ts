@@ -35,8 +35,8 @@ export function runMigrations() {
     deleteKeyFromConfigYaml('swap-endpoint')
   }
 
-  if (config['use-postage-snapshot'] !== false && config['use-postage-snapshot'] !== 'false') {
-    writeConfigYaml({ 'use-postage-snapshot': false })
+  if (config['use-postage-snapshot'] !== undefined) {
+    deleteKeyFromConfigYaml('use-postage-snapshot')
   }
 
   if (config['admin-password'] !== undefined) {

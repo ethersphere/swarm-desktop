@@ -1,11 +1,10 @@
 import BeeDashboard from '@ethersphere/bee-dashboard'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 
-const container = document.getElementById('root')
-ReactDOM.render(
+const root = createRoot(document.getElementById('root') as HTMLElement)
+root.render(
   <React.StrictMode>
     <BeeDashboard isDesktop={true} />
   </React.StrictMode>,
-  container,
 )

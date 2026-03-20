@@ -1,13 +1,31 @@
 import { Bee } from '@ethersphere/bee-js'
-// eslint-disable-next-line unused-imports/no-unused-imports
-import { BEE_NODE_URL, getAllPostageBatch, getBeeInstance, handleFileUpload, nodeIsConnected } from '../bee-api'
+
+import { BEE_NODE_URL } from '../src/config'
+import {
+  getBeeInstance, // eslint-disable-line @typescript-eslint/no-unused-vars
+  getPostageBatches,
+  handleFileUpload,
+  nodeIsConnected,
+} from '../src/plugins/screenshot/utils/bee-api'
+
+jest.mock(
+  'env-paths',
+  () => () =>
+    jest.fn().mockImplementation(() => ({
+      data: 'test/data',
+      config: 'test/data',
+      cache: 'test/data',
+      log: 'test/data',
+      temp: 'test/data',
+    })),
+)
 
 jest.mock('@ethersphere/bee-js', () => {
   return {
-    Bee: jest.fn().mockImplementation(url => {
+    Bee: jest.fn().mockImplementation(_ => {
       return {
         isConnected: jest.fn(),
-        getAllPostageBatch: jest.fn(),
+        getPostageBatches: jest.fn(),
         uploadFile: jest.fn(),
       }
     }),
@@ -19,6 +37,7 @@ describe('Bee utility functions', () => {
 
   beforeEach(() => {
     mockBeeInstance = new Bee(BEE_NODE_URL) as jest.Mocked<Bee>
+    // eslint-disable-next-line no-import-assign
     ;(getBeeInstance as jest.Mock) = jest.fn(() => mockBeeInstance)
   })
 
@@ -39,27 +58,28 @@ describe('Bee utility functions', () => {
     })
   })
 
-  describe('getAllPostageBatch', () => {
+  describe('getPostageBatches', () => {
     it('should return only usable postage batches', async () => {
-      mockBeeInstance.getAllPostageBatch.mockResolvedValue([
+      mockBeeInstance.getPostageBatches.mockResolvedValue([
         { batchID: 'batch1', usable: true },
         { batchID: 'batch2', usable: false },
         { batchID: 'batch3', usable: true },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ] as any)
 
-      const result = await getAllPostageBatch()
+      const result = await getPostageBatches()
 
       expect(result).toEqual([
         { batchID: 'batch1', usable: true },
         { batchID: 'batch3', usable: true },
       ])
-      expect(mockBeeInstance.getAllPostageBatch).toHaveBeenCalled()
+      expect(mockBeeInstance.getPostageBatches).toHaveBeenCalled()
     })
 
-    it('should throw an error if getAllPostageBatch fails', async () => {
-      mockBeeInstance.getAllPostageBatch.mockRejectedValue(new Error('Failed to fetch batches'))
+    it('should throw an error if getPostageBatches fails', async () => {
+      mockBeeInstance.getPostageBatches.mockRejectedValue(new Error('Failed to fetch batches'))
 
-      await expect(getAllPostageBatch()).rejects.toThrow('Failed to fetch batches')
+      await expect(getPostageBatches()).rejects.toThrow('Failed to fetch batches')
     })
   })
 
@@ -70,6 +90,7 @@ describe('Bee utility functions', () => {
         tagUid: 12,
         historyAddress: 'string',
         cid: () => 'string',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any
 
       const args = {

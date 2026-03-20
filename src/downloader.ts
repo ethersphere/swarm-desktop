@@ -5,6 +5,8 @@ import fetch from 'node-fetch'
 import { arch, platform } from 'os'
 import { parse } from 'path'
 import { promisify } from 'util'
+
+import { BEE_VERSION } from './config'
 import { logger } from './logger'
 import { getPath, paths } from './path'
 
@@ -41,7 +43,7 @@ export async function runDownloader(force = false): Promise<void> {
   }
   await ensureDir(paths.data)
   await ensureAsset(
-    `https://github.com/ethersphere/bee/releases/download/v2.7.0/bee-${platformString}-${archString}${suffixString}`,
+    `https://github.com/ethersphere/bee/releases/download/${BEE_VERSION}/bee-${platformString}-${archString}${suffixString}`,
     `bee${suffixString}`,
     { chmod: process.platform !== 'win32', force },
   )

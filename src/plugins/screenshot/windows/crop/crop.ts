@@ -1,5 +1,6 @@
-import { BrowserWindow, app } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import path from 'node:path'
+
 import { logger } from '../../../../logger'
 import { getScreenSize } from '../../utils'
 import { previewWindow } from '../preview/preview'

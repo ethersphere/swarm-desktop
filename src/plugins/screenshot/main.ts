@@ -1,11 +1,13 @@
 import { desktopCapturer, dialog, ipcMain, nativeImage } from 'electron'
+
 import { logger } from '../../logger'
-import { getScreenSize } from './utils'
-import { getAllPostageBatch, handleFileUpload, nodeIsConnected } from './utils/bee-api'
+
+import { getPostageBatches, handleFileUpload, nodeIsConnected } from './utils/bee-api'
 import { captureWindow } from './windows/capture/capture'
 import { createCropWindow } from './windows/crop/crop'
 import type { CropImageArgs } from './windows/crop/crop-preload'
 import { createPreviewWindow, previewWindow } from './windows/preview/preview'
+import { getScreenSize } from './utils'
 
 function takeScreenshotImplementation() {
   let imgDataURL: string
@@ -61,13 +63,13 @@ function takeScreenshotImplementation() {
   })
 
   ipcMain.handle('get-all-postage-batch', async () => {
-    return await getAllPostageBatch()
+    return await getPostageBatches()
   })
 
   ipcMain.on('create-postage-stamp', evnt => {
     const getAllPostageBatchIntervalID = setInterval(async () => {
       try {
-        const ps = await getAllPostageBatch()
+        const ps = await getPostageBatches()
 
         if (ps.length) {
           clearInterval(getAllPostageBatchIntervalID)
@@ -97,7 +99,7 @@ function takeScreenshotImplementation() {
       delete args.imgDataURL
 
       const result = await handleFileUpload(args)
-      delete result.cid
+      delete result.tagUid
 
       if (result.reference) {
         e.sender.send('upload-result', JSON.stringify({ ...result }))

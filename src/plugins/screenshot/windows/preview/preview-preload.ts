@@ -1,5 +1,6 @@
 import { PostageBatch } from '@ethersphere/bee-js'
 import { contextBridge, ipcRenderer } from 'electron'
+
 import type { OnImageDataURL } from '../../interface'
 
 contextBridge.exposeInMainWorld('electron', {
@@ -13,6 +14,7 @@ contextBridge.exposeInMainWorld('electron', {
   createPostageStamp: () => ipcRenderer.send('create-postage-stamp'),
   updatePostageStampState: (cb: (ps: PostageBatch[]) => void) =>
     ipcRenderer.on('update-postage-stamp-state', (_, ps) => cb(ps)),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   uploadToSwarm: async (obj: any) => ipcRenderer.invoke('upload-to-swarm', obj),
   onUploadResult: (cb: (resObj: string) => void) => ipcRenderer.on('upload-result', (_, resObj) => cb(resObj)),
 })

@@ -1,14 +1,22 @@
 {
   "ignores": [
+    "@commitlint/*",
     "@electron-forge/*",
+    "@eslint/*",
+    "@ethereumjs/*",
     "@types/*",
-    "@kayahr/jest-electron-runner",
+    "@typescript-eslint/*",
+    "eslint*",
+    "typescript",
     "electron-forge-maker-zip-all",
     "ts-jest",
     "ts-node",
     "concurrently",
     "cross-env",
     "cpy",
-    "open"
+    "open",
+    "rimraf",
+    "prettier",
+    "husky"
   ]
 }

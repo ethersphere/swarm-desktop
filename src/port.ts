@@ -1,15 +1,15 @@
 import net from 'net'
+
+import { DEFAULT_ELECTRON_API_PORT, MAX_ELECTRON_API_PORT } from './config'
 import { logger } from './logger'
 
 export const port = {
   value: -1,
 }
 
-const DEFAULT_PORT = 3054
-
 export async function findFreePort() {
   logger.info('Finding free port...')
-  for (let i = DEFAULT_PORT; i < 5000; i++) {
+  for (let i = DEFAULT_ELECTRON_API_PORT; i < MAX_ELECTRON_API_PORT; i++) {
     const free = await testPort(i)
 
     if (free) {
