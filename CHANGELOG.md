@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.52.2](https://github.com/ethersphere/swarm-desktop/compare/v0.52.1...v0.52.2) (2026-03-23)
+
+
+### Bug Fixes
+
+* exclude dev files from package, add nvmrc, fix missing dashboard CSS ([#531](https://github.com/ethersphere/swarm-desktop/issues/531)) ([f88c243](https://github.com/ethersphere/swarm-desktop/commit/f88c243cab6d3f30cbafe709a48c233f46a534cb))
+* upgrade packages and bee-dashboard bug fixes ([#527](https://github.com/ethersphere/swarm-desktop/issues/527)) ([c577f41](https://github.com/ethersphere/swarm-desktop/commit/c577f4137d636cdd983a2ee33e71d370bf1ca446))
+
+
+### Miscellaneous
+
+* apply new eslint, commitlint rules ([c577f41](https://github.com/ethersphere/swarm-desktop/commit/c577f4137d636cdd983a2ee33e71d370bf1ca446))
+* migrate from npm to pnpm ([c577f41](https://github.com/ethersphere/swarm-desktop/commit/c577f4137d636cdd983a2ee33e71d370bf1ca446))
+* migrate from webpack to vite ([c577f41](https://github.com/ethersphere/swarm-desktop/commit/c577f4137d636cdd983a2ee33e71d370bf1ca446))
+* update all dependencies like react, ethers etc. ([c577f41](https://github.com/ethersphere/swarm-desktop/commit/c577f4137d636cdd983a2ee33e71d370bf1ca446))
+* update ci worklfow steps ([c577f41](https://github.com/ethersphere/swarm-desktop/commit/c577f4137d636cdd983a2ee33e71d370bf1ca446))
+* upgrade bee to v2.7.1 ([c577f41](https://github.com/ethersphere/swarm-desktop/commit/c577f4137d636cdd983a2ee33e71d370bf1ca446))
+* upgrade bee-dashboard to v0.34.0 ([c577f41](https://github.com/ethersphere/swarm-desktop/commit/c577f4137d636cdd983a2ee33e71d370bf1ca446))
+
 ## [0.52.1](https://github.com/ethersphere/swarm-desktop/compare/v0.52.0...v0.52.1) (2026-02-18)
 
 
