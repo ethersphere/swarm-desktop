@@ -14,6 +14,11 @@ if (process.env.WINDOWS_CODESIGN_FILE) {
 
 const iconPath = path.resolve(__dirname, 'assets', 'icon')
 
+const { devDependencies = {}, dependencies = {} } = JSON.parse(
+  fs.readFileSync(path.join(__dirname, 'package.json'), 'utf8'),
+)
+const devOnlyDeps = new Set(Object.keys(devDependencies).filter(pkg => !(pkg in dependencies)))
+
 const config = {
   packagerConfig: {
     icon: iconPath,
@@ -21,6 +26,45 @@ const config = {
     name: 'Swarm Desktop',
     appBundleId: 'org.ethswarm.swarmDesktop',
     asar: true,
+    ignore: [
+      // UI source + its node_modules — compiled output is already in dist/ui
+      /^\/ui\//,
+      // TypeScript source — compiled output is in dist/
+      /^\/src\//,
+      // Test files
+      /^\/test\//,
+      // Dev config and tooling files
+      /^\/.github/,
+      /^\/.husky/,
+      /^\/.depcheckrc\.json$/,
+      /^\/.editorconfig$/,
+      /^\/.gitattributes$/,
+      /^\/.gitignore$/,
+      /^\/.nvmrc$/,
+      /^\/.prettierignore$/,
+      /^\/.prettierrc$/,
+      /^\/.release-please-manifest\.json$/,
+      /^\/release-please-config\.json$/,
+      /^\/commitlint\.config\.cjs$/,
+      /^\/devkit\.mjs$/,
+      /^\/eslint-compat\.cjs$/,
+      /^\/eslint\.config\.mjs$/,
+      /^\/forge\.config\.js$/,
+      /^\/jest\.config\.ts$/,
+      /^\/tsconfig.*\.json$/,
+      /^\/CHANGELOG\.md$/,
+      /^\/CODEOWNERS$/,
+      /^\/CODE_OF_CONDUCT\.md$/,
+      /^\/README\.md$/,
+      // Build caches
+      /^\/node_modules\/\.cache\//,
+      // DevDependency node_modules — derived dynamically from package.json devDependencies
+      filePath => {
+        const match = filePath.match(/^\/node_modules\/((?:@[^/]+\/[^/]+)|[^/]+)/)
+
+        return match ? devOnlyDeps.has(match[1]) : false
+      },
+    ],
     osxSign: {
       identity: 'Developer ID Application: Swarm Association (9J9SPHU9RP)',
       hardenedRuntime: true,

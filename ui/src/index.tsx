@@ -1,3 +1,4 @@
+import '@ethersphere/bee-dashboard/style.css'
 import BeeDashboard from '@ethersphere/bee-dashboard'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
