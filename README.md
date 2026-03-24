@@ -27,8 +27,7 @@ Stay up to date by joining the [official Discord](https://discord.gg/GU22h2utj6)
 
 ## Install
 
-Go to the [releases page](https://github.com/ethersphere/swarm-desktop/releases/latest) and download the correct build
-for your operation system:
+Go to the [releases page](https://github.com/ethersphere/swarm-desktop/releases/latest) and download the correct build for your operating system:
 
 - Windows: `Swarm.Desktop-***.Setup.exe`
 - macOS: `Swarm.Desktop-darwin-x64-***.zip`
@@ -36,8 +35,7 @@ for your operation system:
 
 ### macOS
 
-macOS may not allow you to run the .app after unzipping. To solve this, right click the .app and click Open. You will
-have an option to ignore the warning.
+macOS may not allow you to run the `.app` after unzipping. To solve this, right-click the `.app` and click Open. You will have an option to ignore the warning.
 
 ## Usage
 
@@ -49,16 +47,14 @@ There are some ways you can make this module better:
 
 - Consult our [open issues](https://github.com/ethersphere/swarm-desktop/issues) and take on one of them
 - Help our tests reach 100% coverage!
-- Join us in our [Discord chat](https://discord.gg/wdghaQsGq5) in the #develop-on-swarm channel if you have questions or
-  want to give feedback
+- Join us in our [Discord chat](https://discord.gg/wdghaQsGq5) in the #develop-on-swarm channel if you have questions or want to give feedback
 
 ### Architecture
 
 Swarm Desktop consists of two components:
 
 1.  Electron back-end that provides orchestration API that retrieve, spins, stops and manage the Bee node
-2.  Bundled [Bee Dashboard](https://github.com/ethersphere/bee-dashboard) that provides UI to manage Bee node and
-    provides access to Swarm network
+2.  Bundled [Bee Dashboard](https://github.com/ethersphere/bee-dashboard) that provides UI to manage Bee node and provides access to Swarm network
 
 The Electron back-end is placed in `src` folder.
 
@@ -78,8 +74,7 @@ It also stores configuration files, Bee assets and other things in application's
 
 As there are several independent components it bit depends on what you want to develop.
 
-**Be aware!** The UI won't automatically open during development in order not to confuse on which environment they are
-running. You have to open them manually.
+**Be aware!** The UI won't automatically open during development in order not to confuse on which environment they are running. You have to open them manually.
 
 #### Electron Desktop
 
@@ -102,8 +97,8 @@ Desktop repo.
 There are several handy scripts:
 
 - `pnpm run init:husky` that initializes husky for commit linting
-- `pnpm run purge:data` that purge's the Desktop's data folder
-- `pnpm run purge:logs` that purge's the Desktop's logs folder
+- `pnpm run purge:data` that purges the Desktop's data folder
+- `pnpm run purge:logs` that purges the Desktop's logs folder
 
 ## Maintainers
 
