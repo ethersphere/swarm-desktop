@@ -1,13 +1,11 @@
 # Changelog
 
-## [0.52.2](https://github.com/ethersphere/swarm-desktop/compare/v0.52.1...v0.52.2) (2026-03-23)
-
+## [0.52.2](https://github.com/ethersphere/swarm-desktop/compare/v0.52.1...v0.52.2) (2026-03-24)
 
 ### Bug Fixes
 
 * exclude dev files from package, add nvmrc, fix missing dashboard CSS ([#531](https://github.com/ethersphere/swarm-desktop/issues/531)) ([f88c243](https://github.com/ethersphere/swarm-desktop/commit/f88c243cab6d3f30cbafe709a48c233f46a534cb))
 * upgrade packages and bee-dashboard bug fixes ([#527](https://github.com/ethersphere/swarm-desktop/issues/527)) ([c577f41](https://github.com/ethersphere/swarm-desktop/commit/c577f4137d636cdd983a2ee33e71d370bf1ca446))
-
 
 ### Miscellaneous
 
