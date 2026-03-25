@@ -1,4 +1,6 @@
-import { Contract, ethers, JsonRpcProvider } from 'ethers'
+import { Contract, ethers } from 'ethers'
+
+import { newGnosisProvider } from './blockchain'
 
 export const WRAPPED_XDAI_CONTRACT = '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d'
 export const BZZ_ON_XDAI_CONTRACT = '0xdbf3ea6f5bee45c02255b2c26a16f300502f68da'
@@ -47,7 +49,7 @@ export async function swap(
   minimumBzz: string,
   blockchainRpcEndpoint: string,
 ): Promise<string[]> {
-  const provider = new JsonRpcProvider(blockchainRpcEndpoint, 100)
+  const provider = newGnosisProvider(blockchainRpcEndpoint)
   const signer = new ethers.Wallet(privateKey, provider)
   const gasLimit = 1000000
   const contract = new Contract(HONEYSWAP_CONTRACT, contractInterface, signer)
