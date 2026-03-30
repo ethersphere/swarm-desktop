@@ -46,7 +46,8 @@ export function rebuildElectronTray() {
         },
         {
           label: 'Etherjot',
-          click: () => openUrl('https://etherjot.com'),
+          click: () =>
+            openUrl('http://localhost:1633/bzz/00b7ef7c5d20cba4b06596b7652bb16ddec91c114069653dbcac7a19f0697915/'),
         },
         {
           label: 'Decentralized Wiki',
