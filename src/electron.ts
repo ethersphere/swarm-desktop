@@ -52,7 +52,7 @@ export function rebuildElectronTray() {
         {
           label: 'Decentralized Wiki',
           click: () =>
-            openUrl('http://localhost:1633/bzz/f8aa0f764267de0cae814edf58358dcd6ccf38f0a242656be8bf01a14700090c/'),
+            openUrl('http://localhost:1633/bzz/bc9b942212421e2a19fe1ffdf0add641ae530923041ea8f549381747b14b2f2d/'),
         },
         {
           label: 'Decentralized OSM',
