@@ -7,6 +7,14 @@
 
 * sync and update with all changes from fork ([#537](https://github.com/ethersphere/swarm-desktop/issues/537)) ([adacb17](https://github.com/ethersphere/swarm-desktop/commit/adacb177aa111d702630b2c7afea9b73b8229aba))
 
+### Bug Fixes
+
+fix: swap error caused by invalid id and batchcount
+fix: update forge config to exclude only TypeScript source files while retaining static assets
+fix: update etherjot url in taskbar
+fix: update decentralized wiki url in taskbar
+chore: upgrade @ethersphere/bee-dashboard to version 0.35.0
+
 ## [0.52.2](https://github.com/ethersphere/swarm-desktop/compare/v0.52.1...v0.52.2) (2026-03-24)
 
 ### Bug Fixes
