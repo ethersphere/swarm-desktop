@@ -29,8 +29,11 @@ const config = {
     ignore: [
       // UI source + its node_modules — compiled output is already in dist/ui
       /^\/ui\//,
-      // TypeScript source — compiled output is in dist/
-      /^\/src\//,
+      // TypeScript source files — compiled output is in dist/desktop/
+      // Note: only .ts files are excluded; static assets (HTML, CSS, audio) under
+      // src/plugins/ must remain so plugin BrowserWindows can load them at runtime
+      // via app.getAppPath() + 'src/plugins/...'
+      /^\/src\/.*\.ts$/,
       // Test files
       /^\/test\//,
       // Dev config and tooling files

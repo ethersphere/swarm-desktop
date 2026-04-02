@@ -1,7 +1,22 @@
-import { Contract, JsonRpcProvider, Wallet } from 'ethers'
+import { Contract, JsonRpcPayload, JsonRpcProvider, JsonRpcResult, Wallet } from 'ethers'
 
 import { bzzContractInterface } from './contract'
 import { BZZ_ON_XDAI_CONTRACT } from './swap'
+
+const GNOSIS_CHAIN_ID = 100
+
+class FixedIdJsonRpcProvider extends JsonRpcProvider {
+  async _send(payload: JsonRpcPayload | Array<JsonRpcPayload>): Promise<Array<JsonRpcResult>> {
+    const results = await super._send(payload)
+    const payloads = Array.isArray(payload) ? payload : [payload]
+
+    return results.map((result, i) => ({ ...result, id: payloads[i]?.id ?? result.id }))
+  }
+}
+
+export function newGnosisProvider(url: string): JsonRpcProvider {
+  return new FixedIdJsonRpcProvider(url, GNOSIS_CHAIN_ID, { staticNetwork: true, batchMaxCount: 1 })
+}
 
 export async function sendNativeTransaction(
   privateKey: string,
@@ -38,7 +53,7 @@ export async function sendBzzTransaction(privateKey: string, to: string, value: 
 }
 
 async function makeReadySigner(privateKey: string, blockchainRpcEndpoint: string) {
-  const provider = new JsonRpcProvider(blockchainRpcEndpoint, 100)
+  const provider = newGnosisProvider(blockchainRpcEndpoint)
   await provider.getNetwork()
   const signer = new Wallet(privateKey, provider)
 
