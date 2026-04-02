@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.53.0](https://github.com/ethersphere/swarm-desktop/compare/v0.52.2...v0.53.0) (2026-04-02)
+
+
+### Features
+
+* sync and update with all changes from fork ([#537](https://github.com/ethersphere/swarm-desktop/issues/537)) ([adacb17](https://github.com/ethersphere/swarm-desktop/commit/adacb177aa111d702630b2c7afea9b73b8229aba))
+
 ## [0.52.2](https://github.com/ethersphere/swarm-desktop/compare/v0.52.1...v0.52.2) (2026-03-24)
 
 ### Bug Fixes
