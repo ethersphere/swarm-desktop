@@ -28,8 +28,22 @@ export const getPostageBatches = async () => {
   }
 
   const psBatch = await bee.getPostageBatches()
+  const usable = psBatch
+    .filter(ps => ps.usable === true)
+    .map(ps => ({
+      batchID: ps.batchID.toHex(),
+      utilization: ps.utilization,
+      usable: ps.usable,
+      label: ps.label,
+      depth: ps.depth,
+      amount: ps.amount,
+      bucketDepth: ps.bucketDepth,
+      blockNumber: ps.blockNumber,
+      immutableFlag: ps.immutableFlag,
+      usage: ps.usage,
+    }))
 
-  return psBatch.filter(ps => ps.usable === true)
+  return usable
 }
 
 type HandleFileUploadArgs = {

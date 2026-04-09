@@ -61,9 +61,9 @@ describe('Bee utility functions', () => {
   describe('getPostageBatches', () => {
     it('should return only usable postage batches', async () => {
       mockBeeInstance.getPostageBatches.mockResolvedValue([
-        { batchID: 'batch1', usable: true },
-        { batchID: 'batch2', usable: false },
-        { batchID: 'batch3', usable: true },
+        { batchID: { toHex: () => 'batch1' }, usable: true },
+        { batchID: { toHex: () => 'batch2' }, usable: false },
+        { batchID: { toHex: () => 'batch3' }, usable: true },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ] as any)
 

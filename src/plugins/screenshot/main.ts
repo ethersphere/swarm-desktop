@@ -30,7 +30,7 @@ function takeScreenshotImplementation() {
         createPreviewWindow(imgDataURL)
       }
     } catch (err) {
-      logger.error('Failed to take Screenshot: ', err.message)
+      logger.error('Failed to take Screenshot: ', (err as Error).message)
       dialog.showErrorBox('Error', 'Failed to take screenshot.')
     }
   })
@@ -77,8 +77,8 @@ function takeScreenshotImplementation() {
         }
       } catch (err) {
         clearInterval(getAllPostageBatchIntervalID)
-        logger.error(err.message)
-        evnt.sender.send('update-postage-stamp-state', err.message)
+        logger.error((err as Error).message)
+        evnt.sender.send('update-postage-stamp-state', (err as Error).message)
       } finally {
         if (getAllPostageBatchIntervalID) {
           clearInterval(getAllPostageBatchIntervalID)
@@ -102,10 +102,10 @@ function takeScreenshotImplementation() {
       delete result.tagUid
 
       if (result.reference) {
-        e.sender.send('upload-result', JSON.stringify({ ...result }))
+        e.sender.send('upload-result', JSON.stringify({ reference: result.reference.toHex() }))
       }
     } catch (err) {
-      logger.error('handleFileUpload: ', err.message)
+      logger.error('handleFileUpload: ', (err as Error).message)
       throw err
     }
   })
