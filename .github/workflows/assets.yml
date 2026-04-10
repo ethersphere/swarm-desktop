@@ -1,5 +1,6 @@
 name: Assets build
 on:
+  workflow_dispatch:
   # The `release: create` event (nor-any other release type events) are not triggered for release draft creation
   # which is needed to have all the assets build when the release goes out.
   # We hence uses `repository_dispatch` from the `release.yaml` workflow when release is created by the release-please mechanism.
