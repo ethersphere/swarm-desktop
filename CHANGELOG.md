@@ -1,39 +1,23 @@
 # Changelog
 
-## [0.53.0](https://github.com/ethersphere/swarm-desktop/compare/v0.52.2...v0.53.0) (2026-04-02)
-
-
-### Features
-
-* sync and update with all changes from fork ([#537](https://github.com/ethersphere/swarm-desktop/issues/537)) ([adacb17](https://github.com/ethersphere/swarm-desktop/commit/adacb177aa111d702630b2c7afea9b73b8229aba))
+## [0.53.1](https://github.com/ethersphere/swarm-desktop/compare/v0.53.1...v0.52.1) (2026-04-10)
 
 ### Bug Fixes
 
-fix: swap error caused by invalid id and batchcount
-fix: update forge config to exclude only TypeScript source files while retaining static assets
-fix: update etherjot url in taskbar
-fix: update decentralized wiki url in taskbar
-chore: upgrade @ethersphere/bee-dashboard to version 0.35.0
-
-## [0.52.2](https://github.com/ethersphere/swarm-desktop/compare/v0.52.1...v0.52.2) (2026-03-24)
-
-### Bug Fixes
-
-* exclude dev files from package, add nvmrc, fix missing dashboard CSS ([#531](https://github.com/ethersphere/swarm-desktop/issues/531)) ([f88c243](https://github.com/ethersphere/swarm-desktop/commit/f88c243cab6d3f30cbafe709a48c233f46a534cb))
-* upgrade packages and bee-dashboard bug fixes ([#527](https://github.com/ethersphere/swarm-desktop/issues/527)) ([c577f41](https://github.com/ethersphere/swarm-desktop/commit/c577f4137d636cdd983a2ee33e71d370bf1ca446))
-
-### Miscellaneous
-
-* apply new eslint, commitlint rules ([c577f41](https://github.com/ethersphere/swarm-desktop/commit/c577f4137d636cdd983a2ee33e71d370bf1ca446))
-* migrate from npm to pnpm ([c577f41](https://github.com/ethersphere/swarm-desktop/commit/c577f4137d636cdd983a2ee33e71d370bf1ca446))
-* migrate from webpack to vite ([c577f41](https://github.com/ethersphere/swarm-desktop/commit/c577f4137d636cdd983a2ee33e71d370bf1ca446))
-* update all dependencies like react, ethers etc. ([c577f41](https://github.com/ethersphere/swarm-desktop/commit/c577f4137d636cdd983a2ee33e71d370bf1ca446))
-* update ci worklfow steps ([c577f41](https://github.com/ethersphere/swarm-desktop/commit/c577f4137d636cdd983a2ee33e71d370bf1ca446))
-* upgrade bee to v2.7.1 ([c577f41](https://github.com/ethersphere/swarm-desktop/commit/c577f4137d636cdd983a2ee33e71d370bf1ca446))
-* upgrade bee-dashboard to v0.34.0 ([c577f41](https://github.com/ethersphere/swarm-desktop/commit/c577f4137d636cdd983a2ee33e71d370bf1ca446))
+- chore: apply new eslint, commitlint rules
+- chore: migrate from npm to pnpm
+- chore: migrate from webpack to vite
+- chore: update all dependencies like react, ethers etc.
+- chore: update ci workflow steps
+- chore: upgrade bee to v2.7.1
+- chore: upgrade @ethersphere/bee-dashboard to v0.35.1
+- fix: swap error caused by invalid id and batchcount
+- fix: update forge config to exclude ts source files, retain assets
+- fix: update decentralized wiki url in electron tray menu
+- fix: serialize bee-js v11 batchid extends bytes before ipc transfer
+- fix: app menu changes
 
 ## [0.52.1](https://github.com/ethersphere/swarm-desktop/compare/v0.52.0...v0.52.1) (2026-02-18)
-
 
 ### Bug Fixes
 
