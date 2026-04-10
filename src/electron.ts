@@ -37,17 +37,8 @@ export function rebuildElectronTray() {
       label: 'Apps',
       submenu: [
         {
-          label: 'Datafund App',
-          click: () => openUrl('https://app.datafund.io'),
-        },
-        {
-          label: 'bbw2025.buzz',
+          label: 'Event Communication Platform',
           click: () => openUrl('https://dapp.bbw2025.buzz/'),
-        },
-        {
-          label: 'Etherjot',
-          click: () =>
-            openUrl('http://localhost:1633/bzz/00b7ef7c5d20cba4b06596b7652bb16ddec91c114069653dbcac7a19f0697915/'),
         },
         {
           label: 'Decentralized Wiki',
