@@ -5,25 +5,48 @@
 
 ### Features
 
-* upgrade to bee-dashboard v0.36.0 ([cd4851a](https://github.com/ethersphere/swarm-desktop/commit/cd4851a235805cc7e603789c9ac8f1914f2ee6ac))
+* spdv-1314 ([#28](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/28)) ([c4f58e1](https://github.com/ethersphere/swarm-desktop/commit/c4f58e16cbc47fef9d1f089ff276fcca93e3392b))
 * upgrade to bee-dashboard v0.36.0 ([300f275](https://github.com/ethersphere/swarm-desktop/commit/300f2752e1fea42e6ff02dc4b5831871712adec8))
 
 
 ### Bug Fixes
 
 * add ui-local pnpm-workspace.yaml so ui installs standalone ([fc38a98](https://github.com/ethersphere/swarm-desktop/commit/fc38a98a833d198537edb570793557152328de71))
-* notification appears when bee fails and restart loop starts ([#31](https://github.com/ethersphere/swarm-desktop/issues/31)) ([03b1b5a](https://github.com/ethersphere/swarm-desktop/commit/03b1b5a0d0fbbe49ba07f965daa090bf08ed48c8))
+* app menu changes ([#16](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/16)) ([80c5700](https://github.com/ethersphere/swarm-desktop/commit/80c5700764286ea4a9d39a63c1487ca6efd710de))
+* don't override macOS dock icon so system tinting works ([#24](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/24)) ([b077ddb](https://github.com/ethersphere/swarm-desktop/commit/b077ddb5b7bc37784cb49134bd5a22846e1536c9))
+* express gift wallet fees as human-readable constants ([#18](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/18)) ([2ec3c67](https://github.com/ethersphere/swarm-desktop/commit/2ec3c67bd6308b186892781e6fceeb7d032d8a85))
+* notification appears when bee fails and restart loop starts ([#31](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/31)) ([03b1b5a](https://github.com/ethersphere/swarm-desktop/commit/03b1b5a0d0fbbe49ba07f965daa090bf08ed48c8))
+* prevent second instance from opening browser tab on launch ([#30](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/30)) ([b0751c4](https://github.com/ethersphere/swarm-desktop/commit/b0751c448fc1ec3e66f7614606e1edafaebb5f6d))
+* remove skip-postage-snapshot from default config ([#20](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/20)) ([8cdb4d1](https://github.com/ethersphere/swarm-desktop/commit/8cdb4d14aeb7b865a1da932bee9a20d0a50ad197))
+* replace cloudflare-eth resolver SPDV-1296 ([#29](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/29)) ([01d0bcc](https://github.com/ethersphere/swarm-desktop/commit/01d0bcc732e158a32309c22c21444648357ffb67))
+* replace tokenservice with bff.cow.fi ([#19](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/19)) ([3911322](https://github.com/ethersphere/swarm-desktop/commit/391132254f8a8465ead8dba2823411d05a10c04f))
 * resolve lint errors in index and launcher ([ae2787d](https://github.com/ethersphere/swarm-desktop/commit/ae2787d0991e354475b34b9ba77e6c03801f49c0))
+* serialize bee-js v11 BatchId extends Bytes before IPC transfer ([#15](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/15)) ([1f76967](https://github.com/ethersphere/swarm-desktop/commit/1f7696760ec6d6a03d13d64e5e5cd565354e1fbd))
 * set DEBUG env variable in MacOS arm64 publish ([defa345](https://github.com/ethersphere/swarm-desktop/commit/defa34509eb80e7e338dc5bfb5baa195fde4f9c1))
-* spdv-1332 ([#32](https://github.com/ethersphere/swarm-desktop/issues/32)) ([f9ea63f](https://github.com/ethersphere/swarm-desktop/commit/f9ea63fb8a1e98376084517294fd1341751d0601))
-* spdv-1344 ([#33](https://github.com/ethersphere/swarm-desktop/issues/33)) ([97c24e8](https://github.com/ethersphere/swarm-desktop/commit/97c24e8e4a9c2ad37312d6a2bba9ab5065335997))
+* spdv-1263 ([#23](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/23)) ([7ae5634](https://github.com/ethersphere/swarm-desktop/commit/7ae5634672697b6050f7d2bc65ece68260367580))
+* spdv-1299 ([#26](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/26)) ([45eeed8](https://github.com/ethersphere/swarm-desktop/commit/45eeed8bd83ffc9b29e1bd7fa37811b2b79828bf))
+* spdv-1332 ([#32](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/32)) ([f9ea63f](https://github.com/ethersphere/swarm-desktop/commit/f9ea63fb8a1e98376084517294fd1341751d0601))
+* spdv-1344 ([#33](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/33)) ([97c24e8](https://github.com/ethersphere/swarm-desktop/commit/97c24e8e4a9c2ad37312d6a2bba9ab5065335997))
+* spdv-958 ([2a158eb](https://github.com/ethersphere/swarm-desktop/commit/2a158eb172b055816213adf21821ceaf805e7948))
+* swap error caused by invalid id and batchcount ([6977994](https://github.com/ethersphere/swarm-desktop/commit/697799467438d8934d068f5571bf741a4768ff26))
+* tray-menu-text-change ([#25](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/25)) ([0a3495a](https://github.com/ethersphere/swarm-desktop/commit/0a3495ab64205cd5ea50fd2e51dd6c4539327104))
+* update decentralized wiki url in electron tray menu spdv-1035 ([#13](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/13)) ([5e0afd6](https://github.com/ethersphere/swarm-desktop/commit/5e0afd6551e34aef858bf1bd33f5b2e0dc6f8b29))
+* update etherjot url in taskbar spdv-940 ([#12](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/12)) ([3e33d87](https://github.com/ethersphere/swarm-desktop/commit/3e33d87e8e98470d968543bdf25494b1b3c4b96b))
+* update forge config to exclude TS source files, retain assets spdv-1022 ([#11](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/11)) ([9677bf5](https://github.com/ethersphere/swarm-desktop/commit/9677bf59b0a8921282609b37a34ef2d18b6d4758))
+* update tray icon on system theme change for Linux and Windows ([#22](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/22)) ([45b4769](https://github.com/ethersphere/swarm-desktop/commit/45b4769d24c108831d4d7419c185d788ed356409))
+
+
+### Documentation
+
+* readme update ([#27](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/27)) ([320ee04](https://github.com/ethersphere/swarm-desktop/commit/320ee049d283af376b00329648fbe44b4e58edfb))
 
 
 ### Miscellaneous
 
-* merge upstream v0.54.1 (bee v2.8.1) ([beb7551](https://github.com/ethersphere/swarm-desktop/commit/beb7551d9ab5599819131395c8f7cc45a4cb3230))
 * merge upstream v0.54.1 (bee v2.8.1) ([f4af9dd](https://github.com/ethersphere/swarm-desktop/commit/f4af9dd362ff2e45a15aa7824c9905c35e9d0544))
 * rebuild dashboard bee-js v12.3.1 for bee v2.8.1 API ([#554](https://github.com/ethersphere/swarm-desktop/issues/554)) ([1479375](https://github.com/ethersphere/swarm-desktop/commit/147937569074e0f7a283f44c8de8051329aed128))
+* upgrade @ethersphere/bee-dashboard to v0.35.1 ([#17](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/17)) ([b1fce91](https://github.com/ethersphere/swarm-desktop/commit/b1fce91bcfc0984544155bc97ab854df82341a7e))
+* upgrade @ethersphere/bee-dashboard to version 0.35.0 spdv-1036 ([#14](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/14)) ([6077936](https://github.com/ethersphere/swarm-desktop/commit/6077936f0e25695e10fae2b70f514ace7931b005))
 
 ## [0.54.1](https://github.com/ethersphere/swarm-desktop/compare/v0.54.0...v0.54.1) (2026-06-24)
 
