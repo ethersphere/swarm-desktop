@@ -5,32 +5,25 @@
 
 ### Features
 
-* upgrade to bee-dashboard v0.36.0 ([cd4851a](https://github.com/ethersphere/swarm-desktop/commit/cd4851a235805cc7e603789c9ac8f1914f2ee6ac))
 * upgrade to bee-dashboard v0.36.0 ([300f275](https://github.com/ethersphere/swarm-desktop/commit/300f2752e1fea42e6ff02dc4b5831871712adec8))
 
 
 ### Bug Fixes
 
 * add ui-local pnpm-workspace.yaml so ui installs standalone ([fc38a98](https://github.com/ethersphere/swarm-desktop/commit/fc38a98a833d198537edb570793557152328de71))
-* gift- wallet-generation ([72653d9](https://github.com/ethersphere/swarm-desktop/commit/72653d99f331d8e00a358cf6201d174f64f2268c))
-* gift-wallet-generation ([4aef929](https://github.com/ethersphere/swarm-desktop/commit/4aef929e47801961e51efbc004820a959be23cd5))
+* gift-wallet-generation ([72653d9](https://github.com/ethersphere/swarm-desktop/commit/72653d99f331d8e00a358cf6201d174f64f2268c))
 * notification appears when bee fails and restart loop starts ([#31](https://github.com/ethersphere/swarm-desktop/issues/31)) ([03b1b5a](https://github.com/ethersphere/swarm-desktop/commit/03b1b5a0d0fbbe49ba07f965daa090bf08ed48c8))
 * resolve lint errors in index and launcher ([ae2787d](https://github.com/ethersphere/swarm-desktop/commit/ae2787d0991e354475b34b9ba77e6c03801f49c0))
 * set DEBUG env variable in MacOS arm64 publish ([defa345](https://github.com/ethersphere/swarm-desktop/commit/defa34509eb80e7e338dc5bfb5baa195fde4f9c1))
 * spdv-1332 ([#32](https://github.com/ethersphere/swarm-desktop/issues/32)) ([f9ea63f](https://github.com/ethersphere/swarm-desktop/commit/f9ea63fb8a1e98376084517294fd1341751d0601))
 * spdv-1344 ([#33](https://github.com/ethersphere/swarm-desktop/issues/33)) ([97c24e8](https://github.com/ethersphere/swarm-desktop/commit/97c24e8e4a9c2ad37312d6a2bba9ab5065335997))
-* upgrade bee-dashboard to v0.36.1 ([66cd885](https://github.com/ethersphere/swarm-desktop/commit/66cd885063b7d46f535ca35410632de32bce9fac))
-* upgrade bee-dashboard to v0.36.1 ([133c598](https://github.com/ethersphere/swarm-desktop/commit/133c5986e9a4f553fa36e37761f03fbe9f803313))
 * upgrade bee-dashboard to v0.36.1 ([6658e4b](https://github.com/ethersphere/swarm-desktop/commit/6658e4be36e63684dc0718464da468ef1ebcde3b))
 
 
 ### Miscellaneous
 
-* **master:** release 0.55.0 ([#558](https://github.com/ethersphere/swarm-desktop/issues/558)) ([230b8a0](https://github.com/ethersphere/swarm-desktop/commit/230b8a03094b7125d5e7e09c3c5d8907da9a75fa))
-* merge upstream v0.54.1 (bee v2.8.1) ([beb7551](https://github.com/ethersphere/swarm-desktop/commit/beb7551d9ab5599819131395c8f7cc45a4cb3230))
 * merge upstream v0.54.1 (bee v2.8.1) ([f4af9dd](https://github.com/ethersphere/swarm-desktop/commit/f4af9dd362ff2e45a15aa7824c9905c35e9d0544))
 * rebuild dashboard bee-js v12.3.1 for bee v2.8.1 API ([#554](https://github.com/ethersphere/swarm-desktop/issues/554)) ([1479375](https://github.com/ethersphere/swarm-desktop/commit/147937569074e0f7a283f44c8de8051329aed128))
-* reset release-please manifest to 0.54.1 ([965be18](https://github.com/ethersphere/swarm-desktop/commit/965be18d1f0112d6ec6ecd2ae594281965940060))
 
 ## [0.55.0](https://github.com/ethersphere/swarm-desktop/compare/v0.54.1...v0.55.0) (2026-07-14)
 
