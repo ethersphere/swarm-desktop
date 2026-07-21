@@ -25,9 +25,7 @@ export async function sendNativeTransaction(
   blockchainRpcEndpoint: string,
 ) {
   const signer = await makeReadySigner(privateKey, blockchainRpcEndpoint)
-  const feeData = await signer.provider.getFeeData()
-  const gasPrice = feeData.gasPrice || BigInt(0)
-  const transaction = await signer.sendTransaction({ to, value, gasPrice })
+  const transaction = await signer.sendTransaction({ to, value })
   const receipt = await transaction.wait(1)
 
   if (!receipt) {
@@ -39,10 +37,8 @@ export async function sendNativeTransaction(
 
 export async function sendBzzTransaction(privateKey: string, to: string, value: string, blockchainRpcEndpoint: string) {
   const signer = await makeReadySigner(privateKey, blockchainRpcEndpoint)
-  const feeData = await signer.provider.getFeeData()
-  const gasPrice = feeData.gasPrice || BigInt(0)
   const bzz = new Contract(BZZ_ON_XDAI_CONTRACT, bzzContractInterface, signer)
-  const transaction = await bzz.transfer(to, value, { gasPrice })
+  const transaction = await bzz.transfer(to, value)
   const receipt = await transaction.wait(1)
 
   if (!receipt) {

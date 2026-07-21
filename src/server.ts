@@ -38,6 +38,17 @@ const PEERS_ENDPOINT = '/peers'
 
 let serverInstance: Server | null = null
 let isRestarting = false
+let walletTransactionQueue: Promise<unknown> = Promise.resolve()
+
+function withWalletLock<T>(task: () => Promise<T>): Promise<T> {
+  const result = walletTransactionQueue.then(task, task)
+  walletTransactionQueue = result.then(
+    (): void => undefined,
+    (): void => undefined,
+  )
+
+  return result
+}
 
 export function isServerRunning(): boolean {
   return isRestarting || (serverInstance !== null && serverInstance.listening)
@@ -166,26 +177,36 @@ export function runServer() {
     const blockchainRpcEndpoint = Reflect.get(config, 'blockchain-rpc-endpoint') as string
     const privateKeyString = await getPrivateKey()
     const { address } = context.params
-    await sendBzzTransaction(
-      privateKeyString,
-      address,
-      parseUnits(GIFT_WALLET_BZZ_AMOUNT, 16).toString(),
-      blockchainRpcEndpoint,
-    )
-    await sendNativeTransaction(
-      privateKeyString,
-      address,
-      parseUnits(GIFT_WALLET_DAI_AMOUNT, 18).toString(),
-      blockchainRpcEndpoint,
-    )
-    context.body = { success: true }
+    try {
+      await withWalletLock(async () => {
+        await sendBzzTransaction(
+          privateKeyString,
+          address,
+          parseUnits(GIFT_WALLET_BZZ_AMOUNT, 16).toString(),
+          blockchainRpcEndpoint,
+        )
+        await sendNativeTransaction(
+          privateKeyString,
+          address,
+          parseUnits(GIFT_WALLET_DAI_AMOUNT, 18).toString(),
+          blockchainRpcEndpoint,
+        )
+      })
+      context.body = { success: true }
+    } catch (error) {
+      logger.error(error)
+      context.status = 500
+      context.body = { message: 'Failed to fund gift wallet', error }
+    }
   })
   router.post('/swap', async context => {
     const config = readConfigYaml()
     const blockchainRpcEndpoint = Reflect.get(config, 'blockchain-rpc-endpoint') as string
     const privateKeyString = await getPrivateKey()
     try {
-      await swap(privateKeyString, (context.request.body as Record<string, string>).dai, '10000', blockchainRpcEndpoint)
+      await withWalletLock(() =>
+        swap(privateKeyString, (context.request.body as Record<string, string>).dai, '10000', blockchainRpcEndpoint),
+      )
       context.body = { success: true }
     } catch (error) {
       logger.error(error)
