@@ -2,7 +2,7 @@ allowBuilds:
   esbuild: true
   unrs-resolver: true
 minimumReleaseAgeExclude:
-  - '@ethersphere/bee-dashboard@0.36.1'
+  - '@ethersphere/bee-dashboard@0.36.2'
 onlyBuiltDependencies:
   - '@ethersphere/bee-dashboard'
   - esbuild
