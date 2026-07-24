@@ -19,3 +19,7 @@ api-key.txt
 
 # secret
 .env
+
+# test artifacts (logs/config written into the test data dir during test runs)
+test/data/*
+!test/data/.gitkeep

@@ -1,6 +1,8 @@
 import type { Server } from 'http'
 import { readFile } from 'node:fs/promises'
 import requestStats from 'request-stats'
+import type { Readable } from 'stream'
+import { StringDecoder } from 'string_decoder'
 import { createLogger, format, Logform, Logger, transports } from 'winston'
 
 import { logLevel, SUPPORTED_LEVELS } from './config'
@@ -8,7 +10,7 @@ import { getLogPath } from './path'
 
 export const DesktopLogFile = 'bee-desktop.log'
 export const BeeLogFile = 'bee.log'
-export const MaxLogFileRotateSize = '500K'
+export const MaxLogFileRotateSize = 500 * 1024
 export const MaxLogFileNumber = 10
 
 const supportedLevels: Record<string, number> = SUPPORTED_LEVELS.reduce(
@@ -29,14 +31,56 @@ export const logger: Logger = createLogger({
     new transports.Console({ level: logLevel, format: format.colorize({ all: true }) }),
     new transports.File({
       filename: getLogPath(DesktopLogFile),
-      maxsize: 1_000_000,
-      maxFiles: 10,
+      maxsize: MaxLogFileRotateSize,
+      maxFiles: MaxLogFileNumber,
       tailable: true,
     }),
   ],
 })
 
 logger.info(`using max log level=${logLevel}`)
+
+export function createBeeLogger(options: { filename?: string; maxsize?: number; maxFiles?: number } = {}): Logger {
+  const beeLog = createLogger({
+    format: format.printf(info => String(info.message)),
+    transports: [
+      new transports.File({
+        filename: options.filename ?? getLogPath(BeeLogFile),
+        maxsize: options.maxsize ?? MaxLogFileRotateSize,
+        maxFiles: options.maxFiles ?? MaxLogFileNumber,
+        tailable: true,
+      }),
+    ],
+  })
+  beeLog.on('error', error => logger.error(error))
+
+  return beeLog
+}
+
+export const beeLogger: Logger = createBeeLogger()
+
+export function forwardLines(stream: Readable, onLine: (line: string) => void): void {
+  const decoder = new StringDecoder('utf8')
+  let buffer = ''
+
+  stream.on('data', (chunk: Buffer) => {
+    buffer += decoder.write(chunk)
+    let newlineIndex = buffer.indexOf('\n')
+    while (newlineIndex !== -1) {
+      onLine(buffer.slice(0, newlineIndex).replace(/\r$/, ''))
+      buffer = buffer.slice(newlineIndex + 1)
+      newlineIndex = buffer.indexOf('\n')
+    }
+  })
+
+  stream.on('end', () => {
+    buffer += decoder.end()
+
+    if (buffer.length > 0) {
+      onLine(buffer.replace(/\r$/, ''))
+    }
+  })
+}
 
 function processMetadata(metadata: Record<string, unknown>): string {
   // Create array of "<key>=<value>" strings from an object

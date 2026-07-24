@@ -1,15 +1,14 @@
 import { spawn } from 'child_process'
 import { mkdirSync, writeFileSync } from 'fs'
 import { platform } from 'os'
-import * as RotatingFileStream from 'rotating-file-stream'
 import { v4 } from 'uuid'
 
 import { configFile, dataDirFilePath } from './config'
 import { rebuildElectronTray } from './electron'
 import { BeeManager } from './lifecycle'
-import { BeeLogFile, logger, MaxLogFileNumber, MaxLogFileRotateSize } from './logger'
+import { beeLogger, forwardLines, logger } from './logger'
 import { createNotification } from './notify'
-import { checkPath, getDefaultLogPath, getPath } from './path'
+import { checkPath, getPath } from './path'
 
 let startFailureCount = 0
 const NOTIFY_EVERY_N_FAILURES = 5 // ~50s between toasts at the 10s keep-alive interval
@@ -109,20 +108,10 @@ async function runProcess(command: string, args: string[], abortController: Abor
     subprocess.stdout.pipe(process.stdout)
     subprocess.stderr.pipe(process.stderr)
 
-    // Also store the logs to log dir
-    const fileStream = RotatingFileStream.createStream(BeeLogFile, {
-      size: MaxLogFileRotateSize,
-      maxFiles: MaxLogFileNumber,
-      path: getDefaultLogPath(),
-    })
-    fileStream.on('error', err => logger.error(err))
-
-    subprocess.stdout.pipe(fileStream, { end: false })
-    subprocess.stderr.pipe(fileStream, { end: false })
+    forwardLines(subprocess.stdout, line => beeLogger.info(line))
+    forwardLines(subprocess.stderr, line => beeLogger.info(line))
 
     subprocess.on('close', code => {
-      fileStream.end()
-
       if (code === 0) {
         resolve()
       } else {
@@ -130,7 +119,6 @@ async function runProcess(command: string, args: string[], abortController: Abor
       }
     })
     subprocess.on('error', error => {
-      fileStream.end()
       reject(error)
     })
   })

@@ -113,7 +113,6 @@
     "node-notifier": "^10.0.1",
     "opener": "^1.5.2",
     "request-stats": "^3.0.0",
-    "rotating-file-stream": "^3.2.8",
     "update-electron-app": "^2.0.1",
     "uuid": "^13.0.0",
     "winston": "^3.19.0"
