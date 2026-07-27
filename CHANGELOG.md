@@ -1,13 +1,19 @@
 # Changelog
 
+## [0.55.1](https://github.com/ethersphere/swarm-desktop/compare/v0.54.1...v0.55.1) (2026-07-21)
+
+
+### Bug Fixes
+
+* gift-wallet-generation ([72653d9](https://github.com/ethersphere/swarm-desktop/commit/72653d99f331d8e00a358cf6201d174f64f2268c))
+* upgrade bee-dashboard to v0.36.1 ([6658e4b](https://github.com/ethersphere/swarm-desktop/commit/6658e4be36e63684dc0718464da468ef1ebcde3b))
+
 ## [0.55.0](https://github.com/ethersphere/swarm-desktop/compare/v0.54.1...v0.55.0) (2026-07-14)
 
 
 ### Features
 
 * spdv-1314 ([#28](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/28)) ([c4f58e1](https://github.com/ethersphere/swarm-desktop/commit/c4f58e16cbc47fef9d1f089ff276fcca93e3392b))
-* upgrade to bee-dashboard v0.36.0 ([300f275](https://github.com/ethersphere/swarm-desktop/commit/300f2752e1fea42e6ff02dc4b5831871712adec8))
-
 
 ### Bug Fixes
 
@@ -39,7 +45,6 @@
 ### Documentation
 
 * readme update ([#27](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/27)) ([320ee04](https://github.com/ethersphere/swarm-desktop/commit/320ee049d283af376b00329648fbe44b4e58edfb))
-
 
 ### Miscellaneous
 
