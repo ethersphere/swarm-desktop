@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.55.2](https://github.com/ethersphere/swarm-desktop/compare/v0.55.1...v0.55.2) (2026-08-06)
+
+
+### Documentation
+
+* remove beta disclaimer from README ([#565](https://github.com/ethersphere/swarm-desktop/issues/565)) ([d5c6a7d](https://github.com/ethersphere/swarm-desktop/commit/d5c6a7d1839ce60a17c3187cdc239ee313660158))
+
 ## [0.55.1](https://github.com/ethersphere/swarm-desktop/compare/v0.54.1...v0.55.1) (2026-07-21)
 
 
