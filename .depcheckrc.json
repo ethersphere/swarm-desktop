@@ -9,7 +9,6 @@
     "eslint*",
     "typescript",
     "electron-forge-maker-zip-all",
-    "ts-jest",
     "ts-node",
     "concurrently",
     "cross-env",

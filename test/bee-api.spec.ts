@@ -1,44 +1,45 @@
-import { Bee } from '@ethersphere/bee-js'
+import type { Bee } from '@ethersphere/bee-js'
+import type { Mocked } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { BEE_NODE_URL } from '../src/config'
 import {
-  getBeeInstance, // eslint-disable-line @typescript-eslint/no-unused-vars
+  getBeeInstance,
   getPostageBatches,
   handleFileUpload,
   nodeIsConnected,
 } from '../src/plugins/screenshot/utils/bee-api'
 
-jest.mock(
-  'env-paths',
-  () => () =>
-    jest.fn().mockImplementation(() => ({
-      data: 'test/data',
-      config: 'test/data',
-      cache: 'test/data',
-      log: 'test/data',
-      temp: 'test/data',
-    })),
-)
+vi.mock('env-paths', () => ({
+  default: vi.fn().mockImplementation(() => ({
+    data: 'test/data',
+    config: 'test/data',
+    cache: 'test/data',
+    log: 'test/data',
+    temp: 'test/data',
+  })),
+}))
 
-jest.mock('@ethersphere/bee-js', () => {
+vi.mock('@ethersphere/bee-js', () => {
   return {
-    Bee: jest.fn().mockImplementation(_ => {
+    // eslint-disable-next-line prefer-arrow-callback -- must be a constructible function for `new Bee(...)`
+    Bee: vi.fn().mockImplementation(function BeeCtor(_) {
       return {
-        isConnected: jest.fn(),
-        getPostageBatches: jest.fn(),
-        uploadFile: jest.fn(),
+        isConnected: vi.fn(),
+        getPostageBatches: vi.fn(),
+        uploadFile: vi.fn(),
       }
     }),
   }
 })
 
 describe('Bee utility functions', () => {
-  let mockBeeInstance: jest.Mocked<Bee>
+  let mockBeeInstance: Mocked<Bee>
 
   beforeEach(() => {
-    mockBeeInstance = new Bee(BEE_NODE_URL) as jest.Mocked<Bee>
-    // eslint-disable-next-line no-import-assign
-    ;(getBeeInstance as jest.Mock) = jest.fn(() => mockBeeInstance)
+    mockBeeInstance = getBeeInstance() as Mocked<Bee>
+    mockBeeInstance.isConnected.mockReset()
+    mockBeeInstance.getPostageBatches.mockReset()
+    mockBeeInstance.uploadFile.mockReset()
   })
 
   describe('nodeIsConnected', () => {

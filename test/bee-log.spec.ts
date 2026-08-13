@@ -1,16 +1,17 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync } from 'fs'
 import { EOL } from 'os'
 import { PassThrough } from 'stream'
+import { afterAll, beforeEach, describe, expect, test, vi } from 'vitest'
 
-jest.mock('env-paths', () =>
-  jest.fn().mockImplementation(() => ({
+vi.mock('env-paths', () => ({
+  default: vi.fn().mockImplementation(() => ({
     data: 'test/data',
     config: 'test/data',
     cache: 'test/data',
     log: 'test/data',
     temp: 'test/data',
   })),
-)
+}))
 
 import { createBeeLogger, forwardLines } from '../src/logger'
 
