@@ -5,7 +5,7 @@ import PACKAGE_JSON from '../package.json'
 
 import { getPath } from './path'
 
-export const BEE_VERSION = 'v2.8.1'
+export const BEE_VERSION = 'v2.8.2'
 export { GIFT_WALLET_BZZ_AMOUNT, GIFT_WALLET_DAI_AMOUNT } from './gift-wallet-fees'
 export const DEFAULT_ELECTRON_API_PORT = 3054
 export const MAX_ELECTRON_API_PORT = 5000
