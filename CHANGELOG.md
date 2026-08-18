@@ -5,7 +5,7 @@
 
 ### Bug Fixes
 
-* upgrdae to bee-js v2.8.2 ([#568](https://github.com/ethersphere/swarm-desktop/issues/568)) ([2dafdca](https://github.com/ethersphere/swarm-desktop/commit/2dafdca02dac9f85aa373485b66d817d6475e6a8))
+* upgrade to Bee v2.8.2 ([#568](https://github.com/ethersphere/swarm-desktop/issues/568)) ([2dafdca](https://github.com/ethersphere/swarm-desktop/commit/2dafdca02dac9f85aa373485b66d817d6475e6a8))
 
 
 ### Documentation
