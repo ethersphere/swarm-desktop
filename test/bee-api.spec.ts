@@ -24,36 +24,42 @@ vi.mock('@ethersphere/bee-js', () => {
     // eslint-disable-next-line prefer-arrow-callback -- must be a constructible function for `new Bee(...)`
     Bee: vi.fn().mockImplementation(function BeeCtor(_) {
       return {
-        isConnected: vi.fn(),
-        getPostageBatches: vi.fn(),
-        uploadFile: vi.fn(),
+        connectivity: { isConnected: vi.fn() },
+        stamp: { getAll: vi.fn() },
+        file: { upload: vi.fn() },
       }
     }),
   }
 })
 
+type MockedBee = {
+  connectivity: Mocked<Bee['connectivity']>
+  stamp: Mocked<Bee['stamp']>
+  file: Mocked<Bee['file']>
+}
+
 describe('Bee utility functions', () => {
-  let mockBeeInstance: Mocked<Bee>
+  let mockBeeInstance: MockedBee
 
   beforeEach(() => {
-    mockBeeInstance = getBeeInstance() as Mocked<Bee>
-    mockBeeInstance.isConnected.mockReset()
-    mockBeeInstance.getPostageBatches.mockReset()
-    mockBeeInstance.uploadFile.mockReset()
+    mockBeeInstance = getBeeInstance() as unknown as MockedBee
+    mockBeeInstance.connectivity.isConnected.mockReset()
+    mockBeeInstance.stamp.getAll.mockReset()
+    mockBeeInstance.file.upload.mockReset()
   })
 
   describe('nodeIsConnected', () => {
     it('should return true when node is connected', async () => {
-      mockBeeInstance.isConnected.mockResolvedValue(true)
+      mockBeeInstance.connectivity.isConnected.mockResolvedValue(true)
 
       const res = await nodeIsConnected()
 
       expect(res).toBe(true)
-      expect(mockBeeInstance.isConnected).toHaveBeenCalled()
+      expect(mockBeeInstance.connectivity.isConnected).toHaveBeenCalled()
     })
 
     it('should throw an error when there is an issue checking connection', async () => {
-      mockBeeInstance.isConnected.mockRejectedValue(new Error('Connection failed'))
+      mockBeeInstance.connectivity.isConnected.mockRejectedValue(new Error('Connection failed'))
 
       await expect(nodeIsConnected()).rejects.toThrow('Connection failed')
     })
@@ -61,7 +67,7 @@ describe('Bee utility functions', () => {
 
   describe('getPostageBatches', () => {
     it('should return only usable postage batches', async () => {
-      mockBeeInstance.getPostageBatches.mockResolvedValue([
+      mockBeeInstance.stamp.getAll.mockResolvedValue([
         { batchID: { toHex: () => 'batch1' }, usable: true },
         { batchID: { toHex: () => 'batch2' }, usable: false },
         { batchID: { toHex: () => 'batch3' }, usable: true },
@@ -74,11 +80,11 @@ describe('Bee utility functions', () => {
         { batchID: 'batch1', usable: true },
         { batchID: 'batch3', usable: true },
       ])
-      expect(mockBeeInstance.getPostageBatches).toHaveBeenCalled()
+      expect(mockBeeInstance.stamp.getAll).toHaveBeenCalled()
     })
 
     it('should throw an error if getPostageBatches fails', async () => {
-      mockBeeInstance.getPostageBatches.mockRejectedValue(new Error('Failed to fetch batches'))
+      mockBeeInstance.stamp.getAll.mockRejectedValue(new Error('Failed to fetch batches'))
 
       await expect(getPostageBatches()).rejects.toThrow('Failed to fetch batches')
     })
@@ -100,11 +106,11 @@ describe('Bee utility functions', () => {
         name: 'test-img.png',
       }
 
-      mockBeeInstance.uploadFile.mockResolvedValue(mockResponse)
+      mockBeeInstance.file.upload.mockResolvedValue(mockResponse)
       const result = await handleFileUpload(args)
 
       expect(result).toEqual(mockResponse)
-      expect(mockBeeInstance.uploadFile).toHaveBeenCalledWith(
+      expect(mockBeeInstance.file.upload).toHaveBeenCalledWith(
         args.batchID,
         args.imgBuffer,
         args.name,
@@ -114,7 +120,7 @@ describe('Bee utility functions', () => {
 
     it('should throw an error if uploadFile fails', async () => {
       const errMsg = 'File upload failed.'
-      mockBeeInstance.uploadFile.mockRejectedValue(new Error(errMsg))
+      mockBeeInstance.file.upload.mockRejectedValue(new Error(errMsg))
 
       const args = {
         batchID: 'batch123',
@@ -124,7 +130,7 @@ describe('Bee utility functions', () => {
 
       await expect(handleFileUpload(args)).rejects.toThrow(errMsg)
 
-      expect(mockBeeInstance.uploadFile).toHaveBeenCalledWith(
+      expect(mockBeeInstance.file.upload).toHaveBeenCalledWith(
         args.batchID,
         args.imgBuffer,
         args.name,
