@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.56.0](https://github.com/ethersphere/swarm-desktop/compare/v0.55.2...v0.56.0) (2026-09-08)
+
+
+### Features
+
+* bee-js v13 migration, log rotation refactor, test suite modernization and fixes ([4a6016c](https://github.com/ethersphere/swarm-desktop/commit/4a6016c4e02ca213b9414cf2580e44d24bd2d57f))
+* migrate to bee-js v13.0.0 and bee-dashboard v0.37.0 ([aebec97](https://github.com/ethersphere/swarm-desktop/commit/aebec976f587f4353e77d76cc9beba43cee0da75))
+* migrate to bee-js v13.0.0 and bee-dashboard v0.37.0 ([984a12e](https://github.com/ethersphere/swarm-desktop/commit/984a12eab13f1170da9134f9a21ba5f62097d71d))
+
+
+### Miscellaneous
+
+* remove packageManager from package.json ([91e6128](https://github.com/ethersphere/swarm-desktop/commit/91e61289f740b1997ac649c663813b33725aa6f1))
+* remove packageManager from package.json ([f5784c5](https://github.com/ethersphere/swarm-desktop/commit/f5784c5c93ec2910fbaf135589a595f7a859b632))
+
 ## [0.55.2](https://github.com/ethersphere/swarm-desktop/compare/v0.55.1...v0.55.2) (2026-08-18)
 
 
