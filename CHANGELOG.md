@@ -2,18 +2,19 @@
 
 ## [0.56.0](https://github.com/ethersphere/swarm-desktop/compare/v0.55.2...v0.56.0) (2026-09-08)
 
-
 ### Features
 
-* bee-js v13 migration, log rotation refactor, test suite modernization and fixes ([4a6016c](https://github.com/ethersphere/swarm-desktop/commit/4a6016c4e02ca213b9414cf2580e44d24bd2d57f))
-* migrate to bee-js v13.0.0 and bee-dashboard v0.37.0 ([aebec97](https://github.com/ethersphere/swarm-desktop/commit/aebec976f587f4353e77d76cc9beba43cee0da75))
-* migrate to bee-js v13.0.0 and bee-dashboard v0.37.0 ([984a12e](https://github.com/ethersphere/swarm-desktop/commit/984a12eab13f1170da9134f9a21ba5f62097d71d))
+* [`984a12e`](https://github.com/ethersphere/swarm-desktop/commit/984a12eab13f1170da9134f9a21ba5f62097d71d) migrate to bee-js v13.0.0 and bee-dashboard v0.37.0 ([#45](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/45)) 
 
+### Bug Fixes
+
+* [`46064ef`](https://github.com/ethersphere/swarm-desktop/commit/46064ef3a0031c9e0ed5d31770a103a687da1dc3) consolidate Bee log rotation, fixing a per-restart stream leak and close race ([#39](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/39)) 
+* [`125185d`](https://github.com/ethersphere/swarm-desktop/commit/125185d1ff9541c00dd111a3a62d805971542892) tray icon ubuntu light dark white border ([#42](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/42)) 
 
 ### Miscellaneous
 
-* remove packageManager from package.json ([91e6128](https://github.com/ethersphere/swarm-desktop/commit/91e61289f740b1997ac649c663813b33725aa6f1))
-* remove packageManager from package.json ([f5784c5](https://github.com/ethersphere/swarm-desktop/commit/f5784c5c93ec2910fbaf135589a595f7a859b632))
+* [`12ef4b2`](https://github.com/ethersphere/swarm-desktop/commit/12ef4b2fab7b28a6d73e58cbac49b2ab60c1c4b6) migrate test suite from Jest to Vitest ([#44](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/44)) 
+* [`c328cad`](https://github.com/ethersphere/swarm-desktop/commit/c328cad87c4485a570f290ee4f4fb4fedf6bd366) remove configs-js sync workflow ([#43](https://github.com/Solar-Punk-Ltd/swarm-desktop/pull/43)) 
 
 ## [0.55.2](https://github.com/ethersphere/swarm-desktop/compare/v0.55.1...v0.55.2) (2026-08-18)
 
