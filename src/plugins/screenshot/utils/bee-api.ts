@@ -16,7 +16,7 @@ export const nodeIsConnected = async () => {
   const bee = getBeeInstance()
 
   if (bee) {
-    return await bee.isConnected()
+    return await bee.connectivity.isConnected()
   }
 }
 
@@ -27,7 +27,7 @@ export const getPostageBatches = async () => {
     throw new Error('Bee instance is not initialized')
   }
 
-  const psBatch = await bee.getPostageBatches()
+  const psBatch = await bee.stamp.getAll()
   const usable = psBatch
     .filter(ps => ps.usable === true)
     .map(ps => ({
@@ -59,7 +59,7 @@ export async function handleFileUpload(args: HandleFileUploadArgs) {
     throw new Error('Bee instance is not initialized')
   }
 
-  return await bee.uploadFile(args.batchID, args.imgBuffer, args.name, {
+  return await bee.file.upload(args.batchID, args.imgBuffer, args.name, {
     ...args.options,
     contentType: 'image/png',
   })

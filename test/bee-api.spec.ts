@@ -1,58 +1,65 @@
-import { Bee } from '@ethersphere/bee-js'
+import type { Bee } from '@ethersphere/bee-js'
+import type { Mocked } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { BEE_NODE_URL } from '../src/config'
 import {
-  getBeeInstance, // eslint-disable-line @typescript-eslint/no-unused-vars
+  getBeeInstance,
   getPostageBatches,
   handleFileUpload,
   nodeIsConnected,
 } from '../src/plugins/screenshot/utils/bee-api'
 
-jest.mock(
-  'env-paths',
-  () => () =>
-    jest.fn().mockImplementation(() => ({
-      data: 'test/data',
-      config: 'test/data',
-      cache: 'test/data',
-      log: 'test/data',
-      temp: 'test/data',
-    })),
-)
+vi.mock('env-paths', () => ({
+  default: vi.fn().mockImplementation(() => ({
+    data: 'test/data',
+    config: 'test/data',
+    cache: 'test/data',
+    log: 'test/data',
+    temp: 'test/data',
+  })),
+}))
 
-jest.mock('@ethersphere/bee-js', () => {
+vi.mock('@ethersphere/bee-js', () => {
   return {
-    Bee: jest.fn().mockImplementation(_ => {
+    // eslint-disable-next-line prefer-arrow-callback -- must be a constructible function for `new Bee(...)`
+    Bee: vi.fn().mockImplementation(function BeeCtor(_) {
       return {
-        isConnected: jest.fn(),
-        getPostageBatches: jest.fn(),
-        uploadFile: jest.fn(),
+        connectivity: { isConnected: vi.fn() },
+        stamp: { getAll: vi.fn() },
+        file: { upload: vi.fn() },
       }
     }),
   }
 })
 
+type MockedBee = {
+  connectivity: Mocked<Bee['connectivity']>
+  stamp: Mocked<Bee['stamp']>
+  file: Mocked<Bee['file']>
+}
+
 describe('Bee utility functions', () => {
-  let mockBeeInstance: jest.Mocked<Bee>
+  let mockBeeInstance: MockedBee
 
   beforeEach(() => {
-    mockBeeInstance = new Bee(BEE_NODE_URL) as jest.Mocked<Bee>
-    // eslint-disable-next-line no-import-assign
-    ;(getBeeInstance as jest.Mock) = jest.fn(() => mockBeeInstance)
+    mockBeeInstance = getBeeInstance() as unknown as MockedBee
+    mockBeeInstance.connectivity.isConnected.mockReset()
+    mockBeeInstance.stamp.getAll.mockReset()
+    mockBeeInstance.file.upload.mockReset()
   })
 
   describe('nodeIsConnected', () => {
     it('should return true when node is connected', async () => {
-      mockBeeInstance.isConnected.mockResolvedValue(true)
+      mockBeeInstance.connectivity.isConnected.mockResolvedValue(true)
 
       const res = await nodeIsConnected()
 
       expect(res).toBe(true)
-      expect(mockBeeInstance.isConnected).toHaveBeenCalled()
+      expect(mockBeeInstance.connectivity.isConnected).toHaveBeenCalled()
     })
 
     it('should throw an error when there is an issue checking connection', async () => {
-      mockBeeInstance.isConnected.mockRejectedValue(new Error('Connection failed'))
+      mockBeeInstance.connectivity.isConnected.mockRejectedValue(new Error('Connection failed'))
 
       await expect(nodeIsConnected()).rejects.toThrow('Connection failed')
     })
@@ -60,7 +67,7 @@ describe('Bee utility functions', () => {
 
   describe('getPostageBatches', () => {
     it('should return only usable postage batches', async () => {
-      mockBeeInstance.getPostageBatches.mockResolvedValue([
+      mockBeeInstance.stamp.getAll.mockResolvedValue([
         { batchID: { toHex: () => 'batch1' }, usable: true },
         { batchID: { toHex: () => 'batch2' }, usable: false },
         { batchID: { toHex: () => 'batch3' }, usable: true },
@@ -73,11 +80,11 @@ describe('Bee utility functions', () => {
         { batchID: 'batch1', usable: true },
         { batchID: 'batch3', usable: true },
       ])
-      expect(mockBeeInstance.getPostageBatches).toHaveBeenCalled()
+      expect(mockBeeInstance.stamp.getAll).toHaveBeenCalled()
     })
 
     it('should throw an error if getPostageBatches fails', async () => {
-      mockBeeInstance.getPostageBatches.mockRejectedValue(new Error('Failed to fetch batches'))
+      mockBeeInstance.stamp.getAll.mockRejectedValue(new Error('Failed to fetch batches'))
 
       await expect(getPostageBatches()).rejects.toThrow('Failed to fetch batches')
     })
@@ -99,11 +106,11 @@ describe('Bee utility functions', () => {
         name: 'test-img.png',
       }
 
-      mockBeeInstance.uploadFile.mockResolvedValue(mockResponse)
+      mockBeeInstance.file.upload.mockResolvedValue(mockResponse)
       const result = await handleFileUpload(args)
 
       expect(result).toEqual(mockResponse)
-      expect(mockBeeInstance.uploadFile).toHaveBeenCalledWith(
+      expect(mockBeeInstance.file.upload).toHaveBeenCalledWith(
         args.batchID,
         args.imgBuffer,
         args.name,
@@ -113,7 +120,7 @@ describe('Bee utility functions', () => {
 
     it('should throw an error if uploadFile fails', async () => {
       const errMsg = 'File upload failed.'
-      mockBeeInstance.uploadFile.mockRejectedValue(new Error(errMsg))
+      mockBeeInstance.file.upload.mockRejectedValue(new Error(errMsg))
 
       const args = {
         batchID: 'batch123',
@@ -123,7 +130,7 @@ describe('Bee utility functions', () => {
 
       await expect(handleFileUpload(args)).rejects.toThrow(errMsg)
 
-      expect(mockBeeInstance.uploadFile).toHaveBeenCalledWith(
+      expect(mockBeeInstance.file.upload).toHaveBeenCalledWith(
         args.batchID,
         args.imgBuffer,
         args.name,

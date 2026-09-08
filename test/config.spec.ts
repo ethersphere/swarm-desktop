@@ -1,16 +1,17 @@
 import { existsSync, unlinkSync, writeFileSync } from 'fs-extra'
+import { afterAll, beforeEach, describe, expect, test, vi } from 'vitest'
 
 import { configYamlExists, readConfigYaml, readWalletPasswordOrThrow, writeConfigYaml } from '../src/config'
 
-jest.mock('env-paths', () =>
-  jest.fn().mockImplementation(() => ({
+vi.mock('env-paths', () => ({
+  default: vi.fn().mockImplementation(() => ({
     data: 'test/data',
     config: 'test/data',
     cache: 'test/data',
     log: 'test/data',
     temp: 'test/data',
   })),
-)
+}))
 
 describe('config-yaml module', () => {
   beforeEach(cleanUp)
