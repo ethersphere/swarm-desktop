@@ -2,7 +2,7 @@ allowBuilds:
   esbuild: true
   unrs-resolver: true
 minimumReleaseAgeExclude:
-  - '@ethersphere/bee-dashboard@0.37.0'
+  - '@ethersphere/bee-dashboard@0.37.1'
   - '@solarpunkltd/file-manager-lib@1.1.0'
 onlyBuiltDependencies:
   - '@ethersphere/bee-dashboard'
