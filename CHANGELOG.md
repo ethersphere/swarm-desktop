@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.56.3](https://github.com/ethersphere/swarm-desktop/compare/v0.56.1...v0.56.3) (2026-11-09)
+
+
+### Bug Fixes
+
+* replace compromised 0.56.2 release ([ffee3c9](https://github.com/ethersphere/swarm-desktop/commit/ffee3c9200d67f975434400e7868d6ebc4b9828f))
+* replace compromised 0.56.2 release ([2097e8c](https://github.com/ethersphere/swarm-desktop/commit/2097e8c2d27dc890a43c4e7f856a59d0d36478d9))
+
 ## [0.56.1](https://github.com/ethersphere/swarm-desktop/compare/v0.56.0...v0.56.1) (2026-10-14)
 
 
