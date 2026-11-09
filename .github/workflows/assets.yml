@@ -12,6 +12,21 @@ jobs:
     runs-on: macos-15
     environment: release
     steps:
+      - name: Verify release commit is on a protected branch
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+          BRANCHES: "master"
+        run: |
+          set -euo pipefail
+          for b in $BRANCHES; do
+            st=$(gh api "repos/$REPO/compare/$b...$SHA" --jq .status 2>/dev/null || echo error)
+            if [ "$st" = identical ] || [ "$st" = behind ]; then echo "OK: $SHA is on $b"; exit 0; fi
+          done
+          echo "::error::$SHA is not on any of: $BRANCHES. Refusing to publish."; exit 1
+
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
         with:
@@ -61,6 +76,21 @@ jobs:
     runs-on: macos-15
     environment: release
     steps:
+      - name: Verify release commit is on a protected branch
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+          BRANCHES: "master"
+        run: |
+          set -euo pipefail
+          for b in $BRANCHES; do
+            st=$(gh api "repos/$REPO/compare/$b...$SHA" --jq .status 2>/dev/null || echo error)
+            if [ "$st" = identical ] || [ "$st" = behind ]; then echo "OK: $SHA is on $b"; exit 0; fi
+          done
+          echo "::error::$SHA is not on any of: $BRANCHES. Refusing to publish."; exit 1
+
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
         with:
@@ -114,6 +144,21 @@ jobs:
     runs-on: ${{ matrix.os }}
     environment: release
     steps:
+      - name: Verify release commit is on a protected branch
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+          BRANCHES: "master"
+        run: |
+          set -euo pipefail
+          for b in $BRANCHES; do
+            st=$(gh api "repos/$REPO/compare/$b...$SHA" --jq .status 2>/dev/null || echo error)
+            if [ "$st" = identical ] || [ "$st" = behind ]; then echo "OK: $SHA is on $b"; exit 0; fi
+          done
+          echo "::error::$SHA is not on any of: $BRANCHES. Refusing to publish."; exit 1
+
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
         with:
