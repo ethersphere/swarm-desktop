@@ -40,6 +40,12 @@ function errorHandler(e: Error | string) {
 
 let splash: Splash | undefined
 
+async function notifyIfCompromised() {
+  const firstSeen = await checkCompromise()
+
+  if (firstSeen) showCompromiseNotice(firstSeen)
+}
+
 async function main() {
   logger.info(`Bee Desktop version: ${PACKAGE_JSON.version} (${process.env.NODE_ENV ?? 'production'})`)
 
@@ -101,9 +107,7 @@ async function main() {
   splash.hide()
   splash = undefined
 
-  const firstSeen = await checkCompromise()
-
-  if (firstSeen) showCompromiseNotice(firstSeen)
+  await notifyIfCompromised()
 
   runKeepAliveLoop()
 
@@ -124,4 +128,7 @@ async function main() {
   })
 }
 
-main().catch(errorHandler)
+main().catch(async e => {
+  errorHandler(e)
+  await notifyIfCompromised()
+})
