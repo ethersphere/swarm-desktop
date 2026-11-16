@@ -6,6 +6,8 @@ import PACKAGE_JSON from '../package.json'
 import { runScreenshot } from './plugins/screenshot'
 import { ensureApiKey } from './api-key'
 import { openDashboardInBrowser } from './browser'
+import { checkCompromise } from './compromise-check'
+import { showCompromiseNotice } from './compromise-notice'
 import { getDesktopVersionFromFile, writeDesktopVersionFile } from './config'
 import { runDownloader } from './downloader'
 import { runElectronTray } from './electron'
@@ -98,6 +100,10 @@ async function main() {
   if (process.env.NODE_ENV !== 'development') openDashboardInBrowser()
   splash.hide()
   splash = undefined
+
+  const firstSeen = await checkCompromise()
+
+  if (firstSeen) showCompromiseNotice(firstSeen)
 
   runKeepAliveLoop()
 
