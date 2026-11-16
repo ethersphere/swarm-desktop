@@ -7,6 +7,10 @@ on:
   repository_dispatch:
     types: [assets-build]
 
+# electron-builder uploads the signed builds to the GitHub release.
+permissions:
+  contents: write
+
 jobs:
   # Runs before any job that waits on the release approval or holds signing secrets,
   # so a commit that is not on a protected branch is rejected up front.
