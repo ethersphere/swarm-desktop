@@ -6,6 +6,8 @@ import PACKAGE_JSON from '../package.json'
 import { runScreenshot } from './plugins/screenshot'
 import { ensureApiKey } from './api-key'
 import { openDashboardInBrowser } from './browser'
+import { checkCompromise } from './compromise-check'
+import { showCompromiseNotice } from './compromise-notice'
 import { getDesktopVersionFromFile, writeDesktopVersionFile } from './config'
 import { runDownloader } from './downloader'
 import { runElectronTray } from './electron'
@@ -37,6 +39,12 @@ function errorHandler(e: Error | string) {
 }
 
 let splash: Splash | undefined
+
+async function notifyIfCompromised() {
+  const firstSeen = await checkCompromise()
+
+  if (firstSeen) showCompromiseNotice(firstSeen)
+}
 
 async function main() {
   logger.info(`Bee Desktop version: ${PACKAGE_JSON.version} (${process.env.NODE_ENV ?? 'production'})`)
@@ -99,6 +107,8 @@ async function main() {
   splash.hide()
   splash = undefined
 
+  await notifyIfCompromised()
+
   runKeepAliveLoop()
 
   app.whenReady().then(() => {
@@ -118,4 +128,7 @@ async function main() {
   })
 }
 
-main().catch(errorHandler)
+main().catch(async e => {
+  errorHandler(e)
+  await notifyIfCompromised()
+})
