@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'">
+  <title>Swarm Desktop</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #ffffff;
+      --fg: #1f1f1f;
+      --muted: #595959;
+      --border: #d9d9d9;
+      --alert: #b3261e;
+      --alert-bg: #fdecea;
+      --code-bg: #f2f2f2;
+      --button-bg: #1f1f1f;
+      --button-fg: #ffffff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1e1e1e;
+        --fg: #ececec;
+        --muted: #a6a6a6;
+        --border: #3a3a3a;
+        --alert: #ff8a80;
+        --alert-bg: #3b1f1d;
+        --code-bg: #2b2b2b;
+        --button-bg: #ececec;
+        --button-fg: #1e1e1e;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 28px 32px 24px;
+      background: var(--bg);
+      color: var(--fg);
+      font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Ubuntu, Cantarell, sans-serif;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      padding: 12px 16px;
+      border-left: 4px solid var(--alert);
+      border-radius: 4px;
+      background: var(--alert-bg);
+      color: var(--alert);
+      font-size: 20px;
+      line-height: 1.3;
+    }
+
+    h2 {
+      margin: 24px 0 8px;
+      font-size: 16px;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    details {
+      margin: 16px 0;
+      padding: 10px 16px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    details[open] summary {
+      margin-bottom: 10px;
+    }
+
+    details p {
+      color: var(--muted);
+    }
+
+    code {
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: var(--code-bg);
+      font: 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      user-select: all;
+      overflow-wrap: anywhere;
+    }
+
+    ol {
+      margin: 0;
+      padding-left: 22px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    [data-os] {
+      display: none;
+    }
+
+    body[data-platform="darwin"] [data-os="darwin"],
+    body[data-platform="win32"] [data-os="win32"],
+    body[data-platform="linux"] [data-os="linux"] {
+      display: inline;
+    }
+
+    footer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 24px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: 0;
+      border-radius: 6px;
+      background: var(--button-bg);
+      color: var(--button-fg);
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>This computer ran a compromised version of Swarm Desktop</h1>
+
+  <p>
+    On <strong id="first-seen"></strong>, this computer started Swarm Desktop 0.56.2, a version published by an
+    attacker. It would copy this node’s key and password and install a backdoor. Updating to a new version does not
+    remove the backdoor.
+  </p>
+
+  <details>
+    <summary>Verify this yourself (works offline)</summary>
+    <p>
+      <span data-os="darwin">In Finder, go to: <code>~/Library/Logs/Swarm Desktop</code></span>
+      <span data-os="win32">In File Explorer, go to: <code>%LOCALAPPDATA%\Swarm Desktop\Log</code></span>
+      <span data-os="linux">Open: <code>~/.local/state/Swarm Desktop</code></span>
+    </p>
+    <p>Search the bee-desktop*.log files for “<code>Bee Desktop version: 0.56.2 (</code>”.</p>
+    <p>
+      <span data-os="darwin">Other signs: a hidden .solidity folder in your home folder, or the login item
+        com.solidity.langsupport.runner.</span>
+      <span data-os="linux">Other signs: a hidden .solidity folder in your home folder, or the startup item
+        solidity-langsupport-runner.</span>
+      <span data-os="win32">Other signs: a hidden .solidity folder in your home folder, an app-0.56.2 folder in
+        %LOCALAPPDATA%\swarm-desktop, or an unfamiliar remote-support app installed around the date shown above.</span>
+    </p>
+    <p>Finding any of these confirms the compromise. Deleting them does not fix it.</p>
+  </details>
+
+  <h2>Take the following actions immediately</h2>
+  <ol>
+    <li>Disconnect this computer from the internet or turn the internet off.</li>
+    <li>
+      From another device, rotate everything that was on this computer: crypto wallets and seed phrases, saved
+      passwords, email, exchange accounts, SSH keys, API tokens, your password manager’s master password, etc.
+    </li>
+    <li>Reinstall the operating system, then Swarm Desktop. Do not restore the old data folder.</li>
+  </ol>
+
+  <footer>
+    <button id="read" type="button">I have read the notice</button>
+  </footer>
+
+  <script>
+    const params = new URLSearchParams(window.location.search)
+    const platform = params.get('platform')
+
+    document.body.dataset.platform = ['darwin', 'win32'].includes(platform) ? platform : 'linux'
+
+    document.getElementById('first-seen').textContent = new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      timeZoneName: 'short',
+    }).format(new Date(params.get('firstSeen')))
+
+    document.getElementById('read').addEventListener('click', () => window.close())
+  </script>
+</body>
+</html>
