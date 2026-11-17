@@ -14,6 +14,10 @@ on:
         default: master
         required: false
 
+# electron-builder publishes the pre-release builds to GitHub.
+permissions:
+  contents: write
+
 jobs:
   publish-macos-m1:
     runs-on: macos-latest
