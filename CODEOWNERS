@@ -1,1 +1,9 @@
-* @Cafe137
+* @Cafe137 @ferencsarai @darkobas2 @crtahlin
+
+# Workflows, release configuration and packaging
+/.github/                      @ethersphere/release-reviewers
+/CODEOWNERS                    @ethersphere/release-reviewers
+/release-please-config.json    @ethersphere/release-reviewers
+/.release-please-manifest.json @ethersphere/release-reviewers
+/forge.config.js               @ethersphere/release-reviewers
+/.npmrc                        @ethersphere/release-reviewers
